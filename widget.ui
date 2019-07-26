@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Widget</class>
+ <widget class="QWidget" name="Widget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>645</width>
+    <height>396</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Widget</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="dateBtn">
+       <property name="text">
+        <string>DateList</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="classBtn">
+       <property name="text">
+        <string>ClassList</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="courseBtn">
+       <property name="text">
+        <string>CourseList</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="chapterBtn">
+       <property name="text">
+        <string>ChapterList</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
