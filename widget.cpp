@@ -19,8 +19,9 @@ Widget::~Widget()
 
 void Widget::on_dateBtn_clicked()
 {
-    QWidget *w = new DateListWidget();
+    DateListWidget *w = new DateListWidget();
     w->show();
+    w->updateScrollArea();
 }
 
 void Widget::on_classBtn_clicked()

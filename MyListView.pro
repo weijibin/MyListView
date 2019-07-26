@@ -18,9 +18,6 @@ SOURCES += main.cpp\
     courselistwidget.cpp \
     chapterlistwidget.cpp \
     datelistwidget.cpp \
-    dateList/datelistmodel.cpp \
-    dateList/datedelegate.cpp \
-    dateList/datelistview.cpp \
     dateList/datewidget.cpp
 
 HEADERS  += widget.h \
@@ -28,9 +25,6 @@ HEADERS  += widget.h \
     courselistwidget.h \
     chapterlistwidget.h \
     datelistwidget.h \
-    dateList/datelistmodel.h \
-    dateList/datedelegate.h \
-    dateList/datelistview.h \
     dateList/datewidget.h
 
 FORMS    += widget.ui \

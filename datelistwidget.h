@@ -10,6 +10,7 @@
 class QPushButton;
 class QScrollArea;
 class QHBoxLayout;
+class DateWidget;
 
 class DateListWidget : public QWidget
 {
@@ -18,10 +19,12 @@ public:
     explicit DateListWidget(QWidget *parent = 0);
 
     void initUi();
-    void testDateUi();
+
+    void updateScrollArea();
 signals:
 
 public slots:
+
 private slots:
     void onLeftClick();
     void onRightClick();
@@ -31,6 +34,7 @@ private slots:
 
 private:
     void printLayoutWidgets();
+
 private:
     DateListView * m_view;
     DateListModel * m_model;
@@ -43,6 +47,18 @@ private:
 
     QWidget * m_scrolWidget;
     QHBoxLayout * m_scrolLayout;
+
+    QList<DateWidget*> m_dateWidgets;
+
+    int m_dateCount;
+
+    int m_dateVisibleNum;
+
+    int m_dateWidgetWidth;
+    int m_dateWidgetHeight;
+
+    int m_aniDuration;
+
 };
 
 
