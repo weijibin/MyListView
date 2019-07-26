@@ -1,23 +1,17 @@
 #ifndef DATEWIDGET_H
 #define DATEWIDGET_H
 
-#include <QWidget>
+#include <QPushButton>
 
-namespace Ui {
-class DateWidget;
-}
-
-class DateWidget : public QWidget
+class DateWidget : public QPushButton
 {
     Q_OBJECT
 
 public:
     explicit DateWidget(QWidget *parent = 0);
     ~DateWidget();
-    QString text();
-
-private:
-    Ui::DateWidget *ui;
+protected:
+    virtual void paintEvent(QPaintEvent *e) override;
 };
 
 #endif // DATEWIDGET_H

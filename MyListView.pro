@@ -27,5 +27,7 @@ HEADERS  += widget.h \
     datelistwidget.h \
     dateList/datewidget.h
 
-FORMS    += widget.ui \
-    dateList/datewidget.ui
+FORMS    += widget.ui
+
+RESOURCES += \
+    res.qrc

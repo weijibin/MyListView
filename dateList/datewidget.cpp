@@ -1,22 +1,19 @@
 #include "datewidget.h"
-#include "ui_datewidget.h"
-
+#include <QPainter>
 DateWidget::DateWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::DateWidget)
+    QPushButton(parent)
 {
-    ui->setupUi(this);
+    this->setCheckable(true);
     static int  num = 0;
-
-    ui->pushButton->setText(QString::number(num++));
-}
-
-QString DateWidget::text()
-{
-    return ui->pushButton->text();
+    setText(QString::number(num++));
 }
 
 DateWidget::~DateWidget()
 {
-    delete ui;
+
+}
+
+void DateWidget::paintEvent(QPaintEvent *e)
+{
+    QPushButton::paintEvent(e);
 }

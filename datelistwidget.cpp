@@ -8,28 +8,30 @@
 #include <QScrollBar>
 #include <QDebug>
 #include <QPushButton>
+#include <QButtonGroup>
 
 #include <QPropertyAnimation>
 #include "dateList/datewidget.h"
 
 DateListWidget::DateListWidget(QWidget *parent) : QWidget(parent)
 {
-//    initUi();
-
-    m_dateCount = 21;
+    m_dateCount = 9;
 
     m_dateVisibleNum = m_dateCount/3;
 
     m_dateWidgetWidth = 150;
     m_dateWidgetHeight = 50;
 
-    m_aniDuration = 800;
+    m_aniDuration = 500;
+
 
     initUi();
 }
 
 void DateListWidget::initUi()
 {
+    m_btnGroup = new QButtonGroup(this);
+
     QHBoxLayout * layout = new QHBoxLayout;
     this->setLayout(layout);
 
@@ -40,6 +42,7 @@ void DateListWidget::initUi()
     m_area->setContentsMargins(0,0,0,0);
 
     m_scrolWidget = new QWidget;
+    m_scrolWidget->setObjectName("weeklist");
     m_scrolLayout = new QHBoxLayout;
 
     m_scrolLayout->setSpacing(0);
@@ -58,9 +61,11 @@ void DateListWidget::initUi()
     m_right->setFixedWidth(40);
     connect(m_right,&QPushButton::clicked,this,&DateListWidget::onRightClick);
 
+    layout->addStretch();
     layout->addWidget(m_left);
     layout->addWidget(m_area);
     layout->addWidget(m_right);
+    layout->addStretch();
 
     for(int i =0; i<m_dateCount; i++)
     {
@@ -70,19 +75,20 @@ void DateListWidget::initUi()
 
         m_dateWidgets.append(w);
         m_scrolLayout->addWidget(w);
+
+        m_btnGroup->addButton(w);
     }
 
     m_scrolLayout->setSizeConstraint(QLayout::SetFixedSize);
     m_area->setFixedWidth(m_dateVisibleNum*m_dateWidgetWidth);
+    m_area->setFixedHeight(m_dateWidgetHeight);
 
 }
 
 
 void DateListWidget::updateScrollArea()
 {
-    qDebug()<<m_area->horizontalScrollBar()->value();
     m_area->horizontalScrollBar()->setValue(m_dateVisibleNum*m_dateWidgetWidth);
-    qDebug()<<m_area->horizontalScrollBar()->value();
 }
 
 void DateListWidget::onLeftClick()
@@ -114,17 +120,14 @@ void DateListWidget::onRightClick()
 
 void DateListWidget::updateWidget_pre()
 {
-    int value = m_area->horizontalScrollBar()->value();
-
     for(int i=0; i<m_dateVisibleNum; i++)
     {
         int count = m_scrolLayout->layout()->count();
         QLayoutItem *child = m_scrolLayout->takeAt(count-1);
 
         DateWidget *tt1 = qobject_cast<DateWidget *>(child->widget());
-
         m_dateWidgets.removeOne(tt1);
-
+        m_btnGroup->removeButton(tt1);
         tt1->deleteLater();
 
         delete child;
@@ -136,23 +139,23 @@ void DateListWidget::updateWidget_pre()
 
         m_scrolLayout->insertWidget(0,w);
         m_dateWidgets.insert(0,w);
-
-//        m_area->horizontalScrollBar()->setValue(value += m_dateWidgetWidth);
+        m_btnGroup->addButton(w);
     }
 
     updateScrollArea();
+
+//    printLayoutWidgetsInfo();
 }
 
 void DateListWidget::updateWidget_back()
 {
-    qDebug()<<"Before====="<<m_area->horizontalScrollBar()->value();
-    int value = m_area->horizontalScrollBar()->value();
     for(int i=0; i<m_dateVisibleNum; i++)
     {
         QLayoutItem *child = m_scrolLayout->takeAt(0);
 
         DateWidget *tt1 = qobject_cast<DateWidget *>(child->widget());
         m_dateWidgets.removeOne(tt1);
+        m_btnGroup->removeButton(tt1);
         tt1->deleteLater();
 
         delete child;
@@ -162,21 +165,18 @@ void DateListWidget::updateWidget_back()
         w->setFixedWidth(m_dateWidgetWidth);
         m_scrolLayout->addWidget(w);
         m_dateWidgets.append(w);
-
-
-//        m_area->horizontalScrollBar()->setValue(value -= m_dateWidgetWidth);
-
+        m_btnGroup->addButton(w);
     }
-
     updateScrollArea();
-    qDebug()<<"After====="<<m_area->horizontalScrollBar()->value();
+
+//    printLayoutWidgetsInfo();
 }
 
 
-void DateListWidget::printLayoutWidgets()
+void DateListWidget::printLayoutWidgetsInfo()
 {
 
-    qDebug()<<"=============================================================";
+    qDebug()<<">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>";
     for (int cc = m_scrolLayout->layout()->count()-1; cc >= 0; --cc)
     {
         QLayoutItem *it = m_scrolLayout->layout()->itemAt(cc);
@@ -184,10 +184,28 @@ void DateListWidget::printLayoutWidgets()
         if (orderHistory != 0)
         {
             qDebug()<<orderHistory->text();
-            qDebug()<<orderHistory;
         }
     }
     qDebug()<<"=============================================================";
+
+    for (int cc = m_dateWidgets.count()-1; cc >= 0; --cc)
+    {
+        DateWidget *orderHistory = m_dateWidgets.at(cc);
+        if (orderHistory != 0)
+        {
+            qDebug()<<orderHistory->text();
+        }
+    }
+    qDebug()<<"=============================================================";
+    for (int cc = m_btnGroup->buttons().count()-1; cc >= 0; --cc)
+    {
+        DateWidget *orderHistory = qobject_cast<DateWidget*>(m_btnGroup->buttons().at(cc));
+        if (orderHistory != 0)
+        {
+            qDebug()<<orderHistory->text();
+        }
+    }
+    qDebug()<<"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<";
 }
 
 

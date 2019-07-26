@@ -11,6 +11,7 @@ class QPushButton;
 class QScrollArea;
 class QHBoxLayout;
 class DateWidget;
+class QButtonGroup;
 
 class DateListWidget : public QWidget
 {
@@ -33,7 +34,7 @@ private slots:
     void updateWidget_back();
 
 private:
-    void printLayoutWidgets();
+    void printLayoutWidgetsInfo();
 
 private:
     DateListView * m_view;
@@ -49,15 +50,16 @@ private:
     QHBoxLayout * m_scrolLayout;
 
     QList<DateWidget*> m_dateWidgets;
+    QButtonGroup * m_btnGroup;
 
-    int m_dateCount;
+    int m_dateCount;   // total DateWidget count
 
-    int m_dateVisibleNum;
+    int m_dateVisibleNum; // the visible DateWidget count
 
     int m_dateWidgetWidth;
     int m_dateWidgetHeight;
 
-    int m_aniDuration;
+    int m_aniDuration; // animation duration
 
 };
 

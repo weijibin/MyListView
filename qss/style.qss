@@ -1,0 +1,16 @@
+QWidget#weeklist > QPushButton{
+    border: none;
+    background-color: #f3f8ff;
+}
+QWidget#weeklist > QPushButton:hover{
+    border: none;
+    background-color: #f3f800;
+}
+QWidget#weeklist > QPushButton:pressed{
+    border: none;
+    background-color: #f300ff;
+}
+QWidget#weeklist > QPushButton:checked{
+    border: none;
+    background-color: #00f8ff;
+}
