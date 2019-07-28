@@ -77,6 +77,8 @@ void DateListWidget::initUi()
     layout->addWidget(m_right);
     layout->addStretch();
 
+    layout->setSpacing(0);
+
     for(int i =0; i<m_dateCount; i++)
     {
         DateWidget * w = new DateWidget(m_scrolWidget);

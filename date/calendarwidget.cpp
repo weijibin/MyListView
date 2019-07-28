@@ -3,15 +3,13 @@
 #include <QHBoxLayout>
 #include <QPainter>
 #include <QStyleOption>
+#include <QTextCharFormat>
 #include <QDebug>
 
 CalendarWidget::CalendarWidget(QWidget *parent) : QWidget(parent)
 {
     setWindowFlags(Qt::NoDropShadowWindowHint | Qt::FramelessWindowHint | Qt::Popup);
     setAttribute(Qt::WA_TranslucentBackground, true);
-//    setAttribute(Qt::WA_NoSystemBackground, false);
-
-//    setAutoFillBackground(true);
 
     initUI();
 
@@ -31,8 +29,19 @@ void CalendarWidget::initUI()
 
     m_calendar = new QCalendarWidget(this);
     m_calendar->setObjectName("calendarObj");
+//    m_calendar->setFocusPolicy(Qt::NoFocus);
     m_calendar->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
     layout->addWidget(m_calendar);
+
+
+//    QTextCharFormat selectday;
+//    //刷新日历表背景颜色
+//    QBrush brush;
+//    QColor color("#141414");
+//    brush.setColor(color);
+//    selectday.setBackground(brush);
+//    m_calendar->setDateTextFormat(QDate::currentDate(), selectday);
+
 
     this->setLayout(layout);
 
@@ -48,6 +57,4 @@ void CalendarWidget::paintEvent(QPaintEvent*event)
     opt.init(this);
     QPainter p(this);
     style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
-
-//    p.drawRect(this->rect());
 }
