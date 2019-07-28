@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>qss/style.qss</file>
+        <file>res/calendar_bg.png</file>
     </qresource>
 </RCC>

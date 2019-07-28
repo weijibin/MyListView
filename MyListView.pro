@@ -18,14 +18,16 @@ SOURCES += main.cpp\
     courselistwidget.cpp \
     chapterlistwidget.cpp \
     datelistwidget.cpp \
-    dateList/datewidget.cpp
+    dateList/datewidget.cpp \
+    date/calendarwidget.cpp
 
 HEADERS  += widget.h \
     classlistwidget.h \
     courselistwidget.h \
     chapterlistwidget.h \
     datelistwidget.h \
-    dateList/datewidget.h
+    dateList/datewidget.h \
+    date/calendarwidget.h
 
 FORMS    += widget.ui
 

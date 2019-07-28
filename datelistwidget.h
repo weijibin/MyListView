@@ -1,4 +1,4 @@
-#ifndef DATALISTWIDGET_H
+﻿#ifndef DATALISTWIDGET_H
 #define DATALISTWIDGET_H
 
 #include <QWidget>
@@ -12,6 +12,8 @@ class QScrollArea;
 class QHBoxLayout;
 class DateWidget;
 class QButtonGroup;
+class QLabel;
+class CalendarWidget;
 
 class DateListWidget : public QWidget
 {
@@ -20,6 +22,7 @@ public:
     explicit DateListWidget(QWidget *parent = 0);
 
     void initUi();
+    void initConnections();
 
     void updateScrollArea();
 signals:
@@ -42,6 +45,9 @@ private:
     DateDelegate * m_delegate;
 
 private:
+    CalendarWidget * m_popupWidget;
+    QLabel * m_dateLabel;
+    QPushButton * m_subCtrl;
     QPushButton * m_left;
     QPushButton * m_right;
     QScrollArea * m_area;

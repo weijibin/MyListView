@@ -1,4 +1,4 @@
-#include "datelistwidget.h"
+﻿#include "datelistwidget.h"
 
 #include <QListView>
 
@@ -9,9 +9,13 @@
 #include <QDebug>
 #include <QPushButton>
 #include <QButtonGroup>
+#include <QLabel>
+#include <QDate>
 
 #include <QPropertyAnimation>
+#include <QPoint>
 #include "dateList/datewidget.h"
+#include "date/calendarwidget.h"
 
 DateListWidget::DateListWidget(QWidget *parent) : QWidget(parent)
 {
@@ -26,6 +30,7 @@ DateListWidget::DateListWidget(QWidget *parent) : QWidget(parent)
 
 
     initUi();
+    initConnections();
 }
 
 void DateListWidget::initUi()
@@ -56,12 +61,17 @@ void DateListWidget::initUi()
 
     m_left = new QPushButton("Left");
     m_left->setFixedWidth(40);
-    connect(m_left,&QPushButton::clicked,this,&DateListWidget::onLeftClick);
     m_right = new QPushButton("Right");
     m_right->setFixedWidth(40);
-    connect(m_right,&QPushButton::clicked,this,&DateListWidget::onRightClick);
+
+    m_dateLabel = new QLabel;
+    m_dateLabel->setFixedWidth(150);
+    m_subCtrl = new QPushButton;
+    m_subCtrl->setFixedWidth(40);
 
     layout->addStretch();
+    layout->addWidget(m_dateLabel);
+    layout->addWidget(m_subCtrl);
     layout->addWidget(m_left);
     layout->addWidget(m_area);
     layout->addWidget(m_right);
@@ -83,8 +93,42 @@ void DateListWidget::initUi()
     m_area->setFixedWidth(m_dateVisibleNum*m_dateWidgetWidth);
     m_area->setFixedHeight(m_dateWidgetHeight);
 
+    m_popupWidget = new CalendarWidget(this);
+    m_popupWidget->setObjectName("calendarWidget");
+
+//    m_popupWidget->setStyleSheet("QWidget{\
+//                                 border-image:url(:/res/calendar_bg.png) 5 15 5 5;\
+//                                 border-top: 15px transparent;\
+//                                 border-bottom: 5px transparent;\
+//                                 border-right: 5px transparent;\
+//                                 border-left: 5px transparent;\
+//                             }");
 }
 
+void DateListWidget::initConnections()
+{
+    m_dateLabel->setText(QDate::currentDate().toString());
+
+    bool checked = connect(m_popupWidget,&CalendarWidget::sigSelectedDate,[=](const QDate& date){
+        m_dateLabel->setText(date.toString());
+    });
+
+    checked = connect(m_subCtrl,&QPushButton::clicked,[=](){
+        m_popupWidget->show();
+        QRect rect = m_subCtrl->rect();
+        int width = m_popupWidget->width();
+
+        QPoint pos1 = m_subCtrl->pos() + QPoint(rect.width()/2,rect.height());
+
+        QPoint offset = QPoint(-1*width/2, 0);
+
+        QPoint pos = this->mapToGlobal(pos1 + offset);
+        m_popupWidget->move(pos);
+    });
+
+    connect(m_left,&QPushButton::clicked,this,&DateListWidget::onLeftClick);
+    connect(m_right,&QPushButton::clicked,this,&DateListWidget::onRightClick);
+}
 
 void DateListWidget::updateScrollArea()
 {
