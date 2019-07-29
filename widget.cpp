@@ -5,6 +5,11 @@
 #include "date/DateListWidget.h"
 #include "courselist/CourseListWidget.h"
 
+#include "title/TitleWidget.h"
+
+#include "LearningCenterWidget.h"
+#include "InterMediaCtrl.h"
+
 #include <QFile>
 #include <QDebug>
 #include <QDate>
@@ -53,4 +58,11 @@ void Widget::on_courseBtn_clicked()
 void Widget::on_chapterBtn_clicked()
 {
 
+}
+
+void Widget::on_pushButton_clicked()
+{
+    LearningCenterWidget * w = new LearningCenterWidget;
+    InterMediaCtrl::GetInstance().setCenterWidget(w);
+    w->show();
 }

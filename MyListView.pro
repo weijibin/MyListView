@@ -20,7 +20,14 @@ SOURCES += main.cpp\
     learningCenter/date/DateWidget.cpp \
     learningCenter/date/CalendarWidget.cpp \
     learningCenter/date/DateListWidget.cpp \
-    learningCenter/classList/ClassListWidget.cpp
+    learningCenter/classList/ClassListWidget.cpp \
+    learningCenter/title/TitleWidget.cpp \
+    learningCenter/title/MainTitle.cpp \
+    learningCenter/MainWidget.cpp \
+    learningCenter/ChapterWidget.cpp \
+    learningCenter/InterMediaCtrl.cpp \
+    learningCenter/LearningCenterWidget.cpp \
+    learningCenter/title/ChapterTitle.cpp
 
 HEADERS  += widget.h \
     learningCenter/chapterList/ChapterListWidget.h \
@@ -28,7 +35,14 @@ HEADERS  += widget.h \
     learningCenter/date/CalendarWidget.h \
     learningCenter/date/DateListWidget.h \
     learningCenter/date/DateWidget.h \
-    learningCenter/classList/ClassListWidget.h
+    learningCenter/classList/ClassListWidget.h \
+    learningCenter/title/TitleWidget.h \
+    learningCenter/title/MainTitle.h \
+    learningCenter/MainWidget.h \
+    learningCenter/ChapterWidget.h \
+    learningCenter/InterMediaCtrl.h \
+    learningCenter/LearningCenterWidget.h \
+    learningCenter/title/ChapterTitle.h
 
 FORMS    += widget.ui
 
