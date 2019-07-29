@@ -11,23 +11,24 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = MyListView
 TEMPLATE = app
 
+INCLUDEPATH += $$PWD\learningCenter
 
 SOURCES += main.cpp\
         widget.cpp \
-    chapterList/ChapterListWidget.cpp \
-    date/CalendarWidget.cpp \
-    date/DateWidget.cpp \
-    date/DateListWidget.cpp \
-    classList/ClassListWidget.cpp \
-    courseList/CourseListWidget.cpp
+    learningCenter/chapterList/ChapterListWidget.cpp \
+    learningCenter/courseList/CourseListWidget.cpp \
+    learningCenter/date/DateWidget.cpp \
+    learningCenter/date/CalendarWidget.cpp \
+    learningCenter/date/DateListWidget.cpp \
+    learningCenter/classList/ClassListWidget.cpp
 
 HEADERS  += widget.h \
-    chapterList/ChapterListWidget.h \
-    date/CalendarWidget.h \
-    date/DateListWidget.h \
-    date/DateWidget.h \
-    classList/ClassListWidget.h \
-    courseList/CourseListWidget.h
+    learningCenter/chapterList/ChapterListWidget.h \
+    learningCenter/courseList/CourseListWidget.h \
+    learningCenter/date/CalendarWidget.h \
+    learningCenter/date/DateListWidget.h \
+    learningCenter/date/DateWidget.h \
+    learningCenter/classList/ClassListWidget.h
 
 FORMS    += widget.ui
 

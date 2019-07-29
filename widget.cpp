@@ -1,9 +1,9 @@
 #include "widget.h"
 #include "ui_widget.h"
-#include "chapterlist/chapterlistwidget.h"
-#include "classlist/classlistwidget.h"
+#include "chapterlist/ChapterListWidget.h"
+#include "classlist/ClassListWidget.h"
 #include "date/DateListWidget.h"
-#include "courselist/courselistwidget.h"
+#include "courselist/CourseListWidget.h"
 
 #include <QFile>
 #include <QDebug>
@@ -42,7 +42,7 @@ void Widget::on_dateBtn_clicked()
 
 void Widget::on_classBtn_clicked()
 {
-
+    ClassListWidget *w = new ClassListWidget();
 }
 
 void Widget::on_courseBtn_clicked()
