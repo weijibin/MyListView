@@ -11,6 +11,8 @@ public:
     explicit CalendarWidget(QWidget *parent = nullptr);
 
     void initUI();
+
+    void setCalendarDate(const QDate& date);
 signals:
     void sigSelectedDate(const QDate& date);
 public slots:

@@ -7,6 +7,7 @@
 
 #include <QFile>
 #include <QDebug>
+#include <QDate>
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -37,6 +38,13 @@ void Widget::on_dateBtn_clicked()
         f.close();
         w->setStyleSheet(a_qss);
     }
+
+
+    connect(w,&DateListWidget::sigSelectedDate,[=](const QDate&date){
+
+        qDebug()<<"selected Date==========="<<date.toString();
+    });
+
 //    qDebug()<<f.errorString();
 
 //    w->setStyleSheet("QWidget#weeklist > QPushButton{\

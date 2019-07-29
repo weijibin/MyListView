@@ -3,10 +3,6 @@
 
 #include <QWidget>
 
-#include "dateList/datelistview.h"
-#include "dateList/datelistmodel.h"
-#include "dateList/datedelegate.h"
-
 class QPushButton;
 class QScrollArea;
 class QHBoxLayout;
@@ -25,9 +21,14 @@ public:
     void initConnections();
 
     void updateScrollArea();
+
 signals:
+    void sigSelectedDate(const QDate& date);
 
 public slots:
+protected:
+    void setCalendarDate(const QDate& date);
+    void updateWeekListByDate(const QDate& date);
 
 private slots:
     void onLeftClick();
@@ -38,11 +39,6 @@ private slots:
 
 private:
     void printLayoutWidgetsInfo();
-
-private:
-    DateListView * m_view;
-    DateListModel * m_model;
-    DateDelegate * m_delegate;
 
 private:
     CalendarWidget * m_popupWidget;
