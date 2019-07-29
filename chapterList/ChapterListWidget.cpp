@@ -1,4 +1,4 @@
-#include "chapterlistwidget.h"
+#include "ChapterListWidget.h"
 
 ChapterListWidget::ChapterListWidget(QWidget *parent) : QWidget(parent)
 {

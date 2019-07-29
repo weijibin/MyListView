@@ -1,4 +1,4 @@
-#include "courselistwidget.h"
+#include "CourseListWidget.h"
 
 CourseListWidget::CourseListWidget(QWidget *parent) : QWidget(parent)
 {

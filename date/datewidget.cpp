@@ -1,4 +1,4 @@
-#include "datewidget.h"
+#include "DateWidget.h"
 #include <QPainter>
 #include <QDebug>
 

@@ -1,4 +1,4 @@
-﻿#include "datelistwidget.h"
+﻿#include "DateListWidget.h"
 
 #include <QListView>
 
@@ -14,8 +14,8 @@
 
 #include <QPropertyAnimation>
 #include <QPoint>
-#include "date/datewidget.h"
-#include "date/calendarwidget.h"
+#include "date/DateWidget.h"
+#include "date/CalendarWidget.h"
 
 DateListWidget::DateListWidget(QWidget *parent) : QWidget(parent)
 {
@@ -28,6 +28,7 @@ DateListWidget::DateListWidget(QWidget *parent) : QWidget(parent)
 
     m_aniDuration = 1000;
 
+    m_dateFormat = QString::fromLocal8Bit("yyyy年M月");
 
     initUi();
     initConnections();
@@ -66,6 +67,8 @@ void DateListWidget::initUi()
 
     m_dateLabel = new QLabel;
     m_dateLabel->setFixedWidth(150);
+    m_dateLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+
     m_subCtrl = new QPushButton;
     m_subCtrl->setFixedWidth(40);
 
@@ -103,10 +106,10 @@ void DateListWidget::initUi()
 
 void DateListWidget::initConnections()
 {
-    m_dateLabel->setText(QDate::currentDate().toString());
+    m_dateLabel->setText(QDate::currentDate().toString(m_dateFormat));
 
     bool checked = connect(m_popupWidget,&CalendarWidget::sigSelectedDate,[=](const QDate& date){
-        m_dateLabel->setText(date.toString());
+        m_dateLabel->setText(date.toString(m_dateFormat));
         emit sigSelectedDate(date);
 
         updateWeekListByDate(date);
@@ -126,7 +129,7 @@ void DateListWidget::initConnections()
             [=](QAbstractButton * btn){
                 DateWidget *w = qobject_cast<DateWidget*>(btn);
                 m_popupWidget->setCalendarDate(w->getDate());
-                m_dateLabel->setText(w->getDate().toString());
+                m_dateLabel->setText(w->getDate().toString(m_dateFormat));
                 emit sigSelectedDate(w->getDate());
            });
 

@@ -42,7 +42,10 @@ private:
 
 private:
     CalendarWidget * m_popupWidget;
+
     QLabel * m_dateLabel;
+    QString m_dateFormat;
+
     QPushButton * m_subCtrl;
     QPushButton * m_left;
     QPushButton * m_right;

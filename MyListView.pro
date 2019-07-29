@@ -14,20 +14,20 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         widget.cpp \
-    classlistwidget.cpp \
-    courselistwidget.cpp \
-    chapterlistwidget.cpp \
-    datelistwidget.cpp \
-    date/calendarwidget.cpp \
-    date/datewidget.cpp
+    chapterList/ChapterListWidget.cpp \
+    date/CalendarWidget.cpp \
+    date/DateWidget.cpp \
+    date/DateListWidget.cpp \
+    classList/ClassListWidget.cpp \
+    courseList/CourseListWidget.cpp
 
 HEADERS  += widget.h \
-    classlistwidget.h \
-    courselistwidget.h \
-    chapterlistwidget.h \
-    datelistwidget.h \
-    date/calendarwidget.h \
-    date/datewidget.h
+    chapterList/ChapterListWidget.h \
+    date/CalendarWidget.h \
+    date/DateListWidget.h \
+    date/DateWidget.h \
+    classList/ClassListWidget.h \
+    courseList/CourseListWidget.h
 
 FORMS    += widget.ui
 
