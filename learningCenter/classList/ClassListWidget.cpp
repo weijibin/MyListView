@@ -1,6 +1,7 @@
 #include "ClassListWidget.h"
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QTimer>
 #include "date/DateListWidget.h"
 
 ClassListWidget::ClassListWidget(QWidget *parent) : QWidget(parent)
@@ -27,5 +28,8 @@ void ClassListWidget::initUi()
 
     setLayout(layout);
 
-    m_dateListWidget->updateScrollArea();
+    //
+    QTimer::singleShot(100,[=](){
+       m_dateListWidget->updateScrollArea();
+    });
 }

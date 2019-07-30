@@ -43,6 +43,7 @@ void Widget::on_dateBtn_clicked()
 
     w->show();
     w->updateScrollArea();
+
 }
 
 void Widget::on_classBtn_clicked()

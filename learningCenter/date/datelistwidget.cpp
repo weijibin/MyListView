@@ -81,6 +81,7 @@ void DateListWidget::initUi()
     layout->addWidget(m_left);
     layout->addWidget(m_area);
     layout->addWidget(m_right);
+    layout->addSpacing(20);
     layout->addStretch();
 
     layout->setSpacing(0);
@@ -155,7 +156,13 @@ void DateListWidget::paintEvent(QPaintEvent *)
 
 void DateListWidget::updateScrollArea()
 {
+//    qDebug()<<m_area->horizontalScrollBar()->maximum();
+//    qDebug()<<m_area->horizontalScrollBar()->minimum();
+//    qDebug()<<m_dateVisibleNum*m_dateWidgetWidth;
+//    qDebug()<<m_area->widget()->size();
+
     m_area->horizontalScrollBar()->setValue(m_dateVisibleNum*m_dateWidgetWidth);
+
 }
 
 void DateListWidget::onLeftClick()
