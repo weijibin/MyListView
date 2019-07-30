@@ -19,12 +19,22 @@ public:
 
     void updateCardBySize(int w,int h);
 
+    void updateScrollArea();
+
 signals:
 
 public slots:
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
     virtual bool eventFilter(QObject *obj, QEvent *ev) override;
+
+private slots:
+    void onLeftClick();
+    void onRightClick();
+
+    void updateWidget_pre();
+    void updateWidget_back();
+
 private:
     void initUi();
 
