@@ -4,6 +4,7 @@
 #include <QWidget>
 
 class DateListWidget;
+class CardListWidget;
 
 class ClassListWidget : public QWidget
 {
@@ -14,11 +15,13 @@ public:
 signals:
 
 public slots:
+protected:
+    virtual void resizeEvent(QResizeEvent *event) override;
 private:
     void initUi();
 private:
     DateListWidget * m_dateListWidget = nullptr;
-    QWidget * m_cardList = nullptr;
+    CardListWidget * m_cardList = nullptr;
 };
 
 #endif // CLASSLISTWIDGET_H

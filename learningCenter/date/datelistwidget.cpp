@@ -60,6 +60,7 @@ void DateListWidget::initUi()
 
     m_area->setWidget(m_scrolWidget);
 
+
     m_scrolWidget->setLayout(m_scrolLayout);
     m_scrolWidget->setLayout(m_scrolLayout);
 

@@ -83,11 +83,14 @@ QLabel#stuName{
 }
 
 QLabel#appTitle{
-    font: 20px "Microsoft YaHei";
-    font-weight:bold;
-    background-color: #B92500;
-    color: #FFFFFF;
+    border-image: url(:/res/logo.png);
 }
+/*QLabel#appTitle{
+font: 20px "Microsoft YaHei";
+font-weight:bold;
+background-color: #B92500;
+color: #FFFFFF;
+}*/
 
 QWidget#chapterTitle{
     background-color: #B92500;

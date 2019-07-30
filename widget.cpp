@@ -49,6 +49,7 @@ void Widget::on_dateBtn_clicked()
 void Widget::on_classBtn_clicked()
 {
     ClassListWidget *w = new ClassListWidget();
+    w->show();
 }
 
 void Widget::on_courseBtn_clicked()

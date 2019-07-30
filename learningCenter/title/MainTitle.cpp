@@ -17,7 +17,8 @@ MainTitle::MainTitle(QWidget *parent) : TitleWidget(parent)
 void MainTitle::initOtherUi()
 {
     m_icon = new QLabel(this);
-    m_icon->setText(QStringLiteral("学而思网校"));
+//    m_icon->setText(QStringLiteral("学而思网校"));
+    m_icon->setFixedSize(137,25);
     m_icon->setObjectName("appTitle");
 
 

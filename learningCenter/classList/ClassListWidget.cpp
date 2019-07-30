@@ -2,7 +2,9 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QTimer>
+#include <QResizeEvent>
 #include "date/DateListWidget.h"
+#include "classList/CardListWidget.h"
 
 ClassListWidget::ClassListWidget(QWidget *parent) : QWidget(parent)
 {
@@ -20,11 +22,13 @@ void ClassListWidget::initUi()
     m_dateListWidget->setFixedHeight(50);
 
 
-    m_cardList = new QWidget(this);
+    m_cardList = new CardListWidget(this);
 
     layout->addWidget(m_dateListWidget);
     layout->addWidget(m_cardList);
-    layout->addStretch();
+//    layout->addStretch();
+
+    layout->setSpacing(0);
 
     setLayout(layout);
 
@@ -32,4 +36,13 @@ void ClassListWidget::initUi()
     QTimer::singleShot(100,[=](){
        m_dateListWidget->updateScrollArea();
     });
+}
+
+void ClassListWidget::resizeEvent(QResizeEvent *event)
+{
+    QWidget::resizeEvent(event);
+//    if(m_cardList != nullptr)
+//    {
+//        m_cardList->updateCardBySize(event->size().width(),event->size().height());
+//    }
 }

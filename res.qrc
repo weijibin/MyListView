@@ -4,5 +4,6 @@
         <file>res/calendar_bg.png</file>
         <file>res/style_ref.qss</file>
         <file>res/default_boy_img.png</file>
+        <file>res/logo.png</file>
     </qresource>
 </RCC>
