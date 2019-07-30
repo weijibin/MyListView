@@ -30,6 +30,8 @@ protected:
     void setCalendarDate(const QDate& date);
     void updateWeekListByDate(const QDate& date);
 
+    virtual void paintEvent(QPaintEvent *event) override;
+
 private slots:
     void onLeftClick();
     void onRightClick();

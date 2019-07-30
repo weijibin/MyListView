@@ -7,6 +7,8 @@ namespace Ui {
 class Widget;
 }
 
+class LearningCenterWidget;
+
 class Widget : public QWidget
 {
     Q_OBJECT
@@ -28,6 +30,7 @@ private slots:
 
 private:
     Ui::Widget *ui;
+    LearningCenterWidget * m_center = nullptr;
 };
 
 #endif // WIDGET_H

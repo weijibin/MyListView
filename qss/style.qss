@@ -38,10 +38,57 @@ QCalendarWidget QTableView
     background-color: #2F2F3E;
 }
 
-/*QWidget#calendarWidget    {
-    border-image:url(:/res/calendar_bg.png) 20 20 4 20 ;
-    border-top: 20px transparent;
-    border-right: 20px transparent;
-    border-bottom: 4px transparent;
-    border-left: 20px transparent;
-}*/
+QWidget#centerTitle{
+    background-color: #B92500;
+}
+
+QPushButton#inClass {
+    border: 1px solid #FFFFFF;
+    border-top-left-radius: 14px;
+    border-bottom-left-radius: 14px;
+    font: 14px "Microsoft YaHei";
+    background-color: #B92500;
+    color: #FFFFFF;
+}
+QPushButton#inClass:hover {
+    background-color: #FFFFFF;
+    color: #B92400;
+}
+QPushButton#inClass:checked {
+    background-color: #EEEEEE;
+    color: #B92400;
+}
+
+QPushButton#myCourse {
+    border: 1px solid #FFFFFF;
+    border-top-right-radius: 14px;
+    border-bottom-right-radius: 14px;
+    font: 14px "Microsoft YaHei";
+    background-color: #B92500;
+    color: #FFFFFF;
+}
+QPushButton#myCourse:hover {
+    background-color: #FFFFFF;
+    color: #B92400;
+}
+QPushButton#myCourse:checked {
+    background-color: #EEEEEE;
+    color: #B92400;
+}
+
+QLabel#stuName{
+    font: 14px "Microsoft YaHei";
+    background-color: #B92500;
+    color: #FFFFFF;
+}
+
+QLabel#appTitle{
+    font: 20px "Microsoft YaHei";
+    font-weight:bold;
+    background-color: #B92500;
+    color: #FFFFFF;
+}
+
+QWidget#chapterTitle{
+    background-color: #B92500;
+}

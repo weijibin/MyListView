@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+class DateListWidget;
+
 class ClassListWidget : public QWidget
 {
     Q_OBJECT
@@ -12,6 +14,11 @@ public:
 signals:
 
 public slots:
+private:
+    void initUi();
+private:
+    DateListWidget * m_dateListWidget = nullptr;
+    QWidget * m_cardList = nullptr;
 };
 
 #endif // CLASSLISTWIDGET_H

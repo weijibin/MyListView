@@ -15,6 +15,7 @@ MainWidget::MainWidget(QWidget *parent) : QWidget(parent)
 void MainWidget::initUI()
 {
     m_title = new MainTitle(this);
+    m_title->setObjectName("centerTitle");
     m_classList = new ClassListWidget(this);
     m_courseList = new CourseListWidget(this);
 
@@ -26,6 +27,7 @@ void MainWidget::initUI()
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addWidget(m_title);
     mainLayout->addLayout(m_stackedLayout);
+    mainLayout->setSpacing(0);
     setLayout(mainLayout);
 
     this->setContentsMargins(0,0,0,0);
@@ -33,5 +35,25 @@ void MainWidget::initUI()
 
     m_stackedLayout->setCurrentIndex(Class);
 
-//    InterMediaCtrl::GetInstance().setMainTitle(m_title);
+}
+
+void MainWidget::setOuterWidget(QWidget *w)
+{
+    m_title->setOuterWidget(w);
+}
+
+void MainWidget::initState()
+{
+    m_stackedLayout->setCurrentIndex(Class);
+    m_title->initState();
+}
+
+void MainWidget::changeToClassMode()
+{
+    m_stackedLayout->setCurrentIndex(Class);
+}
+
+void MainWidget::changeToCourseMode()
+{
+    m_stackedLayout->setCurrentIndex(Course);
 }

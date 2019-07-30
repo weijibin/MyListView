@@ -24,6 +24,12 @@ public:
     void setMainWidget(MainWidget*w){m_mainWidget=w;}
     void setChapterWidget(ChapterWidget*w){m_chapterWidget=w;}
 
+    void changeToClassMode();
+    void changeToCourseMode();
+    void changeToChapterMode();
+    void changeToHome();
+
+
 //    void setMainTitle(MainTitle*w){m_mainTitle=w;}
 //    void setChapterTitle(ChapterTitle*w){m_chapterTitle=w;}
 

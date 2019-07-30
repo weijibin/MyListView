@@ -62,7 +62,18 @@ void Widget::on_chapterBtn_clicked()
 
 void Widget::on_pushButton_clicked()
 {
-    LearningCenterWidget * w = new LearningCenterWidget;
-    InterMediaCtrl::GetInstance().setCenterWidget(w);
-    w->show();
+    if(m_center == nullptr)
+    {
+        m_center = new LearningCenterWidget;
+        m_center->resize(900,600);
+        InterMediaCtrl::GetInstance().setCenterWidget(m_center);
+
+        QFile f(":/qss/style.qss");
+        if (f.open(QFile::ReadOnly)) {
+            QByteArray a_qss(std::move(f.readAll()));
+            f.close();
+            m_center->setStyleSheet(a_qss);
+        }
+    }
+    m_center->show();
 }

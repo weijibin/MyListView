@@ -12,6 +12,7 @@ class ChapterWidget : public QWidget
 public:
     explicit ChapterWidget(QWidget *parent = 0);
 
+    void setOuterWidget(QWidget*w);
 signals:
 
 public slots:

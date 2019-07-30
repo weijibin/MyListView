@@ -14,6 +14,8 @@
 
 #include <QPropertyAnimation>
 #include <QPoint>
+#include <QPainter>
+
 #include "date/DateWidget.h"
 #include "date/CalendarWidget.h"
 
@@ -39,6 +41,7 @@ void DateListWidget::initUi()
     m_btnGroup = new QButtonGroup(this);
 
     QHBoxLayout * layout = new QHBoxLayout;
+    layout->setContentsMargins(0,0,0,0);
     this->setLayout(layout);
 
     m_area = new QScrollArea;
@@ -100,6 +103,8 @@ void DateListWidget::initUi()
     m_area->setFixedWidth(m_dateVisibleNum*m_dateWidgetWidth);
     m_area->setFixedHeight(m_dateWidgetHeight);
 
+    m_scrolWidget->setFixedWidth(m_dateCount*m_dateWidgetWidth);
+
     m_popupWidget = new CalendarWidget(this);
     m_popupWidget->setObjectName("calendarWidget");
 }
@@ -136,6 +141,17 @@ void DateListWidget::initConnections()
     connect(m_left,&QPushButton::clicked,this,&DateListWidget::onLeftClick);
     connect(m_right,&QPushButton::clicked,this,&DateListWidget::onRightClick);
 }
+
+void DateListWidget::paintEvent(QPaintEvent *)
+{
+    QStyleOption opt;
+    opt.init(this);
+    QPainter p(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+
+//    p.drawRect(this->rect());
+}
+
 
 void DateListWidget::updateScrollArea()
 {

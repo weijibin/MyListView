@@ -5,17 +5,69 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QMouseEvent>
+#include <QPushButton>
 
 TitleWidget::TitleWidget(QWidget *parent) : QWidget(parent)
 {
+    setFixedHeight(60);
+    initUI();
+    initConnections();
+}
 
+void TitleWidget::initUI()
+{
+    m_layout = new QHBoxLayout(this);
+
+    m_menu = new QPushButton(this);
+    m_minBtn = new QPushButton(this);
+    m_norBtn = new QPushButton(this);
+    m_closeBtn = new QPushButton(this);
+
+    m_layout->addStretch();
+
+    m_layout->addWidget(m_menu);
+    m_layout->addWidget(m_minBtn);
+    m_layout->addWidget(m_norBtn);
+    m_layout->addWidget(m_closeBtn);
+
+
+    setLayout(m_layout);
+}
+
+void TitleWidget::initConnections()
+{
+    connect(m_minBtn,&QPushButton::clicked,[=](){
+        if(m_outerWidget != nullptr)
+        {
+            m_outerWidget->showMinimized();
+        }
+    });
+    connect(m_norBtn,&QPushButton::clicked,[=](){
+        if(m_outerWidget != nullptr)
+        {
+            if(m_outerWidget->isMaximized())
+            {
+                m_outerWidget->showNormal();
+            }
+            else
+            {
+                m_outerWidget->showMaximized();
+            }
+        }
+    });
+    connect(m_closeBtn,&QPushButton::clicked,[=](){
+        if(m_outerWidget != nullptr)
+        {
+            m_outerWidget->close();
+        }
+    });
 }
 
 void TitleWidget::mousePressEvent(QMouseEvent *event)
 {
     if(event->buttons() & Qt::LeftButton)
     {
-        m_offset = event->globalPos() - frameGeometry().topLeft();
+        m_offset = event->globalPos() - m_outerWidget->frameGeometry().topLeft();
         event->accept();
     }
 }
@@ -24,7 +76,7 @@ void TitleWidget::mouseMoveEvent(QMouseEvent *event)
 {
     if(event->buttons() & Qt::LeftButton)
     {
-        move(event->globalPos() - m_offset);
+        m_outerWidget->move(event->globalPos() - m_offset);
         event->accept();
     }
 }

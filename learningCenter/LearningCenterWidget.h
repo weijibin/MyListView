@@ -15,6 +15,10 @@ public:
     explicit LearningCenterWidget(QWidget *parent = 0);
 
     enum Index{ Main, Chapter };
+
+    void initState();
+    void changeToChapterMode();
+    void changeToHomeMode();
 signals:
 
 public slots:

@@ -14,6 +14,14 @@ public:
     explicit MainWidget(QWidget *parent = 0);
 
     enum Index{ Class, Course};
+
+    void initState();
+
+    void changeToClassMode();
+    void changeToCourseMode();
+
+    void setOuterWidget(QWidget*w);
+
 signals:
 
 public slots:

@@ -27,7 +27,8 @@ SOURCES += main.cpp\
     learningCenter/ChapterWidget.cpp \
     learningCenter/InterMediaCtrl.cpp \
     learningCenter/LearningCenterWidget.cpp \
-    learningCenter/title/ChapterTitle.cpp
+    learningCenter/title/ChapterTitle.cpp \
+    learningCenter/title/HeadImg.cpp
 
 HEADERS  += widget.h \
     learningCenter/chapterList/ChapterListWidget.h \
@@ -42,7 +43,8 @@ HEADERS  += widget.h \
     learningCenter/ChapterWidget.h \
     learningCenter/InterMediaCtrl.h \
     learningCenter/LearningCenterWidget.h \
-    learningCenter/title/ChapterTitle.h
+    learningCenter/title/ChapterTitle.h \
+    learningCenter/title/HeadImg.h
 
 FORMS    += widget.ui
 

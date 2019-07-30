@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>qss/style.qss</file>
         <file>res/calendar_bg.png</file>
+        <file>res/style_ref.qss</file>
+        <file>res/default_boy_img.png</file>
     </qresource>
 </RCC>
