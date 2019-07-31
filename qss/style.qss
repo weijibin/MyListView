@@ -100,3 +100,10 @@ CardWidget {
     border-image:url(:/res/classover.png);
     margin:0px 10px 0px 10px;
 }
+
+QPushButton#cardLeft{
+    border-image:url(:/res/left.png);
+}
+QPushButton#cardRight{
+    border-image:url(:/res/right.png);
+}

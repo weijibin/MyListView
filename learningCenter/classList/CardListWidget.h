@@ -29,6 +29,9 @@ protected:
     virtual void paintEvent(QPaintEvent *event) override;
     virtual bool eventFilter(QObject *obj, QEvent *ev) override;
 
+    virtual void mouseMoveEvent(QMouseEvent *event) override;
+    virtual void leaveEvent(QEvent *event) override;
+
 private slots:
     void onLeftClick();
     void onRightClick();
@@ -36,9 +39,12 @@ private slots:
     void updateWidget_pre();
     void updateWidget_back();
 
+    void updateLeftAndRightBtn();
+
 private:
     void initUi();
     void initConnections();
+
 
 private:
     QScrollArea * m_area;

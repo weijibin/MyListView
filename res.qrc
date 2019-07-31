@@ -7,5 +7,7 @@
         <file>res/logo.png</file>
         <file>res/default_ppt.png</file>
         <file>res/classover.png</file>
+        <file>res/left.png</file>
+        <file>res/right.png</file>
     </qresource>
 </RCC>

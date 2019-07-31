@@ -7,6 +7,7 @@
 #include <QResizeEvent>
 #include <QPropertyAnimation>
 #include <QScrollBar>
+#include <QMouseEvent>
 #include <QDebug>
 
 #include <QTimer>
@@ -15,21 +16,19 @@
 
 CardListWidget::CardListWidget(QWidget *parent) : QWidget(parent)
 {
-    m_cardTotalCount = 6;
+    setMouseTracking(true);
 
-    m_cardVisibleNum = 2;
+    m_cardTotalCount = 5;
+
+    m_cardVisibleNum = 1;
 
     m_cardWidth = 600;
     m_cardHeight = 500;
 
-    m_aniDuration = 1000;
+    m_aniDuration = 500;
 
     initUi();
     initConnections();
-
-//    QTimer::singleShot(5000,[=](){
-//        onLeftClick();
-//    });
 
     QTimer::singleShot(100,[=](){
        updateScrollArea();
@@ -44,7 +43,8 @@ void CardListWidget::initUi()
     layout->setSpacing(0);
 
     m_area = new QScrollArea(this);
-//    m_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_area->setMouseTracking(true);
+    m_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     m_area->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     m_area->setContentsMargins(0,0,0,0);
@@ -69,17 +69,43 @@ void CardListWidget::initUi()
     for(int i =0; i<m_cardTotalCount; i++)
     {
         CardWidget * w = new CardWidget(m_scrolWidget);
+        w->installEventFilter(this);
         m_cardList.append(w);
         m_scrolLayout->addWidget(w);
     }
 
-    m_leftBtn = new QPushButton(this);
-    m_leftBtn->setText("left");
-    m_rightBtn = new QPushButton(this);
-    m_rightBtn->setText("right");
 
-    layout->addWidget(m_leftBtn);
-    layout->addWidget(m_rightBtn);
+
+    m_leftBtn = new QPushButton(this);
+    m_leftBtn->setObjectName("cardLeft");
+    m_rightBtn = new QPushButton(this);
+    m_rightBtn->setObjectName("cardRight");
+
+    m_leftBtn->setVisible(false);
+    m_rightBtn->setVisible(false);
+
+}
+
+void CardListWidget::updateLeftAndRightBtn()
+{
+    QPoint posL, posR;
+
+    QSize btnSize;
+    btnSize.setWidth(m_cardWidth/5);
+    btnSize.setHeight(m_cardHeight/7);
+
+    m_leftBtn->setFixedSize(btnSize);
+    m_rightBtn->setFixedSize(btnSize);
+
+    posL.setX(m_cardWidth/4 -m_leftBtn->size().width()/2);
+    posL.setY(m_cardHeight/2 - m_leftBtn->size().height()/2);
+
+    posR.setX(m_cardWidth/4*7 -m_rightBtn->size().width()/2);
+    posR.setY(m_cardHeight/2 - m_rightBtn->size().height()/2);
+
+
+    m_leftBtn->move(posL);
+    m_rightBtn->move(posR);
 }
 
 void CardListWidget::initConnections()
@@ -121,18 +147,48 @@ bool CardListWidget::eventFilter(QObject *obj, QEvent *event)
             QResizeEvent *reEvt = static_cast<QResizeEvent*>(event);
             updateCardBySize(reEvt->size().width(),reEvt->size().height());
 
+            updateLeftAndRightBtn();
+
+            updateScrollArea();
+
 //            qDebug()<<reEvt->size();
 //            qDebug()<<m_area->viewport()->size();
         }
     }
+
+
+    if(event->type() == QEvent::MouseMove){
+        if(obj == m_cardList.at(m_cardTotalCount/2-1)){
+            m_leftBtn->setVisible(true);
+        } else if(obj == m_cardList.at(m_cardTotalCount/2+1)){
+            m_rightBtn->setVisible(true);
+        } else {
+            m_leftBtn->setVisible(false);
+            m_rightBtn->setVisible(false);
+        }
+    }
+
     return QWidget::eventFilter(obj, event);
 }
 
 
+void CardListWidget::mouseMoveEvent(QMouseEvent *event)
+{
+    QWidget::mouseMoveEvent(event);
+}
+
+void CardListWidget::leaveEvent(QEvent *event)
+{
+    QWidget::leaveEvent(event);
+    {
+        m_leftBtn->setVisible(false);
+        m_rightBtn->setVisible(false);
+    }
+}
 
 void CardListWidget::updateScrollArea()
 {
-    m_area->horizontalScrollBar()->setValue(m_cardVisibleNum*m_cardWidth);
+    m_area->horizontalScrollBar()->setValue((m_cardVisibleNum+0.5)*m_cardWidth);
 }
 
 void CardListWidget::onLeftClick()
@@ -176,6 +232,7 @@ void CardListWidget::updateWidget_pre()
 
 
         CardWidget * w = new CardWidget(m_scrolWidget);
+        w->installEventFilter(this);
         w->setFixedHeight(m_cardHeight);
         w->setFixedWidth(m_cardWidth);
 
@@ -199,6 +256,7 @@ void CardListWidget::updateWidget_back()
         delete child;
 
         CardWidget * w = new CardWidget(m_scrolWidget);
+        w->installEventFilter(this);
         w->setFixedHeight(m_cardHeight);
         w->setFixedWidth(m_cardWidth);
 

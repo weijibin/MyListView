@@ -14,6 +14,7 @@ signals:
 public slots:
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
+    virtual void mouseMoveEvent(QMouseEvent *event) override;
 private:
     void initUi();
     int m_num;
