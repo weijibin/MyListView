@@ -170,12 +170,15 @@ void DateListWidget::onLeftClick()
 {
     int startValue = m_area->horizontalScrollBar()->value();
     int endValue = startValue-m_dateVisibleNum*m_dateWidgetWidth;
-    QPropertyAnimation *  animation = new QPropertyAnimation(m_area->horizontalScrollBar(),"value");
-    animation->setDuration(m_aniDuration);
-    animation->setStartValue(startValue);
-    animation->setEndValue(endValue);
-    animation->start(QAbstractAnimation::DeleteWhenStopped);
-    connect(animation,&QPropertyAnimation::finished,this,&DateListWidget::updateWidget_pre);
+
+    if(m_animation == nullptr) {
+        m_animation = new QPropertyAnimation(m_area->horizontalScrollBar(),"value",this);
+        m_animation->setDuration(m_aniDuration);
+        m_animation->setStartValue(startValue);
+        m_animation->setEndValue(endValue);
+        m_animation->start();
+        connect(m_animation,&QPropertyAnimation::finished,this,&DateListWidget::updateWidget_pre);
+    }
 }
 
 void DateListWidget::onRightClick()
@@ -183,12 +186,16 @@ void DateListWidget::onRightClick()
     int startValue = m_area->horizontalScrollBar()->value();
     int endValue = startValue+m_dateVisibleNum*m_dateWidgetWidth;
 
-    QPropertyAnimation *  animation = new QPropertyAnimation(m_area->horizontalScrollBar(),"value");
-    animation->setDuration(m_aniDuration);
-    animation->setStartValue(startValue);
-    animation->setEndValue(endValue);
-    animation->start(QAbstractAnimation::DeleteWhenStopped);
-    connect(animation,&QPropertyAnimation::finished,this,&DateListWidget::updateWidget_back);
+    if(m_animation == nullptr) {
+//        qDebug()<<"=====DateListWidget::onRightClick()========";
+        m_animation = new QPropertyAnimation(m_area->horizontalScrollBar(),"value",this);
+        m_animation->setDuration(m_aniDuration);
+        m_animation->setStartValue(startValue);
+        m_animation->setEndValue(endValue);
+        m_animation->start(QAbstractAnimation::DeleteWhenStopped);
+        connect(m_animation,&QPropertyAnimation::finished,this,&DateListWidget::updateWidget_back);
+    }
+
 }
 
 
@@ -223,11 +230,16 @@ void DateListWidget::updateWidget_pre()
 
     updateScrollArea();
 
+    if(m_animation != nullptr){
+        delete m_animation;
+        m_animation = nullptr;
+    }
 //    printLayoutWidgetsInfo();
 }
 
 void DateListWidget::updateWidget_back()
 {
+//    qDebug()<<"DateListWidget::updateWidget_back()";
     for(int i=0; i<m_dateVisibleNum; i++)
     {
         QLayoutItem *child = m_scrolLayout->takeAt(0);
@@ -254,6 +266,10 @@ void DateListWidget::updateWidget_back()
     }
     updateScrollArea();
 
+    if(m_animation != nullptr){
+        delete m_animation;
+        m_animation = nullptr;
+    }
 //    printLayoutWidgetsInfo();
 }
 

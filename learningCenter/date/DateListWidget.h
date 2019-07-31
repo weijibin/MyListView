@@ -10,6 +10,7 @@ class DateWidget;
 class QButtonGroup;
 class QLabel;
 class CalendarWidget;
+class QPropertyAnimation;
 
 class DateListWidget : public QWidget
 {
@@ -67,6 +68,7 @@ private:
     int m_dateWidgetHeight;
 
     int m_aniDuration; // animation duration
+    QPropertyAnimation *m_animation = nullptr;
 
 };
 
