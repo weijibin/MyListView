@@ -85,12 +85,6 @@ QLabel#stuName{
 QLabel#appTitle{
     border-image: url(:/res/logo.png);
 }
-/*QLabel#appTitle{
-font: 20px "Microsoft YaHei";
-font-weight:bold;
-background-color: #B92500;
-color: #FFFFFF;
-}*/
 
 QWidget#chapterTitle{
     background-color: #B92500;
@@ -99,6 +93,13 @@ QWidget#chapterTitle{
 CardWidget {
     border-image:url(:/res/classover.png);
     margin:0px 10px 0px 10px;
+}
+
+DateListWidget > QScrollArea {
+    border: none;
+}
+CardListWidget > QScrollArea {
+    border: none;
 }
 
 QPushButton#cardLeft{

@@ -44,7 +44,7 @@ void DateListWidget::initUi()
     layout->setContentsMargins(0,0,0,0);
     this->setLayout(layout);
 
-    m_area = new QScrollArea;
+    m_area = new QScrollArea(this);
     m_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     m_area->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 

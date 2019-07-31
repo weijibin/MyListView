@@ -26,8 +26,6 @@ void ClassListWidget::initUi()
 
     layout->addWidget(m_dateListWidget);
     layout->addWidget(m_cardList);
-//    layout->addStretch();
-
     layout->setSpacing(0);
 
     setLayout(layout);
@@ -41,8 +39,4 @@ void ClassListWidget::initUi()
 void ClassListWidget::resizeEvent(QResizeEvent *event)
 {
     QWidget::resizeEvent(event);
-//    if(m_cardList != nullptr)
-//    {
-//        m_cardList->updateCardBySize(event->size().width(),event->size().height());
-//    }
 }
