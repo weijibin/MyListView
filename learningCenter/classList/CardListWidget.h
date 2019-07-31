@@ -10,6 +10,7 @@
  * 上课界面中的  课程卡片类
  */
 class CardWidget;
+class QPushButton;
 
 class CardListWidget : public QWidget
 {
@@ -37,6 +38,7 @@ private slots:
 
 private:
     void initUi();
+    void initConnections();
 
 private:
     QScrollArea * m_area;
@@ -44,6 +46,10 @@ private:
     QHBoxLayout * m_scrolLayout;
 
     QList<CardWidget*> m_cardList;
+
+
+    QPushButton * m_leftBtn = nullptr;
+    QPushButton * m_rightBtn = nullptr;
 
     int m_cardTotalCount;
     int m_cardVisibleNum;

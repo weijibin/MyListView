@@ -5,5 +5,7 @@
         <file>res/style_ref.qss</file>
         <file>res/default_boy_img.png</file>
         <file>res/logo.png</file>
+        <file>res/default_ppt.png</file>
+        <file>res/classover.png</file>
     </qresource>
 </RCC>

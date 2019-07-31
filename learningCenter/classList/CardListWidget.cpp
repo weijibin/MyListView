@@ -22,13 +22,14 @@ CardListWidget::CardListWidget(QWidget *parent) : QWidget(parent)
     m_cardWidth = 600;
     m_cardHeight = 500;
 
-    m_aniDuration = 2000;
+    m_aniDuration = 1000;
 
     initUi();
+    initConnections();
 
-    QTimer::singleShot(5000,[=](){
-        onLeftClick();
-    });
+//    QTimer::singleShot(5000,[=](){
+//        onLeftClick();
+//    });
 
     QTimer::singleShot(100,[=](){
        updateScrollArea();
@@ -71,6 +72,20 @@ void CardListWidget::initUi()
         m_cardList.append(w);
         m_scrolLayout->addWidget(w);
     }
+
+    m_leftBtn = new QPushButton(this);
+    m_leftBtn->setText("left");
+    m_rightBtn = new QPushButton(this);
+    m_rightBtn->setText("right");
+
+    layout->addWidget(m_leftBtn);
+    layout->addWidget(m_rightBtn);
+}
+
+void CardListWidget::initConnections()
+{
+    connect(m_leftBtn,&QPushButton::clicked,this,&CardListWidget::onLeftClick);
+    connect(m_rightBtn,&QPushButton::clicked,this,&CardListWidget::onRightClick);
 }
 
 void CardListWidget::updateCardBySize(int w, int h)
@@ -163,8 +178,6 @@ void CardListWidget::updateWidget_pre()
         CardWidget * w = new CardWidget(m_scrolWidget);
         w->setFixedHeight(m_cardHeight);
         w->setFixedWidth(m_cardWidth);
-
-
 
         m_scrolLayout->insertWidget(0,w);
         m_cardList.insert(0,w);

@@ -16,6 +16,7 @@ protected:
     virtual void paintEvent(QPaintEvent *event) override;
 private:
     void initUi();
+    int m_num;
 };
 
 #endif // CARDWIDGET_H

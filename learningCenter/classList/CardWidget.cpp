@@ -2,9 +2,13 @@
 #include <QStyleOption>
 #include <QPainter>
 
+
 CardWidget::CardWidget(QWidget *parent) : QWidget(parent)
 {
-
+    static int num = 0;
+    num++;
+    m_num = num;
+    initUi();
 }
 
 void CardWidget::initUi()
@@ -19,6 +23,6 @@ void CardWidget::paintEvent(QPaintEvent *)
     QPainter p(this);
     style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
 
-    p.drawEllipse(this->rect());
-    p.drawRect(this->rect());
+    //test
+    p.drawText(100,100,QString("num::%1").arg(m_num));
 }

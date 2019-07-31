@@ -95,3 +95,8 @@ color: #FFFFFF;
 QWidget#chapterTitle{
     background-color: #B92500;
 }
+
+CardWidget {
+    border-image:url(:/res/classover.png);
+    margin:0px 10px 0px 10px;
+}
