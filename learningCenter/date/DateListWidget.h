@@ -52,6 +52,8 @@ private:
     QPushButton * m_subCtrl;
     QPushButton * m_left;
     QPushButton * m_right;
+    QPushButton * m_today;
+
     QScrollArea * m_area;
 
     QWidget * m_scrolWidget;

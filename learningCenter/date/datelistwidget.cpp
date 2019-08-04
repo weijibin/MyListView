@@ -3,6 +3,7 @@
 #include <QListView>
 
 #include <QHBoxLayout>
+#include <QVBoxLayout>
 #include <QListWidget>
 #include <QScrollArea>
 #include <QScrollBar>
@@ -64,25 +65,51 @@ void DateListWidget::initUi()
     m_scrolWidget->setLayout(m_scrolLayout);
     m_scrolWidget->setLayout(m_scrolLayout);
 
-    m_left = new QPushButton("Left");
-    m_left->setFixedWidth(40);
-    m_right = new QPushButton("Right");
-    m_right->setFixedWidth(40);
+    m_left = new QPushButton("L");
+    m_left->setFixedSize(24,24);
+    m_right = new QPushButton("R");
+    m_right->setFixedSize(24,24);
+
+    m_today = new QPushButton(QStringLiteral("今天"));
+    m_today->setObjectName("dToday");
+    m_today->setFixedSize(64,24);
 
     m_dateLabel = new QLabel;
-    m_dateLabel->setFixedWidth(150);
+    m_dateLabel->setFixedWidth(70);
     m_dateLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 
     m_subCtrl = new QPushButton;
-    m_subCtrl->setFixedWidth(40);
+    m_subCtrl->setFixedSize(6,4);
 
-    layout->addStretch();
-    layout->addWidget(m_dateLabel);
-    layout->addWidget(m_subCtrl);
-    layout->addWidget(m_left);
+    QVBoxLayout * vBLayout = new QVBoxLayout;
+    vBLayout->setContentsMargins(0,0,0,0);
+    QHBoxLayout* h1Layout = new QHBoxLayout;
+    vBLayout->setContentsMargins(0,0,0,0);
+    QHBoxLayout* h2Layout = new QHBoxLayout;
+    vBLayout->setContentsMargins(0,0,0,0);
+
+    h1Layout->addSpacing(56);
+    h1Layout->addWidget(m_dateLabel);
+    h1Layout->addWidget(m_subCtrl);
+    h1Layout->addSpacing(44);
+
+    h2Layout->addSpacing(32);
+    h2Layout->addWidget(m_left);
+    h2Layout->addSpacing(8);
+    h2Layout->addWidget(m_today);
+    h2Layout->addSpacing(8);
+    h2Layout->addWidget(m_right);
+    h2Layout->addSpacing(20);
+
+
+
+    vBLayout->addLayout(h1Layout);
+    vBLayout->addLayout(h2Layout);
+
+
+
+    layout->addLayout(vBLayout);
     layout->addWidget(m_area);
-    layout->addWidget(m_right);
-    layout->addSpacing(20);
     layout->addStretch();
 
     layout->setSpacing(0);
@@ -142,6 +169,14 @@ void DateListWidget::initConnections()
 
     connect(m_left,&QPushButton::clicked,this,&DateListWidget::onLeftClick);
     connect(m_right,&QPushButton::clicked,this,&DateListWidget::onRightClick);
+    connect(m_today,&QPushButton::clicked,[=](){
+
+        m_dateLabel->setText(QDate::currentDate().toString(m_dateFormat));
+        emit sigSelectedDate(QDate::currentDate());
+
+        updateWeekListByDate(QDate::currentDate());
+    });
+
 }
 
 void DateListWidget::paintEvent(QPaintEvent *)
