@@ -39,55 +39,88 @@ QCalendarWidget QTableView
 }
 
 QWidget#centerTitle{
-    background-color: #B92500;
+/*    background-color: #FFFFFF ;*/
+    background-color: rgba(255,255,255,0.8);
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
 }
 
+QWidget#tabWidget {
+    border: 1px solid #FF5E50;
+    border-radius:18px;
+    background-color: #FFFFFF;
+}
 QPushButton#inClass {
-    border: 1px solid #FFFFFF;
-    border-top-left-radius: 14px;
-    border-bottom-left-radius: 14px;
+    border: none;
+    border-radius:18px;
     font: 14px "Microsoft YaHei";
-    background-color: #B92500;
-    color: #FFFFFF;
-}
-QPushButton#inClass:hover {
     background-color: #FFFFFF;
-    color: #B92400;
+    color: #FF5E50;
 }
+/*QPushButton#inClass:hover {
+    background-color: #FF5E50;
+    color: #FFFFFF;
+}*/
 QPushButton#inClass:checked {
-    background-color: #EEEEEE;
-    color: #B92400;
+    background-color: #FF5E50;
+    border-radius:18px;
+    color: #FFFFFF;
 }
 
-QPushButton#myCourse {
-    border: 1px solid #FFFFFF;
-    border-top-right-radius: 14px;
-    border-bottom-right-radius: 14px;
+QPushButton#myCourse{
+    border: none;
+    border-radius:18px;
     font: 14px "Microsoft YaHei";
-    background-color: #B92500;
+    background-color: #FFFFFF;
+    color: #FF5E50;
+}
+/*QPushButton#myCourse:hover {
+    background-color: #FF5E50;
+    color: #FFFFFF;
+}*/
+QPushButton#myCourse:checked {
+    background-color: #FF5E50;
+    border-radius:18px;
     color: #FFFFFF;
 }
-QPushButton#myCourse:hover {
+
+ClassListWidget{
     background-color: #FFFFFF;
-    color: #B92400;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
 }
-QPushButton#myCourse:checked {
-    background-color: #EEEEEE;
-    color: #B92400;
+CourseListWidget{
+    background-color: #FFFFFF;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+ChapterListWidget{
+    background-color: #FFFFFF;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
 }
 
 QLabel#stuName{
-    font: 14px "Microsoft YaHei";
-    background-color: #B92500;
-    color: #FFFFFF;
+    font: 12px "Microsoft YaHei";
+    /*background-color: #FFFFFF;*/
+    background:transparent;
+    color: #212831;
 }
 
 QLabel#appTitle{
-    border-image: url(:/res/logo.png);
+    /*border-image: url(:/res/logo.png);*/
+    font: 19px "Microsoft YaHei";
+    font-weight:bold;
+    background:transparent;
+    color: #F94434;
+    border: none;
 }
 
 QWidget#chapterTitle{
-    background-color: #B92500;
+/*    background-color: #B92500;*/
+    background-color: rgba(255,255,255,0.8);
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
 }
 
 CardWidget {

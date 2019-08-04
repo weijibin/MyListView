@@ -4,6 +4,7 @@
 
 ChapterListWidget::ChapterListWidget(QWidget *parent) : QWidget(parent)
 {
+    this->setAttribute(Qt::WA_StyledBackground);
     initUi();
 }
 

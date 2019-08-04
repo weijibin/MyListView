@@ -11,7 +11,9 @@
 LearningCenterWidget::LearningCenterWidget(QWidget *parent) : QWidget(parent)
 {
     setWindowFlags(Qt::FramelessWindowHint);
+    setAttribute(Qt::WA_TranslucentBackground);
     initUI();
+    this->setFixedSize(1280,720);
 }
 
 void LearningCenterWidget::initUI()

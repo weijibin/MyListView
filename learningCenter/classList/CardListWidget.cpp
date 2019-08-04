@@ -39,7 +39,7 @@ void CardListWidget::initUi()
 {
     setContentsMargins(0,0,0,0);
     QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->setContentsMargins(0,0,0,10);
+    layout->setContentsMargins(0,0,0,32);
     layout->setSpacing(0);
 
     m_area = new QScrollArea(this);

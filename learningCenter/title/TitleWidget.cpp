@@ -6,12 +6,19 @@
 #include <QHBoxLayout>
 #include <QMouseEvent>
 #include <QPushButton>
+#include <QGraphicsBlurEffect>
 
 TitleWidget::TitleWidget(QWidget *parent) : QWidget(parent)
 {
-    setFixedHeight(60);
+    setFixedHeight(56);
     initUI();
     initConnections();
+
+//    QGraphicsBlurEffect *blurEffect = new QGraphicsBlurEffect(this);
+//    blurEffect->setBlurRadius(3);
+//    blurEffect->setBlurHints(QGraphicsBlurEffect::PerformanceHint);
+//    this->setGraphicsEffect(blurEffect);
+
 }
 
 void TitleWidget::initUI()

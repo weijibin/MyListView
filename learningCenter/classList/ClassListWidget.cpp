@@ -8,6 +8,7 @@
 
 ClassListWidget::ClassListWidget(QWidget *parent) : QWidget(parent)
 {
+    this->setAttribute(Qt::WA_StyledBackground);
     initUi();
 }
 
@@ -19,7 +20,7 @@ void ClassListWidget::initUi()
 
 
     m_dateListWidget = new DateListWidget(this);
-    m_dateListWidget->setFixedHeight(50);
+    m_dateListWidget->setFixedHeight(88);
 
 
     m_cardList = new CardListWidget(this);

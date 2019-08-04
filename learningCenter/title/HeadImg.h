@@ -16,6 +16,7 @@ private:
     QPixmap m_pix;
     QPen    m_pen;
     QBrush  m_brush;
+    int m_width;
 };
 
 #endif // TEACHERHEADIMG_H

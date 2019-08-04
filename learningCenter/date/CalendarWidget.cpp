@@ -6,6 +6,8 @@
 #include <QTextCharFormat>
 #include <QDebug>
 
+#include "CCalendarWidget.h"
+
 CalendarWidget::CalendarWidget(QWidget *parent) : QWidget(parent)
 {
     setWindowFlags(Qt::NoDropShadowWindowHint | Qt::FramelessWindowHint | Qt::Popup);
@@ -27,7 +29,7 @@ void CalendarWidget::initUI()
     QHBoxLayout * layout = new QHBoxLayout(this);
     layout->setContentsMargins(0,0,0,0);
 
-    m_calendar = new QCalendarWidget(this);
+    m_calendar = new CCalendarWidget(this);
     m_calendar->setObjectName("calendarObj");
 //    m_calendar->setFocusPolicy(Qt::NoFocus);
     m_calendar->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);

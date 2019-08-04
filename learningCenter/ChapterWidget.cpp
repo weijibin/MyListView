@@ -19,6 +19,7 @@ void ChapterWidget::initUI()
     mainLayout->addWidget(m_title);
     mainLayout->addWidget(m_chapterList);
 
+    mainLayout->setSpacing(0);
     this->setContentsMargins(0,0,0,0);
     mainLayout->setContentsMargins(0,0,0,0);
 

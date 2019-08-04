@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QCalendarWidget>
 
+class CCalendarWidget;
+
 class CalendarWidget : public QWidget
 {
     Q_OBJECT
@@ -19,7 +21,7 @@ public slots:
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
 private:
-    QCalendarWidget * m_calendar;
+    CCalendarWidget * m_calendar;
 };
 
 #endif // CALENDARWIDGET_H

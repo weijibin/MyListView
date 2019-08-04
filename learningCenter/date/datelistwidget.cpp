@@ -25,8 +25,8 @@ DateListWidget::DateListWidget(QWidget *parent) : QWidget(parent)
 
     m_dateVisibleNum = m_dateCount/3;
 
-    m_dateWidgetWidth = 150;
-    m_dateWidgetHeight = 50;
+    m_dateWidgetWidth = 158;
+    m_dateWidgetHeight = 88;
 
     m_aniDuration = 1000;
 

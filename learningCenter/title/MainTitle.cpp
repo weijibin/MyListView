@@ -17,8 +17,8 @@ MainTitle::MainTitle(QWidget *parent) : TitleWidget(parent)
 void MainTitle::initOtherUi()
 {
     m_icon = new QLabel(this);
-//    m_icon->setText(QStringLiteral("学而思网校"));
-    m_icon->setFixedSize(137,25);
+    m_icon->setText(QStringLiteral("学而思网校"));
+    m_icon->setFixedSize(137,20);
     m_icon->setObjectName("appTitle");
 
 
@@ -32,11 +32,25 @@ void MainTitle::initOtherUi()
     m_course->setCheckable(true);
     m_course->setText(QStringLiteral("我的课程"));
 
-    m_class->setFixedSize(100,30);
-    m_course->setFixedSize(100,30);
+    m_class->setFixedSize(88,36);
+    m_course->setFixedSize(88,36);
 
     m_group->addButton(m_class);
     m_group->addButton(m_course);
+
+    QWidget * tab = new QWidget(this);
+    tab->setAttribute(Qt::WA_StyledBackground);
+//    tab->setFixedSize(178,38);
+    tab->setObjectName("tabWidget");
+    tab->setContentsMargins(0,0,0,0);
+
+    QHBoxLayout * tabLayout = new QHBoxLayout(tab);
+    tabLayout->setSpacing(0);
+    tabLayout->setContentsMargins(0,0,0,0);
+
+    tabLayout->addWidget(m_class);
+    tabLayout->addWidget(m_course);
+    tab->setLayout(tabLayout);
 
     m_img = new HeadImg(QPixmap(":/res/default_boy_img.png"),this);
     m_name = new QLabel(this);
@@ -46,8 +60,11 @@ void MainTitle::initOtherUi()
 
     m_layout->insertWidget(1,m_name);
     m_layout->insertWidget(1,m_img);
-    m_layout->insertWidget(0,m_course);
-    m_layout->insertWidget(0,m_class);
+
+//    m_layout->insertWidget(0,m_course);
+//    m_layout->insertWidget(0,m_class);
+    m_layout->insertWidget(0,tab);
+
     m_layout->insertStretch(0);
     m_layout->insertWidget(0,m_icon);
     m_layout->insertSpacing(0,20);

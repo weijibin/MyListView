@@ -30,7 +30,8 @@ SOURCES += main.cpp\
     learningCenter/title/ChapterTitle.cpp \
     learningCenter/title/HeadImg.cpp \
     learningCenter/classList/CardListWidget.cpp \
-    learningCenter/classList/CardWidget.cpp
+    learningCenter/classList/CardWidget.cpp \
+    learningCenter/date/CCalendarWidget.cpp
 
 HEADERS  += widget.h \
     learningCenter/chapterList/ChapterListWidget.h \
@@ -48,7 +49,8 @@ HEADERS  += widget.h \
     learningCenter/title/ChapterTitle.h \
     learningCenter/title/HeadImg.h \
     learningCenter/classList/CardListWidget.h \
-    learningCenter/classList/CardWidget.h
+    learningCenter/classList/CardWidget.h \
+    learningCenter/date/CCalendarWidget.h
 
 FORMS    += widget.ui
 
