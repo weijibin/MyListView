@@ -7,6 +7,28 @@
 #include <QMouseEvent>
 #include <QPushButton>
 #include <QGraphicsBlurEffect>
+#include <QLibrary>
+
+#include <QtWin>
+
+#include <dwmapi.h>
+// WARNING: disable -O2, or application will CRASH at startup!!
+void setGlassEffect(QWidget *w)
+{
+    typedef HRESULT (STDAPICALLTYPE *enableBlurBehindWindow)(HWND, const DWM_BLURBEHIND *);
+    typedef HRESULT (STDAPICALLTYPE *extendFrameIntoClientArea)(HWND, MARGINS *);
+    enableBlurBehindWindow f1 =
+        (enableBlurBehindWindow)QLibrary::resolve("dwmapi", "DwmEnableBlurBehindWindow");
+    extendFrameIntoClientArea f2 =
+        (extendFrameIntoClientArea)QLibrary::resolve("dwmapi", "DwmExtendFrameIntoClientArea");
+
+    DWM_BLURBEHIND bb = {0};
+//    MARGINS margins = {-1};
+    MARGINS margins = {50,50,50,50};
+    bb.dwFlags = DWM_BB_ENABLE | DWM_BB_BLURREGION;
+    if(f1)f1(HWND(w->winId()), &bb);
+    if(f2)f2(HWND(w->winId()), &margins);
+}
 
 TitleWidget::TitleWidget(QWidget *parent) : QWidget(parent)
 {
@@ -18,6 +40,10 @@ TitleWidget::TitleWidget(QWidget *parent) : QWidget(parent)
 //    blurEffect->setBlurRadius(3);
 //    blurEffect->setBlurHints(QGraphicsBlurEffect::PerformanceHint);
 //    this->setGraphicsEffect(blurEffect);
+
+//    m_menu->setGraphicsEffect(nullptr);
+
+//    setGlassEffect(this);
 
 }
 
@@ -94,4 +120,8 @@ void TitleWidget::paintEvent(QPaintEvent *)
     opt.init(this);
     QPainter p(this);
     style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+
+
+//    p.setCompositionMode(QPainter::CompositionMode_DestinationIn);
+//    p.fillRect(rect(), QColor(0, 0, 0, 0));
 }

@@ -78,4 +78,5 @@ void Widget::on_pushButton_clicked()
         }
     }
     m_center->show();
+
 }
