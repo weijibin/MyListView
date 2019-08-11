@@ -53,8 +53,16 @@ QWidget#tabWidget {
 }
 QPushButton#inClass {
 /*    border: 1px solid #FF5E50;*/
-    border: none;
-    border-radius:18px;
+    border-top: 1px solid #FF5E50;
+    border-bottom: 1px solid #FF5E50;
+    border-right: none;
+    border-left: 1px solid #FF5E50;
+
+    border-top-left-radius:18px;
+    border-bottom-left-radius:18px;
+    border-top-right-radius:0px;
+    border-bottom-right-radius:0px;
+
     font: 14px "Microsoft YaHei";
     background-color: #FFFFFF;
     color: #FF5E50;
@@ -71,8 +79,16 @@ QPushButton#inClass:checked {
 
 QPushButton#myCourse{
 /*    border: 1px solid #FF5E50;*/
-    border: none;
-    border-radius:18px;
+    border-top: 1px solid #FF5E50;
+    border-bottom: 1px solid #FF5E50;
+    border-left: none;
+    border-right: 1px solid #FF5E50;
+
+    border-top-left-radius:0px;
+    border-bottom-left-radius:0px;
+    border-top-right-radius:18px;
+    border-bottom-right-radius:18px;
+
     font: 14px "Microsoft YaHei";
     background-color: #FFFFFF;
     color: #FF5E50;
@@ -82,6 +98,7 @@ QPushButton#myCourse{
     color: #FFFFFF;
 }*/
 QPushButton#myCourse:checked {
+    border: none;
     background-color: #FF5E50;
     border-radius:18px;
     color: #FFFFFF;
