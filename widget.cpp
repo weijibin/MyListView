@@ -13,6 +13,8 @@
 #include <QFile>
 #include <QDebug>
 #include <QDate>
+#include "learningCenter/LoadingDlg.h"
+#include "dataprovide.h"
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -54,7 +56,9 @@ void Widget::on_classBtn_clicked()
 
 void Widget::on_courseBtn_clicked()
 {
-
+    DataProvide * pro = new DataProvide();
+    pro->setParentWidget(this);
+    pro->requestData();
 }
 
 void Widget::on_chapterBtn_clicked()

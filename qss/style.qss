@@ -46,11 +46,13 @@ QWidget#centerTitle{
 }
 
 QWidget#tabWidget {
+/*    border: none;*/
     border: 1px solid #FF5E50;
     border-radius:18px;
     background-color: #FFFFFF;
 }
 QPushButton#inClass {
+/*    border: 1px solid #FF5E50;*/
     border: none;
     border-radius:18px;
     font: 14px "Microsoft YaHei";
@@ -68,6 +70,7 @@ QPushButton#inClass:checked {
 }
 
 QPushButton#myCourse{
+/*    border: 1px solid #FF5E50;*/
     border: none;
     border-radius:18px;
     font: 14px "Microsoft YaHei";

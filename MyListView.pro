@@ -5,7 +5,6 @@
 #-------------------------------------------------
 
 QT       += core gui
-QT       += winextras
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -32,7 +31,10 @@ SOURCES += main.cpp\
     learningCenter/title/HeadImg.cpp \
     learningCenter/classList/CardListWidget.cpp \
     learningCenter/classList/CardWidget.cpp \
-    learningCenter/date/CCalendarWidget.cpp
+    learningCenter/date/CCalendarWidget.cpp \
+    learningCenter/LoadingDlg.cpp \
+    dataprovide.cpp \
+    dataprovideimp.cpp
 
 HEADERS  += widget.h \
     learningCenter/chapterList/ChapterListWidget.h \
@@ -51,7 +53,10 @@ HEADERS  += widget.h \
     learningCenter/title/HeadImg.h \
     learningCenter/classList/CardListWidget.h \
     learningCenter/classList/CardWidget.h \
-    learningCenter/date/CCalendarWidget.h
+    learningCenter/date/CCalendarWidget.h \
+    learningCenter/LoadingDlg.h \
+    dataprovide.h \
+    dataprovideimp.h
 
 FORMS    += widget.ui
 

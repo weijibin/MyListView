@@ -9,5 +9,7 @@
         <file>res/classover.png</file>
         <file>res/left.png</file>
         <file>res/right.png</file>
+        <file>res/loading1.gif</file>
+        <file>res/loading2.gif</file>
     </qresource>
 </RCC>

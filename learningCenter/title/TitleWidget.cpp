@@ -9,8 +9,6 @@
 #include <QGraphicsBlurEffect>
 #include <QLibrary>
 
-#include <QtWin>
-
 #include <dwmapi.h>
 // WARNING: disable -O2, or application will CRASH at startup!!
 void setGlassEffect(QWidget *w)

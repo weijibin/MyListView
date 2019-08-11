@@ -40,16 +40,20 @@ void MainTitle::initOtherUi()
 
     QWidget * tab = new QWidget(this);
     tab->setAttribute(Qt::WA_StyledBackground);
-//    tab->setFixedSize(178,38);
+    tab->setFixedSize(178,38);
+//    tab->setFixedHeight(38);
     tab->setObjectName("tabWidget");
     tab->setContentsMargins(0,0,0,0);
 
     QHBoxLayout * tabLayout = new QHBoxLayout(tab);
     tabLayout->setSpacing(0);
-    tabLayout->setContentsMargins(0,0,0,0);
+    tabLayout->setContentsMargins(1,1,1,1);
 
     tabLayout->addWidget(m_class);
     tabLayout->addWidget(m_course);
+
+//    tabLayout->setSizeConstraint(QLayout::SetFixedSize);
+
     tab->setLayout(tabLayout);
 
     m_img = new HeadImg(QPixmap(":/res/default_boy_img.png"),this);
