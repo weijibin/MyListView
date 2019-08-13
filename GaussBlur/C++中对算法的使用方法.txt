@@ -1,0 +1,44 @@
+----------
+范例代码：
+----------
+
+#include <GaussBlurFilter.hpp>
+
+CGaussBlurFilter<double> _filter;
+_filter.SetSigma(3.5); //设置高斯半径
+_filter.SetMultiThreads(true, 4); //开启多线程，用户建议的线程数为 4；
+
+//lpSrcBits/lpDestBits: 像素数据的起始地址，必须以 4 bytes 对齐，
+//注意：不论高度为正或者负，lpBits 都必须为所有像素中地址值最低的那个像素的地址。
+//bmWidth, bmHeight: 图像宽度和高度（像素），高度允许为负值；
+//bpp: 位深度，支持 8（灰度）, 24（真彩色）， 32
+
+_filter.Filter(lpSrcBits, lpDestBits,
+    bmWidth, bmHeight, bpp);
+
+
+-----------
+补充说明：
+-----------
+
+    在多线程处理中，我使用了 Windows API （例如 CreateThread）等，这使得 GaussBlurFilter.hpp 目前只能用在 Windows 平台，如果要在其他平台使用，应当修改和多线程有关的 API 函数调用。
+
+ 
+
+　　高度值可以为正也可以为负，但像素数据的地址 lpBits 都必须是所有像素中，地址值最小的那个像素的地址。即，假设图片左上角点的坐标为原点，如果图片高度为正数（bottom - up），则 lpBits 是左下角像素 （col = 0，row = height - 1）的地址。如果图片高度为负数（top-down），则 lpBits 是左上角像素（col = 0，row = 0） 的地址。图像数据的扫描行宽度必须以 4 Bytes 对齐，即通过下面的公式计算扫描行宽度：
+
+ 
+
+　　int stride = ( bmWidth * bpp + 31 ) / 32 * 4; //扫描行宽度，对齐到 4 Bytes
+
+ 
+
+　　（上式为编程语言表达，非数学表达，即利用了整数除法对小数部分的截断性。）
+
+----------
+作者：
+----------
+
+http://www.cnblogs.com/hoodlum1980
+
+2015年5月25日
