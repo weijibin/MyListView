@@ -1,0 +1,297 @@
+QFrame#titleEvaluation{
+    border-image:url(:/res/pic_qinggeilaoshipingjia.png)
+}
+QFrame#bodyEvaluation{
+    background-color:#ffffff;
+    border:none;
+    border-top-left-radius:8px;
+    border-top-right-radius:8px;
+    border-bottom-right-radius:8px;
+    border-bottom-left-radius:8px;
+}
+
+QLabel#resultLabel{
+    border-image:url(:/res/icon_tijiaochenggong.png)
+}
+QLabel#resultTip,#retryTip{
+    border: none;
+    color: #5E5E7F;
+    font-size:14px;
+}
+
+QPushButton#evaluationClose{
+    border: none;
+    border-image:url(:/res/icon_tuichu nor.png)
+}
+QPushButton#evaluationClose:hover {
+    border: none;
+    border-image:url(:/res/icon_tuichu hover.png)
+}
+QPushButton#evaluationClose:pressed {
+    border: none;
+    border-image:url(:/res/icon_tuichu click.png)
+}
+
+QPushButton#retryBtn{
+    border: none;
+    border-image:url(:/res/button_chongshi nor.png)
+}
+QPushButton#retryBtn:hover{
+    border: none;
+    border-image:url(:/res/button_chongshi hover.png)
+}
+QPushButton#retryBtn:pressed{
+    border: none;
+    border-image:url(:/res/button_chongshi click.png)
+}
+
+QPushButton#submitBtn[statusPropery="submit"]{
+    border: none;
+    border-image:url(:/res/PJ_button_nimingtijiaobingtuichu nor.png)
+}
+QPushButton#submitBtn[statusPropery="submit"]:hover{
+    border: none;
+    border-image:url(:/res/PJ_button_nimingtijiaobingtuichu hover.png)
+}
+QPushButton#submitBtn[statusPropery="submit"]:pressed{
+    border: none;
+    border-image:url(:/res/PJ_button_nimingtijiaobingtuichu click.png)
+}
+
+QPushButton#submitBtn[statusPropery="loading"]{
+    border: none;
+    border-image:url(:/res/PJ_button_nimingtijiaobingtuichu loading.png)
+}
+QPushButton#loadingBtn{
+    border: none;
+    border-image:url(:/res/PJ_button_nimingtijiaobingtuichu loading.png)
+}
+
+QFrame#evlPageLeft{
+    background-color: #f3f8ff;
+    border-top-left-radius:8px;
+    border-bottom-left-radius:8px;
+}
+QFrame#evlPageRight{
+    background-color: #f3f8ff;
+    border-top-right-radius:8px;
+    border-bottom-right-radius:8px;
+}
+QLabel#teacherName{
+    border: none;
+    color: #5E5E7F;
+    font-size:14px;
+    font-weight:bold;
+}
+
+QPushButton#resumesBtn0{
+    border: none;
+    border-image:url(:/res/icon_bumanyi nor.png)
+}
+QPushButton#resumesBtn0:hover{
+    border: none;
+    border-image:url(:/res/icon_bumanyi hover.png)
+}
+QPushButton#resumesBtn0:pressed{
+    border: none;
+    border-image:url(:/res/icon_bumanyi click.png)
+}
+QPushButton#resumesBtn0:checked{
+    border: none;
+    border-image:url(:/res/icon_bumanyi click.png)
+}
+
+QPushButton#resumesBtn1{
+    border: none;
+    border-image:url(:/res/icon_youdaitigao nor.png)
+}
+QPushButton#resumesBtn1:hover{
+    border: none;
+    border-image:url(:/res/icon_youdaitigao hover.png)
+}
+QPushButton#resumesBtn1:pressed{
+    border: none;
+    border-image:url(:/res/icon_youdaitigao click.png)
+}
+QPushButton#resumesBtn1:checked{
+    border: none;
+    border-image:url(:/res/icon_youdaitigao click.png)
+}
+
+QPushButton#resumesBtn2{
+    border: none;
+    border-image:url(:/res/icon_manyi nor.png)
+}
+QPushButton#resumesBtn2:hover{
+    border: none;
+    border-image:url(:/res/icon_manyi hover.png)
+}
+QPushButton#resumesBtn2:pressed{
+    border: none;
+    border-image:url(:/res/icon_manyi click.png)
+}
+QPushButton#resumesBtn2:checked{
+    border: none;
+    border-image:url(:/res/icon_manyi click.png)
+}
+
+QWidget#resumesWidget0{
+    background-color:#ffffff;
+}
+QWidget#resumesWidget1{
+    background-color:#ffffff;
+}
+QWidget#resumesWidget2{
+    background-color:#ffffff;
+}
+
+QWidget#resumesWidget0 > QPushButton{
+    color:#5E5E7F;
+    background-color:#ffffff;
+    border: 1px solid #5E5E7F;
+    border-radius: 14px;
+    font-size:12px;
+    padding: 6px;
+}
+QWidget#resumesWidget0 > QPushButton:hover{
+    color:#F4B5B9;
+    border-color: #F4B5B9;
+}
+QWidget#resumesWidget0 > QPushButton:checked{
+    color:#FB5E50;
+    border-color: #FB5E50;
+}
+
+QWidget#resumesWidget1 > QPushButton{
+    color:#5E5E7F;
+    background-color:#ffffff;
+    border: 1px solid #5E5E7F;
+    border-radius: 14px;
+    font-size:12px;
+    padding: 6px;
+}
+QWidget#resumesWidget1 > QPushButton:hover{
+    color:#F4B5B9;
+    border-color: #F4B5B9;
+}
+QWidget#resumesWidget1 > QPushButton:checked{
+    color:#FB5E50;
+    border-color: #FB5E50;
+}
+QWidget#resumesWidget2 > QPushButton{
+    color:#5E5E7F;
+    background-color:#ffffff;
+    border: 1px solid #5E5E7F;
+    border-radius: 14px;
+    font-size:12px;
+    padding: 6px;
+}
+QWidget#resumesWidget2 > QPushButton:hover{
+    color:#F4B5B9;
+    border-color: #F4B5B9;
+}
+QWidget#resumesWidget2 > QPushButton:checked{
+    color:#FB5E50;
+    border-color: #FB5E50;
+}
+
+QTextEdit#textEvlPage{
+    color: #5E5E7F;
+    border-radius: 8px;
+    background: #ffffff;
+    padding-top:12px;
+    padding-right:12px;
+    padding-bottom:16px;
+    padding-left:12px;
+    font-size: 12px
+}
+
+QWidget#evlScrollWidget{
+    background-color: #ffffff;
+}
+
+QScrollArea{
+  border:0px solid;
+  border-radius: 2px;
+/*  background-color: #f3f8ff;*/
+  background-color: #ffffff;
+}
+
+QScrollBar:vertical
+{
+  width: 6px;
+  border:0px solid;
+  border-radius: 2px;
+  margin: 0px,0px,0px,0px;
+  background-color: transparent;
+  background:#F5F5F5;
+}
+
+QScrollBar:vertical:hover
+{
+  width: 6px;
+  border:0px solid;
+  margin: 0px,0px,0px,0px;
+  background:#F5F5F5;
+}
+
+QScrollBar::handle:vertical
+{
+  width:6px;
+  background:#E1E1E1;
+  border-radius: 2px;
+  height: 40px;
+
+}
+
+QScrollBar::handle:vertical:hover
+{
+  background:#E1E1E1;
+  border-radius: 2px;
+}
+
+QScrollBar::add-line:vertical
+{
+  height:11px;
+  background-color: transparent;
+  subcontrol-position:bottom;
+  border:0px solid;
+  border-radius: 2px;
+
+}
+QScrollBar::sub-line:vertical
+{
+  height:11px;
+  background-color: transparent;
+  subcontrol-position:top;
+  border:0px solid;
+  border-radius: 2px;
+}
+
+QScrollBar::add-page:vertical
+{
+  background-color: #F5F5F5;
+  border:0px solid;
+  border-radius: 2px;
+}
+
+QScrollBar::sub-page:vertical
+{
+  background-color: #F5F5F5;
+  border:0px solid;
+  border-radius: 2px;
+}
+
+QLabel#errorTip{
+    border: none;
+    color: #5E5E7F;
+    font-size:12px;
+}
+QPushButton#iconTip{
+    border: none;
+    border-image:url(:/res/icon_gantanhao.png);
+    margin-top:4px;
+    margin-right:0px;
+    margin-bottom:3px;
+    margin-left:7px;
+}

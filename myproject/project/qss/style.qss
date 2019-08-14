@@ -1,0 +1,388 @@
+﻿QWidget#weeklist > QPushButton{
+    border: none;
+    background-color: #FFFFFF;
+}
+QWidget#weeklist > QPushButton:hover{
+    border: none;
+    background-color: #FFF7F6;
+}
+QWidget#weeklist > QPushButton:pressed{
+    border: none;
+    background-color: #FFF7F6;
+}
+QWidget#weeklist > QPushButton:checked{
+    border: none;
+    background-color: #FFF7F6;
+    color:#FF5E50;
+}
+
+QWidget#calendarWidget{
+    border-image:url(:/res/calendar_bg.png);
+}
+
+QCalendarWidget#calendarObj{
+    border-radius:8px;
+    background-color: #2F2F3E;
+}
+QCalendarWidget QWidget#qt_calendar_navigationbar{
+    background-color: #2F2F3E;
+}
+
+QToolButton#qt_calendar_monthbutton,#qt_calendar_yearbutton{
+    color: #9ea5a9;
+    font: 9pt simHei;
+}
+
+QCalendarWidget QTableView
+{
+    alternate-background-color: rgb(128, 128, 255);
+    background-color: #2F2F3E;
+}
+
+QWidget#centerTitle{
+/*    background-color: #FFFFFF ;*/
+    background-color: rgba(255,255,255,0.9);
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+}
+
+QWidget#tabWidget {
+    border: 1px solid #FF5E50;
+    border-radius:18px;
+    background-color: #FFFFFF;
+}
+QPushButton#inClass {
+/*    border: 1px solid #FF5E50;*/
+    border-top: 1px solid #FF5E50;
+    border-bottom: 1px solid #FF5E50;
+    border-right: none;
+    border-left: 1px solid #FF5E50;
+
+    border-top-left-radius:18px;
+    border-bottom-left-radius:18px;
+    border-top-right-radius:0px;
+    border-bottom-right-radius:0px;
+
+    font: 14px "Microsoft YaHei";
+    background-color: #FFFFFF;
+    color: #FF5E50;
+}
+/*QPushButton#inClass:hover {
+    background-color: #FF5E50;
+    color: #FFFFFF;
+}*/
+QPushButton#inClass:checked {
+    background-color: #FF5E50;
+    border-radius:18px;
+    color: #FFFFFF;
+}
+
+QPushButton#myCourse{
+/*    border: 1px solid #FF5E50;*/
+    border-top: 1px solid #FF5E50;
+    border-bottom: 1px solid #FF5E50;
+    border-left: none;
+    border-right: 1px solid #FF5E50;
+
+    border-top-left-radius:0px;
+    border-bottom-left-radius:0px;
+    border-top-right-radius:18px;
+    border-bottom-right-radius:18px;
+
+    font: 14px "Microsoft YaHei";
+    background-color: #FFFFFF;
+    color: #FF5E50;
+}
+/*QPushButton#myCourse:hover {
+    background-color: #FF5E50;
+    color: #FFFFFF;
+}*/
+QPushButton#myCourse:checked {
+    border: none;
+    background-color: #FF5E50;
+    border-radius:18px;
+    color: #FFFFFF;
+}
+ClassListWidget{
+    background-color: #FFFFFF;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+CourseListWidget{
+    background-color: #FFFFFF;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+ChapterListWidget{
+    background-color: #FFFFFF;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+CefViewWidget{
+    background-color: #FFFFFF;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+QLabel#stuName{
+    font: 12px "Microsoft YaHei";
+    /*background-color: #FFFFFF;*/
+    background:transparent;
+    color: #212831;
+}
+
+QLabel#appTitle{
+    /*border-image: url(:/res/logo.png);*/
+    font: 19px "Microsoft YaHei";
+    font-weight:bold;
+    background:transparent;
+    color: #F94434;
+    border: none;
+}
+
+QWidget#chapterTitle{
+/*    background-color: #FFFFFF;*/
+    background-color: rgba(255,255,255,0.9);
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+}
+
+/*CardWidget {
+    border-image:url(:/res/classover.png);
+    margin:0px 10px 0px 10px;
+}*/
+
+DateListWidget {
+    background-color: #FFFFFF;
+}
+
+DateListWidget > QScrollArea {
+    background-color: #FFFFFF;
+    border: none;
+}
+CardListWidget > QScrollArea {
+    border: none;
+}
+
+QPushButton#cardLeft{
+    border-image:url(:/res/left.png);
+}
+QPushButton#cardRight{
+    border-image:url(:/res/right.png);
+}
+
+QPushButton#l_min{
+    border-image:url(:/res/icon_zuixiaohua.png);
+}
+QPushButton#l_min:hover {
+    border-image:url(:/res/icon_zuixiaohua_hover.png);
+}
+QPushButton#l_nor{
+    border-image:url(:/res/icon_zuidahua.png);
+}
+QPushButton#l_nor:hover {
+    border-image:url(:/res/icon_zuidahua_hover.png);
+}
+QPushButton#l_close{
+    border-image:url(:/res/icon_guanbi.png);
+}
+QPushButton#l_close:hover {
+    border-image:url(:/res/icon_guanbi_hover.png);
+}
+QPushButton#l_update{
+    border-image:url(:/res/icon_shuaxin.png);
+}
+QPushButton#l_update:hover {
+    border-image:url(:/res/icon_shuaxin_hover.png);
+}
+QPushButton#l_menu{
+    border-image:url(:/res/icon_caidan.png);
+}
+QPushButton#l_menu:hover {
+    border-image:url(:/res/icon_caidan_hover.png);
+}
+QPushButton#l_material{
+    font: 12px "Microsoft YaHei";
+/*    background:#FFFFFF;*/
+    background:transparent;
+    color: #212831;
+    border-radius:16px;
+/*    border:1px solid rgba(173,180,190,0.4);*/
+    border:1px solid #ADB4BE;
+}
+QPushButton#l_material:hover {
+    font: 12px "Microsoft YaHei";
+    background:transparent;
+    color: #FF5E50;
+    border-radius:16px;
+    border:1px solid  #FF5E50;
+}
+
+QLabel#l_courseName{
+    font: 16px "Microsoft YaHei";
+/*    font-weight:bold;*/
+    background:transparent;
+    color: #212831;
+    border: none;
+}
+
+QPushButton#dToday{
+     background:#F9F9FC;
+     border-radius:12;
+     color:#858C96;
+}
+
+QPushButton#d_left{
+    border-image:url(:/res/icon_date_left.png);
+}
+QPushButton#d_right{
+    border-image:url(:/res/icon_date_right.png);
+}
+
+QFrame#class_entrance{
+    background: #666666;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+}
+QFrame#class_courseinfo{
+    background: #FFFFFF;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+QLabel#c_chaptername{
+    font: 16px "Microsoft YaHei";
+    background:transparent;
+    color:#212831;
+    border: none;
+}
+
+QLabel#c_subname{
+    font: 12px "Microsoft YaHei";
+    background:#5E617C;
+    color:#FFFFFF;
+    border: none;
+    border-radius:2px;
+}
+QLabel#c_courname{
+    font: 12px "Microsoft YaHei";
+    background:transparent;
+    color:#858C96;
+    border: none;
+}
+
+QLabel#c_classTime{
+    font: 14px "Microsoft YaHei";
+    background:rgba(33,40,49,0.3);
+    color:#FFFFFF;
+    border: none;
+    border-bottom-right-radius: 8px;
+    border-top-left-radius: 8px;
+}
+
+QLabel#c_classdes{
+    font: 18px "Microsoft YaHei";
+    background:transparent;
+    color:#FFFFFF;
+    border: none;
+}
+
+QLabel#c_tip{
+    font: 12px "Microsoft YaHei";
+    background:transparent;
+    color:#FFFFFF;
+    border: none;
+}
+
+QPushButton#c_enterclass[liveType="live"]{
+    font: 14px "Microsoft YaHei";
+    color:#FFFFFF;
+    background:#FF5E50;
+    border-radius:22px;
+    border:none;
+}
+QPushButton#c_enterclass:hover[liveType="live"]{
+    font: 14px "Microsoft YaHei";
+    color:#FFFFFF;
+    background:#555555;
+    border-radius:22px;
+    border:none;
+}
+QPushButton#c_enterclass[liveType="playback"]{
+    font: 14px "Microsoft YaHei";
+    color:#FFFFFF;
+    background:rgba(255,255,255,0.1);
+    border-radius:22px;
+    border:1px solid rgba(255,255,255,1);
+}
+QPushButton#c_enterclass:hover[liveType="playback"]{
+    font: 14px "Microsoft YaHei";
+    color:#FF5E50;
+    background:rgba(255,255,255,0.1);
+    border-radius:22px;
+    border:1px solid #FF5E50;
+}
+
+CourseCardWidget {
+    background:#FFFFFF;
+    border-radius:10px;
+}
+
+QLabel#course_sub{
+    font: 12px "Microsoft YaHei";
+    background:#5E617C;
+    color:#FFFFFF;
+    border: none;
+    border-radius:2px;
+}
+QLabel#course_crs{
+    font: 16px "Microsoft YaHei";
+    background:transparent;
+    color:#212831;
+    border: none;
+}
+QLabel#course_refund{
+    border-image:url(:/res/icon_yituike.png);
+}
+
+QFrame#course_title1 > QPushButton{
+    font: 14px "Microsoft YaHei";
+    background:transparent;
+    color:#212831;
+    border: none;
+}
+QFrame#course_title1 > QPushButton:hover{
+    color:#FF5E50;
+}
+QFrame#course_title1 > QPushButton:checked{
+    color:#FF5E50;
+    font-weight:bold;
+}
+
+QFrame#course_title2 > QPushButton{
+    font: 12px "Microsoft YaHei";
+    background:#FAFAFA;
+    color:#212831;
+    border: none;
+    border-radius:12px;
+}
+QFrame#course_title2 > QPushButton:hover{
+    background-color: rgba(255,94,80,0.1);
+    color:#FF5E50;
+    border: none;
+    border-radius:12px;
+}
+QFrame#course_title2 > QPushButton:checked{
+    background-color: rgba(255,94,80,0.1);
+    color:#FF5E50;
+    border: none;
+    border-radius:12px;
+}
+
+CourseListWidget > QScrollArea {
+    background-color: #FFFFFF;
+    border: none;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
