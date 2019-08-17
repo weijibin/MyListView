@@ -38,12 +38,6 @@ DateListWidget::DateListWidget(QWidget *parent) : QWidget(parent)
 
     initUi();
     initConnections();
-
-//    QGraphicsDropShadowEffect * effect = new QGraphicsDropShadowEffect(this);
-//    effect->setOffset(QPointF(-5,-5));
-//    effect->setColor(Qt::black);
-//    effect->setBlurRadius(2);
-//    this->setGraphicsEffect(effect);
 }
 
 void DateListWidget::initUi()
@@ -51,7 +45,7 @@ void DateListWidget::initUi()
     m_btnGroup = new QButtonGroup(this);
 
     QHBoxLayout * layout = new QHBoxLayout;
-    layout->setContentsMargins(0,0,0,0);
+    layout->setContentsMargins(0,0,0,1);
     this->setLayout(layout);
 
     m_area = new QScrollArea(this);
@@ -88,7 +82,7 @@ void DateListWidget::initUi()
 
     m_dateBtn = new CalendarButton(this);
     m_dateBtn->setText(QStringLiteral("今天"));
-    m_dateBtn->setFixedSize(80,20);
+    m_dateBtn->setFixedSize(90,20);
 
     QVBoxLayout * vBLayout = new QVBoxLayout;
     vBLayout->setContentsMargins(0,0,0,0);
@@ -97,9 +91,9 @@ void DateListWidget::initUi()
     QHBoxLayout* h2Layout = new QHBoxLayout;
     vBLayout->setContentsMargins(0,0,0,0);
 
-    h1Layout->addSpacing(56);
+    h1Layout->addSpacing(50);
     h1Layout->addWidget(m_dateBtn);
-    h1Layout->addSpacing(44);
+    h1Layout->addSpacing(40);
 
     h2Layout->addSpacing(32);
     h2Layout->addWidget(m_left);
@@ -115,7 +109,7 @@ void DateListWidget::initUi()
     vBLayout->addLayout(h2Layout);
 
 
-
+    layout->addStretch();
     layout->addLayout(vBLayout);
     layout->addWidget(m_area);
     layout->addStretch();
@@ -144,6 +138,14 @@ void DateListWidget::initUi()
 
     m_popupWidget = new CalendarWidget(this);
     m_popupWidget->setObjectName("calendarWidget");
+
+    //========================================
+    QList<QDate> lst;
+    lst.append(QDate::currentDate());
+    lst.append(QDate::currentDate().addDays(2));
+    lst.append(QDate::currentDate().addDays(5));
+    m_popupWidget->setCourseDate(lst);
+    //======================================
 }
 
 void DateListWidget::initConnections()
@@ -162,7 +164,7 @@ void DateListWidget::initConnections()
         QRect rect = m_dateBtn->rect();
         int width = m_popupWidget->width();
         QPoint pos1 = m_dateBtn->pos() + QPoint(rect.width()/2,rect.height());
-        QPoint offset = QPoint(-1*width/2, 0);
+        QPoint offset = QPoint(-1*width/2+120, 0);
         QPoint pos = this->mapToGlobal(pos1 + offset);
         m_popupWidget->move(pos);
     });
@@ -194,7 +196,14 @@ void DateListWidget::paintEvent(QPaintEvent *)
     QPainter p(this);
     style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
 
-//    p.drawRect(this->rect());
+
+    p.save();
+    QPen pen;
+    pen.setColor(QColor("#F5F5F5"));
+    pen.setWidth(2);
+    p.setPen(pen);
+    p.drawLine(rect().bottomRight(),rect().bottomLeft());
+    p.restore();
 }
 
 
@@ -342,7 +351,6 @@ void DateListWidget::updateWeekListByDate(const QDate &date)
             m_dateWidgets.at(i)->setDateInfo(info);
 
         }
-
         m_dateWidgets.at(index+6)->setChecked(true);
 
     } else {

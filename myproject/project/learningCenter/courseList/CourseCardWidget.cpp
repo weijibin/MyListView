@@ -1,18 +1,30 @@
 #include "CourseCardWidget.h"
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QMouseEvent>
+#include <QDebug>
+#include <QPainter>
 #include "common/TeacherHeadWidget.h"
+#include "InterMediaCtrl.h"
 
 CourseCardWidget::CourseCardWidget(QWidget *parent) : QFrame(parent)
 {
     setWindowFlags(Qt::FramelessWindowHint);
+
+    setAttribute(Qt::WA_TranslucentBackground);
+
     initUi();
-    setFixedSize(384,174);
+
+    m_shadowX = m_shadowY = 3;
+    setFixedSize(384+m_shadowY*2,174+m_shadowY*2);
+
+    connect(this,SIGNAL(clicked()),this,SLOT(sltMouseClicked()));
 }
 
 void CourseCardWidget::initUi()
 {
-    setContentsMargins(24,18,24,18);
+//    setContentsMargins((24+m_shadowY),(18+m_shadowY),(24+m_shadowY),(18+m_shadowY));
+    setContentsMargins(27,21,27,21);
 
     QVBoxLayout * layout = new QVBoxLayout;
     layout->setContentsMargins(0,0,0,0);
@@ -82,4 +94,48 @@ void CourseCardWidget::updateUiByInfo()
     m_courseName->setText(m_info.courseName);
     m_refundFlag->setVisible(m_info.isRefund);
     m_teachers->setTeacherHeadInfo(m_info.teachers);
+}
+
+void CourseCardWidget::sltMouseClicked()
+{
+//    qDebug()<<"CourseCardWidget::sltMouseClicked()";
+    CourseToChapterPar par;
+    par.courseName = m_info.courseName;
+    par.courseType = 1;
+    par.stuCouID = 12212121;
+    InterMediaCtrl::GetInstance().changeToChapterMode(par);
+}
+
+
+void CourseCardWidget::mousePressEvent(QMouseEvent *event)
+{
+    m_mousePos = event->pos();
+}
+
+void CourseCardWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+    QPoint pos = event->pos();
+    if((m_mousePos-pos).manhattanLength()<2)
+    {
+        emit clicked();
+    }
+}
+
+void CourseCardWidget::paintEvent(QPaintEvent *event)
+{
+    QFrame::paintEvent(event);
+
+    QPainter painter(this);
+    painter.save();
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    QRect rect = this->rect().adjusted(m_shadowY,+m_shadowY,-1*m_shadowY,-1*m_shadowY);
+    QColor color(92, 93, 95, 50);
+    int arr[10] = {30, 20, 10, 5, 5};
+    for (int i = 0; i < m_shadowX; i++) {
+        QRect r1 = rect.adjusted(-1*i,-1*i,1*i,1*i);
+        color.setAlpha(arr[i]);
+        painter.setPen(color);
+        painter.drawRoundedRect(QRectF(r1),8,8);
+    }
+    painter.restore();
 }

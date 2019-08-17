@@ -16,8 +16,8 @@ void CalendarButton::paintEvent(QPaintEvent *event)
     QPainter p(this);
     p.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing,true);
     p.setFont(m_font);
-    p.drawText(0,0,70,20,Qt::AlignCenter,m_name);
-    p.drawPixmap(74,8,6,4,QPixmap(m_icon));
+    p.drawText(0,0,80,20,Qt::AlignCenter,m_name);
+    p.drawPixmap(84,8,6,4,QPixmap(m_icon));
 }
 
 void CalendarButton::setDisplyText(const QString & str)

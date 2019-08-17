@@ -39,7 +39,7 @@ void CardListWidget::initUi()
 {
     setContentsMargins(0,0,0,0);
     QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->setContentsMargins(0,0,0,32);
+    layout->setContentsMargins(0,0,0,20);   //margin1111
     layout->setSpacing(0);
 
     m_area = new QScrollArea(this);
@@ -68,7 +68,7 @@ void CardListWidget::initUi()
 
     for(int i =0; i<m_cardTotalCount; i++)
     {
-        CardWidget * w = new CardWidget(m_scrolWidget);
+        CardWidget * w = new CardWidget(1,m_scrolWidget);
 
         w->getClassCard()->installEventFilter(this);
         w->getClassCard()->setClassInfo(getCardInfo(i)); //test
@@ -281,7 +281,7 @@ void CardListWidget::updateWidget_pre()
         delete child;
 
 
-        CardWidget * w = new CardWidget(m_scrolWidget);
+        CardWidget * w = new CardWidget(1,m_scrolWidget);
         w->getClassCard()->installEventFilter(this);
 
         w->getClassCard()->setClassInfo(getCardInfo(count%3)); //test
@@ -308,7 +308,7 @@ void CardListWidget::updateWidget_back()
 
         delete child;
 
-        CardWidget * w = new CardWidget(m_scrolWidget);
+        CardWidget * w = new CardWidget(0,m_scrolWidget);
         w->getClassCard()->installEventFilter(this);
 
         w->getClassCard()->setClassInfo(getCardInfo(i)); //test

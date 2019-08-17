@@ -1,4 +1,4 @@
-#ifndef CHAPTERITEM_H
+﻿#ifndef CHAPTERITEM_H
 #define CHAPTERITEM_H
 
 #include <QObject>
@@ -20,9 +20,10 @@ public:
     ~ChapterItem();
 
 public:
-    void setChapterItemContents(ChapterInfo info);
-    void setChapterEnglishTitle(QString title);
-
+    void setChapterItemContents(const ChapterInfo &info);
+    void setChapterEnglishTitle(const QString &title);
+protected:
+    virtual void paintEvent(QPaintEvent *event) override;
 signals:
 
 public slots:
@@ -33,6 +34,7 @@ private:
     TeacherHeadWidget       *m_teacherHead;
     ButtonWidget            *m_buttonWidget;
     ChapterInfo              m_chapterInfo;
+    QList<TeacherInfo>       m_teacher;
     QHBoxLayout             *m_hbLayout;
 };
 

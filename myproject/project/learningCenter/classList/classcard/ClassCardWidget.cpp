@@ -7,14 +7,19 @@
 
 #include <QGraphicsDropShadowEffect>
 
-ClassCardWidget::ClassCardWidget(QWidget *parent) : QWidget(parent)
+ClassCardWidget::ClassCardWidget(int type,QWidget *parent) : QWidget(parent)
 {
+    m_type = type;
 
     setWindowFlags(Qt::FramelessWindowHint);
-    setAttribute(Qt::WA_TranslucentBackground);
+//    setAttribute(Qt::WA_TranslucentBackground);
 
 //    this->setFixedSize(772,512);
-    initUi();
+
+    if(m_type == 1)
+        initUi();
+    else
+        initNoClassUi();
 
     setMouseTracking(true);
 
@@ -24,6 +29,34 @@ ClassCardWidget::ClassCardWidget(QWidget *parent) : QWidget(parent)
 //    effect->setColor(Qt::gray);
 //    effect->setBlurRadius(10);
 //    this->setGraphicsEffect(effect);
+}
+
+void ClassCardWidget::initNoClassUi()
+{
+    setContentsMargins(0,0,0,0);
+    m_layout = new QVBoxLayout;
+    m_layout->setContentsMargins(0,0,0,0);
+    m_layout->setSpacing(0);
+
+    m_noClassImg = new QLabel(this);
+    m_noClassImg->setFixedSize(250,186);
+    m_noClassImg->setObjectName("c_noClassImg");
+    m_noClassTip = new QLabel(this);
+    m_noClassTip->setObjectName("c_noClassTip");
+    m_noClassTip->setFixedHeight(14);
+    m_noClassTip->setText(QString::fromLocal8Bit("今天没有课程安排哦~"));
+
+    m_layout->addStretch();
+    m_layout->addWidget(m_noClassImg,0,Qt::AlignCenter);
+    m_layout->addWidget(m_noClassTip,0,Qt::AlignCenter);
+    m_layout->addStretch();
+
+    setLayout(m_layout);
+
+    this->setStyleSheet("QWidget{\
+                        background:#FFFFFF;\
+                        border-radius:8px;\
+                    }");
 }
 
 void ClassCardWidget::initUi()
@@ -137,14 +170,14 @@ void ClassCardWidget::initCourseInfo()
 
 
     m_teachersInfo = new TeacherHeadWidget(this);
-//    m_teachersInfo->setFixedWidth(200);
+
+//    m_teachersInfo->setContentsMargins(0,0,0,30);
 
 
     layout->addLayout(layout_info);
     layout->addStretch();
 
-    m_teachersInfo->setContentsMargins(0,20,0,0);
-    layout->addWidget(m_teachersInfo);
+    layout->addWidget(m_teachersInfo,0,Qt::AlignTop);
 
     layout->addSpacing(20);
 
@@ -171,8 +204,8 @@ const ClassCardInfo& ClassCardWidget::getClassInfo()
 void ClassCardWidget::setClassInfo(const ClassCardInfo &info)
 {
     m_info = info;
-
-    updateUiByInfo();
+    if(m_type ==1)
+        updateUiByInfo();
 }
 
 void ClassCardWidget::updateUiByInfo()

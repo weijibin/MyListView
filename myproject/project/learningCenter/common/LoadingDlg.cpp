@@ -23,6 +23,7 @@ void LoadingDlg::initUi()
     this->setLayout(layout);
 
     QMovie *movie = new QMovie(":/res/loading1.gif");
+    movie->setScaledSize(QSize(100,100));
     m_label->setMovie(movie);
     movie->start();
 
@@ -35,7 +36,5 @@ void LoadingDlg::initUi()
 
 //    QPoint movePoint(deskWidth / 2 - frmX / 2, deskHeight / 2 - frmY / 2);
 //    move(movePoint);
-
-
 
 }

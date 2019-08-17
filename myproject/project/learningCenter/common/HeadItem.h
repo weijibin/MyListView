@@ -1,4 +1,4 @@
-#ifndef HEADITEM_H
+﻿#ifndef HEADITEM_H
 #define HEADITEM_H
 
 #include <QWidget>
@@ -18,9 +18,9 @@ public:
     void initUi();
 
 public:
-    void setHeadInfo(QString pixPath,  int type,  QString teacherName);
-    void setHeadPixmap( QString pixPath, int radius = 32);
-    void setHeadText( QString type, QString teacherName);
+    void setHeadInfo(const QString &pixPath,  int type,  const QString &teacherName);
+    void setHeadPixmap(const QString &pixPath, int radius = 32);
+    void setHeadText(const QString &type, const QString &teacherName);
 
 
 private:

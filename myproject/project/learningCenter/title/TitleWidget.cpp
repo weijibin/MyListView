@@ -9,77 +9,6 @@
 #include <QGraphicsBlurEffect>
 #include <QLibrary>
 #include <QPalette>
-#include <QtWin>
-
-#include <dwmapi.h>
-// WARNING: disable -O2, or application will CRASH at startup!!
-void setGlassEffect(QWidget *w)
-{
-    typedef HRESULT (STDAPICALLTYPE *enableBlurBehindWindow)(HWND, const DWM_BLURBEHIND *);
-    typedef HRESULT (STDAPICALLTYPE *extendFrameIntoClientArea)(HWND, MARGINS *);
-    enableBlurBehindWindow f1 =
-        (enableBlurBehindWindow)QLibrary::resolve("dwmapi", "DwmEnableBlurBehindWindow");
-    extendFrameIntoClientArea f2 =
-        (extendFrameIntoClientArea)QLibrary::resolve("dwmapi", "DwmExtendFrameIntoClientArea");
-
-    DWM_BLURBEHIND bb = {0};
-//    MARGINS margins = {-1};
-    MARGINS margins = {50,50,50,50};
-    bb.dwFlags = DWM_BB_ENABLE | DWM_BB_BLURREGION;
-    if(f1)f1(HWND(w->winId()), &bb);
-    if(f2)f2(HWND(w->winId()), &margins);
-}
-
-
-//// 获取最终的模糊图像
-//QImage getBlurImage()
-//{
-//    // 原图为 originImg
-//    QImage originImg;
-//    // 第一个方向处理的图像为tmpImg
-//    QImage tmpImg;
-//    // 经过第二次处理的最终结果newImg
-//    QImage newImg;
-
-//    // 在横向进行一次相加
-//    for(int y=0;y<originImg.height();y++)
-//    {
-//        for(int x=0;x<originImg.width();x++)
-//        {
-//            double red=0,green=0,blue=0;
-//            for(int i=-r; i<=r; i++)
-//            {
-//                // 边界处理后的对应的权值矩阵实际值
-//                int inx = edge(x,i,width());
-
-//                QColor rgb = QColor(originImgpixel(inx,y));
-//                red+=rgb.red()*weight[r+i];
-//                green+=rgb.green()*weight[r+i];
-//                blue+=rgb.blue()*weight[r+i];
-//            }
-//            tmpImg.setPixel(x,y,qRgb(red,green,blue));
-//        }
-//    }
-//    // 在纵方向对第一次的结果重新进行一次
-//    for(int y=0;y<tmpImg.height();y++)
-//    {
-//        for(int x=0;x<tmpImg.width();x++)
-//        {
-//            double red=0,green=0,blue=0;
-//            for(int i=-r; i<=r; i++)
-//            {
-//                int iny = edge(y,i,height());
-
-//                QColor rgb = QColor(tmpImg.pixel(x,iny));
-//                red+=rgb.red()*weight[r+i];
-//                green+=rgb.green()*weight[r+i];
-//                blue+=rgb.blue()*weight[r+i];
-//            }
-//            newImg.setPixel(x,y,qRgb(red,green,blue));
-//        }
-//    }
-//    return newImg;
-//}
 
 TitleWidget::TitleWidget(QWidget *parent) : QWidget(parent)
 {
@@ -93,8 +22,6 @@ TitleWidget::TitleWidget(QWidget *parent) : QWidget(parent)
 //    blurEffect->setBlurRadius(3);
 //    blurEffect->setBlurHints(QGraphicsBlurEffect::PerformanceHint);
 //    this->setGraphicsEffect(blurEffect);
-
-//    setGlassEffect(this);
 
 }
 

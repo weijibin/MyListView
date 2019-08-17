@@ -12,7 +12,10 @@
 #include "InterMediaCtrl.h"
 #include "dataCenter/DataProvider.h"
 #include "common/common.h"
+#include "ChapterWidget.h"
 #include "courseList/CourseCardWidget.h"
+
+#include "date/customcalendar/CCalendarWidget.h"
 
 #include <QFile>
 #include <QDebug>
@@ -32,7 +35,23 @@ Widget::~Widget()
 
 void Widget::on_dateBtn_clicked()
 {
-    DateListWidget *w = new DateListWidget();
+//    DateListWidget *w = new DateListWidget();
+
+//    QFile f(":/qss/style.qss");
+//    if (f.open(QFile::ReadOnly)) {
+//        QByteArray a_qss(std::move(f.readAll()));
+//        f.close();
+//        w->setStyleSheet(a_qss);
+//    }
+
+//    connect(w,&DateListWidget::sigSelectedDate,[=](const QDate&date){
+//        qDebug()<<"selected Date==========="<<date.toString();
+//    });
+
+//    w->show();
+//    w->updateScrollArea();
+
+    CCalendarWidget * w = new CCalendarWidget;
 
     QFile f(":/qss/style.qss");
     if (f.open(QFile::ReadOnly)) {
@@ -41,13 +60,13 @@ void Widget::on_dateBtn_clicked()
         w->setStyleSheet(a_qss);
     }
 
-    connect(w,&DateListWidget::sigSelectedDate,[=](const QDate&date){
-        qDebug()<<"selected Date==========="<<date.toString();
-    });
+    w->setSelectedDate(QDate::currentDate());
+
+    QList<QDate> lst;
+    lst.append(QDate::currentDate().addDays(10));
+    w->setCourseDate(lst);
 
     w->show();
-    w->updateScrollArea();
-
 }
 
 void Widget::on_classBtn_clicked()
@@ -60,7 +79,8 @@ void Widget::on_classBtn_clicked()
 
 //    qDebug()<<"Widget::on_classBtn_clicked()"<<ret;
 
-    ClassCardWidget *w = new ClassCardWidget;
+    ClassCardWidget *w = new ClassCardWidget(0);
+    w->setFixedSize(772,512);
 
     QFile f(":/qss/style.qss");
     if (f.open(QFile::ReadOnly)) {
@@ -137,12 +157,26 @@ void Widget::on_courseBtn_clicked()
 
 void Widget::on_chapterBtn_clicked()
 {
+////    m_center = new LearningCenterWidget(this);
+//    CourseToChapterPar par;
+//    par.deadLine = "2022";
+//    par.stuCouID = 123456;
+//    par.courseName = "小学语数英课程";
+//    par.courseType = 0;
 
+////    m_center = new LearningCenterWidget;
+////    m_center->changeToChapterMode(par);
+////    qDebug() << "enter---->chapterListWidget";
+
+//    ChapterWidget * m_charpter = new ChapterWidget();
+//    m_charpter->setCourseInfo(par);
+//    m_charpter->changeToChapter();
+//    m_charpter->show();
 }
 
 void Widget::on_pushButton_clicked()
 {
-    if(m_center == nullptr)
+//    if(m_center == nullptr)
     {
         m_center = new LearningCenterWidget;
         m_center->resize(900,600);
@@ -156,6 +190,6 @@ void Widget::on_pushButton_clicked()
             m_center->setStyleSheet(a_qss);
         }
     }
-    m_center->show();
+    m_center->showNormal();
 
 }

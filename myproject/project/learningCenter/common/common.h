@@ -4,6 +4,18 @@
 #include <QPixmap>
 #include <QDate>
 
+#define SCROLLBAR_CSS             (\
+"QScrollArea{ border:0px solid; border-radius: 3px;}" \
+"QScrollBar:vertical{width: 6px; border:0px solid; border-radius: 3px; \
+                    margin: 0px,0px,0px,0px; background-color: transparent; background:transparent;}" \
+"QScrollBar::handle:vertical{width:6px; background:#212831; border-radius: 3px;}" \
+"QScrollBar::handle:vertical:hover{background:#212831; border-radius: 3px;}" \
+"QScrollBar::add-line:vertical{height:11px; background-color: transparent; subcontrol-position:bottom; border:0px solid; border-radius: 3px;}" \
+"QScrollBar::sub-line:vertical{height:11px; background-color: transparent; subcontrol-position:top; border:0px solid; border-radius: 3px;}" \
+"QScrollBar::add-page:vertical{background-color: transparent; border:0px solid; border-radius: 3px;}" \
+"QScrollBar::sub-page:vertical{background-color: transparent; border:0px solid; border-radius: 3px;}"\
+)
+
 typedef struct {
     int stuId;
     QString stuName;
@@ -29,6 +41,14 @@ typedef struct{
     int btnType; //0,直播按钮  1,课堂巩固   2,学习报告
     int status; //0 可用 , 1 不可用, 2 可用且高亮
 } ButtonInfo;
+
+typedef struct DateCourseInfo{
+    QDate date;
+    bool isHaveCourse;
+    DateCourseInfo(){
+        isHaveCourse = false;
+    }
+} DateCourseInfo;
 
 //=====================================================
 // 场次列表需要的数据结构

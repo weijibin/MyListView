@@ -3,6 +3,7 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include "RoundMovieWidget.h"
+#include <QDebug>
 
 HeadItem::HeadItem(QWidget *parent) :
     QWidget(parent)
@@ -40,10 +41,11 @@ void HeadItem::initUi()
 
 }
 
-void HeadItem::setHeadInfo(QString pixPath, int type, QString teacherName)
+void HeadItem::setHeadInfo(const QString &pixPath, int type, const QString &teacherName)
 {
+    qDebug() << "HeadItem::setHeadInfo(const QString &pixPath " << pixPath;
     setHeadPixmap(pixPath);
-    QString teacherType = "主讲";
+    QString teacherType = QString::fromLocal8Bit("主讲");
     if (1 == type) {
         teacherType = QString::fromLocal8Bit("主讲");
     } else if (4 == type) {
@@ -59,15 +61,20 @@ void HeadItem::setHeadInfo(QString pixPath, int type, QString teacherName)
     setHeadText(teacherType, teacherName);
 }
 
-void HeadItem::setHeadPixmap(QString pixPath, int radius)
+void HeadItem::setHeadPixmap(const QString &pixPath, int radius)
 {
+    QPixmap pix(pixPath);
+    if (pix.isNull()) {
+        qDebug() << "pixPath ---pixmap null " << pixPath;
+        return;
+    }
     m_roundWidget->setPixmap(QPixmap(pixPath).scaled(radius, radius, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     m_roundWidget->setRadius(0);
     m_roundWidget->setFixedSize(radius, radius);
     setFixedSize(100, 32);
 }
 
-void HeadItem::setHeadText(QString type, QString teacherName)
+void HeadItem::setHeadText(const QString &type,const QString &teacherName)
 {
     m_typeLabel->setText(type);
     m_nameLabel->setText(teacherName);

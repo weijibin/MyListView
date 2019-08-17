@@ -1,4 +1,4 @@
-#include "LearningCenterWidget.h"
+﻿#include "LearningCenterWidget.h"
 #include "MainWidget.h"
 #include "ChapterWidget.h"
 #include "InterMediaCtrl.h"
@@ -10,10 +10,16 @@
 
 LearningCenterWidget::LearningCenterWidget(QWidget *parent) : QWidget(parent)
 {
+#ifdef Q_OS_MAC
+    setWindowFlag(Qt::NoDropShadowWindowHint);
+#endif
+//    setWindowFlags(Qt::Tool | Qt::FramelessWindowHint);
     setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);
+
     initUI();
-    this->setFixedSize(1280,720);
+//    this->setFixedSize(1280,720);   //固定大小
+    this->setMinimumSize(1280,720);
 }
 
 void LearningCenterWidget::initUI()

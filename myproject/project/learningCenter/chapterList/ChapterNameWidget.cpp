@@ -1,6 +1,8 @@
 ﻿#include "ChapterNameWidget.h"
 #include <QLabel>
 #include <QVBoxLayout>
+#include <QStyleOption>
+#include <QPainter>
 
 ChapterNameWidget::ChapterNameWidget(QWidget *parent)
     : QWidget(parent)
@@ -9,6 +11,12 @@ ChapterNameWidget::ChapterNameWidget(QWidget *parent)
     , m_changeChapterLabel(nullptr)
     , m_vbLayout(nullptr)
 {
+
+#ifdef Q_OS_MAC
+    setWindowFlag(Qt::NoDropShadowWindowHint);
+#endif
+    setAttribute(Qt::WA_TranslucentBackground);
+
     initLayout();
 }
 
@@ -17,13 +25,17 @@ ChapterNameWidget::~ChapterNameWidget()
 
 }
 
-void ChapterNameWidget::setChapterContents(QString name, QString time, bool isTitle, bool isChange)
+void ChapterNameWidget::setChapterContents(const QString &name, const QString &time, bool isTitle, bool isChange)
 {
     if (isTitle) {
         setEnglishTitle(name);
     } else {
+        setFixedSize(480, 96);
+
         setChapterNameLabel(name);
         setChapterTimeLabel(time);
+        m_vbLayout->setContentsMargins(0,24,0,24);
+        m_vbLayout->setSpacing(8);
 
         if (isChange) {
             setAdjustChapterLabel();
@@ -45,26 +57,33 @@ void ChapterNameWidget::setChapterContents(QString name, QString time, bool isTi
     adjustSize();
 }
 
+void ChapterNameWidget::paintEvent(QPaintEvent *event)
+{
+    QStyleOption opt;
+    opt.init(this);
+    QPainter p(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+}
+
 void ChapterNameWidget::initLayout()
 {
     if (!m_vbLayout) {
         m_vbLayout = new QVBoxLayout(this);
-        m_vbLayout->setContentsMargins(0,24,0,24);
-        m_vbLayout->setSpacing(8);
     }
 }
 
-void ChapterNameWidget::setChapterNameLabel(QString name)
+void ChapterNameWidget::setChapterNameLabel(const QString &name)
 {
     if (!m_nameLabel){
         m_nameLabel = new QLabel(this);
+        m_nameLabel->setMinimumWidth(480);
     }
 
     m_nameLabel->setText(name);
     m_nameLabel->setStyleSheet("font-size:16px;color:#212831;");
 }
 
-void ChapterNameWidget::setChapterTimeLabel(QString time)
+void ChapterNameWidget::setChapterTimeLabel(const QString &time)
 {
 
     if (!m_timeLabel) {
@@ -90,13 +109,19 @@ void ChapterNameWidget::setAdjustChapterLabel()
    m_changeChapterLabel->setFixedSize(41, 16);
 }
 
-void ChapterNameWidget::setEnglishTitle(QString name)
+void ChapterNameWidget::setEnglishTitle(const QString &name)
 {
     if (!m_nameLabel) {
         m_nameLabel = new QLabel(this);
+        m_nameLabel->setAttribute(Qt::WA_TranslucentBackground);
+        m_nameLabel->setMinimumWidth(480);
     }
 
+    setMinimumSize(480, 64);
     m_nameLabel->setText(name);
-    m_nameLabel->setStyleSheet("font-size:16px; font-weight:bold;color:#858C96;");
+    m_nameLabel->setStyleSheet("font-size:16px; font-weight:bold; color:#858C96;");
+    m_vbLayout->setContentsMargins(0,22,0,22);
+    m_vbLayout->setSpacing(0);
     m_vbLayout->addWidget(m_nameLabel);
+    adjustSize();
 }

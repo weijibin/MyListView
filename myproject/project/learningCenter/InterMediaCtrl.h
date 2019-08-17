@@ -8,6 +8,7 @@ class MainWidget;
 class ChapterWidget;
 class MainTitle;
 class ChapterTitle;
+class CourseListWidget;
 
 class InterMediaCtrl
 {
@@ -27,10 +28,15 @@ public:
     void setCenterWidget(LearningCenterWidget*w){m_centerWidget=w;}
     void setMainWidget(MainWidget*w){m_mainWidget=w;}
     void setChapterWidget(ChapterWidget*w){m_chapterWidget=w;}
+    void setCourseListWidget(CourseListWidget*w){m_courseListWidget=w;}
 
     void changeToClassMode();
     void changeToCourseMode();
     void changeToChapterMode(const CourseToChapterPar & par);
+
+    //课程列表相关
+    void changeToNoCourseMode();
+    void changeToCourseListMode();
 
     void changeToHome();
 
@@ -48,6 +54,8 @@ private:
     MainWidget* m_mainWidget =nullptr;
 
     ChapterWidget* m_chapterWidget =nullptr;  //场次列表
+
+    CourseListWidget *m_courseListWidget = nullptr; //课程列表
 
 //    MainTitle* m_mainTitle =nullptr;
 //    ChapterTitle* m_chapterTitle =nullptr;

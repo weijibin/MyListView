@@ -5,10 +5,6 @@
         <file>res/style_ref.qss</file>
         <file>res/default_boy_img.png</file>
         <file>res/logo.png</file>
-        <file>res/default_ppt.png</file>
-        <file>res/classover.png</file>
-        <file>res/left.png</file>
-        <file>res/right.png</file>
         <file>res/icon_down.png</file>
         <file>res/icon_up.png</file>
         <file>res/loading1.gif</file>
@@ -28,5 +24,14 @@
         <file>res/icon_date_left.png</file>
         <file>res/icon_date_right.png</file>
         <file>res/icon_yituike.png</file>
+        <file>res/icon_kecheng_left.png</file>
+        <file>res/icon_kecheng_left_hover.png</file>
+        <file>res/icon_kecheng_right.png</file>
+        <file>res/icon_kecheng_right_hover.png</file>
+        <file>res/default_jingpin.png</file>
+        <file>res/default_wangluo.png</file>
+        <file>res/default_wuke.png</file>
+        <file>res/icon_month_left.png</file>
+        <file>res/icon_month_right.png</file>
     </qresource>
 </RCC>

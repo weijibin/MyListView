@@ -1,7 +1,8 @@
-#include "ChapterWidget.h"
+﻿#include "ChapterWidget.h"
 #include "title/ChapterTitle.h"
 #include "chapterList/ChapterListWidget.h"
 #include "chapterList/CefViewWidget.h"
+#include "dataCenter/DataProvider.h"
 
 #include <QVBoxLayout>
 #include <QStackedLayout>
@@ -17,6 +18,7 @@ void ChapterWidget::initUI()
     m_title = new ChapterTitle(this);
     m_title->setObjectName("chapterTitle");
     m_chapterList = new ChapterListWidget(this);
+
     m_cefViewWidget = new CefViewWidget(this);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
@@ -68,5 +70,9 @@ void ChapterWidget::setCourseInfo(const CourseToChapterPar & par)
     m_courseInfo = par;
     qDebug()<<m_courseInfo.courseName;
     m_title->setCourseName(m_courseInfo.courseName);
+
+    int ret = DataProvider::GetInstance().requestChapterList(par,m_chapterInfoList);
+    qDebug() << "ret :" << ret << m_chapterInfoList.size() << " " << m_chapterInfoList.at(0).teachers.at(0).imgUrl;
+    m_chapterList->setChapterListContents(m_chapterInfoList, m_courseInfo.deadLine);
 
 }

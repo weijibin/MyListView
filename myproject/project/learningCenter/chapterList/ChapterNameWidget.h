@@ -1,4 +1,4 @@
-#ifndef CHAPTERNAMEWIDGET_H
+﻿#ifndef CHAPTERNAMEWIDGET_H
 #define CHAPTERNAMEWIDGET_H
 
 #include <QObject>
@@ -14,14 +14,17 @@ public:
     ~ChapterNameWidget();
 
 public:
-    void setChapterContents(QString name, QString time, bool isTitle =false, bool isChange=false);
+    void setChapterContents(const QString &name,const QString &time, bool isTitle =false, bool isChange=false);
+
+protected:
+    virtual void paintEvent(QPaintEvent *event) override;
 
 private:
     void initLayout();
-    void setChapterNameLabel(QString name);
-    void setChapterTimeLabel(QString time);
+    void setChapterNameLabel(const QString &name);
+    void setChapterTimeLabel(const QString &time);
     void setAdjustChapterLabel();
-    void setEnglishTitle(QString name);
+    void setEnglishTitle(const QString &name);
 
 private:
     QLabel       *m_nameLabel;

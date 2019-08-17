@@ -5,14 +5,13 @@
 #-------------------------------------------------
 
 QT       += core gui
-QT       += winextras
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = MyListView
 TEMPLATE = app
 
-INCLUDEPATH += $$PWD\learningCenter
+INCLUDEPATH += $$PWD/learningCenter
 
 SOURCES += main.cpp\
         widget.cpp \
@@ -32,7 +31,6 @@ SOURCES += main.cpp\
     learningCenter/title/HeadImg.cpp \
     learningCenter/classList/CardListWidget.cpp \
     learningCenter/classList/CardWidget.cpp \
-    learningCenter/date/CCalendarWidget.cpp \
     learningCenter/date/CalendarButton.cpp \
     learningCenter/common/common.cpp \
     learningCenter/chapterList/CefViewWidget.cpp \
@@ -46,7 +44,9 @@ SOURCES += main.cpp\
     learningCenter/common/TeacherHeadWidget.cpp \
     learningCenter/chapterList/ChapterNameWidget.cpp \
     learningCenter/chapterList/ChapterItem.cpp \
-    learningCenter/courseList/CourseCardWidget.cpp
+    learningCenter/courseList/CourseCardWidget.cpp \
+    learningCenter/date/customcalendar/CCalendarWidget.cpp \
+    learningCenter/date/customcalendar/DayLabel.cpp
 
 HEADERS  += widget.h \
     learningCenter/chapterList/ChapterListWidget.h \
@@ -65,7 +65,6 @@ HEADERS  += widget.h \
     learningCenter/title/HeadImg.h \
     learningCenter/classList/CardListWidget.h \
     learningCenter/classList/CardWidget.h \
-    learningCenter/date/CCalendarWidget.h \
     learningCenter/date/CalendarButton.h \
     learningCenter/common/common.h \
     learningCenter/chapterList/CefViewWidget.h \
@@ -79,7 +78,9 @@ HEADERS  += widget.h \
     learningCenter/common/TeacherHeadWidget.h \
     learningCenter/chapterList/ChapterNameWidget.h \
     learningCenter/chapterList/ChapterItem.h \
-    learningCenter/courseList/CourseCardWidget.h
+    learningCenter/courseList/CourseCardWidget.h \
+    learningCenter/date/customcalendar/CCalendarWidget.h \
+    learningCenter/date/customcalendar/DayLabel.h
 
 FORMS    += widget.ui
 

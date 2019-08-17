@@ -3,6 +3,8 @@
 #include <QLabel>
 #include <QHBoxLayout>
 #include <QDebug>
+#include <QStyleOption>
+#include <QPainter>
 #include "ChapterNameWidget.h"
 #include "common/TeacherHeadWidget.h"
 #include "common/common.h"
@@ -12,8 +14,16 @@ ChapterItem::ChapterItem(QWidget *parent)
     , m_title(nullptr)
     , m_teacherHead(nullptr)
     , m_buttonWidget(nullptr)
+    , m_hbLayout(nullptr)
 {
-    setFixedHeight(96);
+
+#ifdef Q_OS_MAC
+    setWindowFlag(Qt::NoDropShadowWindowHint);
+#endif
+    setWindowFlags(Qt::Tool | Qt::FramelessWindowHint);
+    setAttribute(Qt::WA_TranslucentBackground);
+   // setAttribute(Qt::WA_StyledBackground,true);
+
 }
 
 ChapterItem::~ChapterItem()
@@ -21,33 +31,43 @@ ChapterItem::~ChapterItem()
 
 }
 
-void ChapterItem::setChapterItemContents(ChapterInfo info)
+void ChapterItem::setChapterItemContents(const ChapterInfo &info)
 {
     if (info.isEngTitle) {
         setChapterEnglishTitle(info.chapterName);
 
     } else {
-        QString classTime = QString::fromLocal8Bit("上课时间: ") + info.time.day +" " + info.time.startTime +" " +info.time.endTime;
+        setFixedHeight(96);
+        QString classTime = QString::fromLocal8Bit("上课时间: ") + info.time.day +"-" + info.time.startTime +" " +info.time.endTime;
         m_title = new ChapterNameWidget(this);
         m_title->setChapterContents(info.chapterName, classTime, false, info.isExchanged);
 
         m_hbLayout = new QHBoxLayout(this);
+        m_hbLayout->setContentsMargins(32, 0, 32, 0);
         m_hbLayout->addWidget(m_title);
         m_hbLayout->addStretch();
 
         m_teacherHead = new TeacherHeadWidget(this);
-        m_teacherHead->setTeacherHeadInfo(info.teachers);
+
+        for(int i = 0; i <info.teachers.size(); i++) {
+            m_teacher.append(info.teachers.at(i));
+        }
+
+        m_teacherHead->setTeacherHeadInfo(m_teacher);
         m_hbLayout->addWidget(m_teacherHead);
         m_hbLayout->addStretch();
 
         m_buttonWidget = new ButtonWidget(this);
         m_buttonWidget->setButtonWidgetContents(info.classStatus, info.buttons);
+        m_hbLayout->addWidget(m_buttonWidget);
+        setStyleSheet("background-color:#ffffff;");
     }
 
     adjustSize();
+    show();
 }
 
-void ChapterItem::setChapterEnglishTitle(QString title)
+void ChapterItem::setChapterEnglishTitle(const QString &title)
 {
     if (!m_hbLayout) {
         m_hbLayout = new QHBoxLayout(this);
@@ -58,19 +78,33 @@ void ChapterItem::setChapterEnglishTitle(QString title)
         m_title->setChapterContents(title,"",true,false);
     }
 
+    m_hbLayout->setContentsMargins(32, 0, 32, 0);
     m_hbLayout->addWidget(m_title);
     m_hbLayout->addStretch();
 
     setStyleSheet("background: #F5F5F5;");
+    setFixedHeight(64);
+    update();
 
+}
 
+void ChapterItem::paintEvent(QPaintEvent *event)
+{
+    QStyleOption opt;
+    opt.init(this);
+    QPainter p(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
 }
 
 ButtonWidget::ButtonWidget(QWidget *parent)
     : QWidget(parent)
     , m_liveStatusLabel(nullptr)
-{
+    , m_hbLayout(nullptr)
 
+{
+    initLayout();
+    setFixedHeight(96);
+    setFixedWidth(480);
 }
 
 ButtonWidget::~ButtonWidget()
@@ -87,6 +121,7 @@ ButtonWidget::~ButtonWidget()
 void ButtonWidget::setButtonWidgetContents(QString livetText, QList<ButtonInfo> infoList)
 {
     setLiveStatusLabel(livetText);
+    m_hbLayout->addStretch();
     m_hbLayout->addWidget(m_liveStatusLabel);
     for (int i = 0; i < infoList.size(); i++) {
         QPushButton * button = setButtonInfo(infoList.at(i));
@@ -96,12 +131,14 @@ void ButtonWidget::setButtonWidgetContents(QString livetText, QList<ButtonInfo> 
         connect(m_buttonList.at(i), SIGNAL(clicked()), this, SLOT(onButtonClick()));
     }
     adjustSize();
+    //show();
 }
 
 void ButtonWidget::setLiveStatusLabel(QString text)
 {
     if (!m_liveStatusLabel) {
         m_liveStatusLabel = new QLabel(this);
+        m_liveStatusLabel->setFixedSize(70, 18);
     }
     m_liveStatusLabel->setText(text);
     if (text == QString::fromLocal8Bit("直播待开始")) {
@@ -111,7 +148,6 @@ void ButtonWidget::setLiveStatusLabel(QString text)
     } else if (text == QString::fromLocal8Bit("直播未完成")) {
         m_liveStatusLabel->setStyleSheet("font-size:14px; color:#212831");
     }
-
 }
 
 QPushButton *ButtonWidget::setEnterRoomButton(QString text, int status)
@@ -163,6 +199,11 @@ QPushButton *ButtonWidget::setEnterRoomButton(QString text, int status)
                           }");
     }
 
+   if (button->isEnabled()) {
+       button->setCursor(QCursor(Qt::PointingHandCursor));
+   } else {
+       button->setCursor(QCursor(Qt::ArrowCursor));
+   }
     return button;
 }
 
@@ -187,9 +228,9 @@ QPushButton *ButtonWidget::setProgramButton(QString text, int status)
                        QPushButton:hover{\
                           background:rgba(255,255,255,1); \
                           border-radius:18px; \
-                          border:1px solid rgba(173,180,190,0.4); \
+                          border:1px solid rgba(255,94,80,1); \
                           font-size:14px; \
-                          color:rgba(33,40,49,1); \
+                          color:rgba(255,94,80,1); \
                        }\
                        QPushButton:pressed{\
                           background:rgba(255,255,255,1); \
@@ -213,6 +254,12 @@ QPushButton *ButtonWidget::setProgramButton(QString text, int status)
                         } ");
     } else {
 
+    }
+
+    if (button->isEnabled()) {
+        button->setCursor(QCursor(Qt::PointingHandCursor));
+    } else {
+        button->setCursor(QCursor(Qt::ArrowCursor));
     }
     return button;
 }

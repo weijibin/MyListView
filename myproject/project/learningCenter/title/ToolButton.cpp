@@ -39,12 +39,14 @@ void ToolButton::enterEvent(QEvent *event)
 {
     m_isHover = true;
     QPushButton::enterEvent(event);
+    update(); //mac needed
 }
 
 void ToolButton::leaveEvent(QEvent *event)
 {
     m_isHover = false;
     QPushButton::leaveEvent(event);
+    update(); //mac needed
 }
 
 void ToolButton::setDisplyText(const QString & str)

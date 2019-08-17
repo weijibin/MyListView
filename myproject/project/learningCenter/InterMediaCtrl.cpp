@@ -2,6 +2,7 @@
 #include "LearningCenterWidget.h"
 #include "MainWidget.h"
 #include "ChapterWidget.h"
+#include "courseList/CourseListWidget.h"
 
 InterMediaCtrl::InterMediaCtrl()
 {
@@ -69,5 +70,21 @@ void InterMediaCtrl::enterRoom(const QString &url)
     if(m_centerWidget != nullptr)
     {
         m_centerWidget->enterRoom(url);
+    }
+}
+
+void InterMediaCtrl::changeToCourseListMode()
+{
+    if(m_courseListWidget != nullptr)
+    {
+        m_courseListWidget->changeToCourseListMode();
+    }
+}
+
+void InterMediaCtrl::changeToNoCourseMode()
+{
+    if(m_courseListWidget != nullptr)
+    {
+        m_courseListWidget->changeToNoCourseMode();
     }
 }

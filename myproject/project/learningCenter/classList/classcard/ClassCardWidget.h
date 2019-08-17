@@ -15,7 +15,7 @@ class ClassCardWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ClassCardWidget(QWidget *parent = 0);
+    explicit ClassCardWidget(int type = 1,QWidget *parent = 0);
 
     const ClassCardInfo& getClassInfo();
     void setClassInfo(const ClassCardInfo& info);
@@ -26,6 +26,9 @@ public slots:
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
 private:
+
+    void initNoClassUi();
+
     void initUi();
     void initEntrance();
     void initCourseInfo();
@@ -49,6 +52,11 @@ private:
     QLabel * m_subjectName = nullptr;
     TeacherHeadWidget * m_teachersInfo = nullptr;
 
+    int m_type = 1; //0 无课卡片, 1 有课的卡片
+
+    //no class
+    QLabel * m_noClassImg = nullptr;
+    QLabel * m_noClassTip = nullptr;
 };
 
 #endif // CLASSCARDWIDGET_H

@@ -19,9 +19,14 @@ protected:
     virtual void resizeEvent(QResizeEvent *event) override;
 private:
     void initUi();
+
+    QSize getCardListSize(const QSize &size);
 private:
     DateListWidget * m_dateListWidget = nullptr;
     CardListWidget * m_cardList = nullptr;
+
+    QSize m_initCardListSize;
+    QSize m_cardListMaxSize;
 };
 
 #endif // CLASSLISTWIDGET_H

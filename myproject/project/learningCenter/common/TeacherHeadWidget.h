@@ -1,4 +1,4 @@
-#ifndef TEACHERHEADWIDGET_H
+﻿#ifndef TEACHERHEADWIDGET_H
 #define TEACHERHEADWIDGET_H
 
 #include <QObject>
@@ -20,7 +20,7 @@ public:
 
     ~TeacherHeadWidget();
 
-    void  setTeacherHeadInfo(QList<TeacherInfo> info);
+    void  setTeacherHeadInfo(const QList<TeacherInfo> &info);
 
 signals:
 

@@ -1,4 +1,4 @@
-#ifndef CHAPTERWIDGET_H
+﻿#ifndef CHAPTERWIDGET_H
 #define CHAPTERWIDGET_H
 
 #include <QWidget>
@@ -39,6 +39,7 @@ private:
     QStackedLayout * m_stackedLayout = nullptr;
 
     CourseToChapterPar m_courseInfo;
+    QList<ChapterInfo> m_chapterInfoList;
 
 
 };

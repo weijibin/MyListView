@@ -64,6 +64,14 @@ void DateWidget::paintEvent(QPaintEvent *e)
         painter.drawText(m_rect_info,m_courseInfo);
         painter.restore();
 
+        painter.save();
+        QPen pen;
+        pen.setColor(QColor("#FF5E50"));
+        pen.setWidth(4);
+        painter.setPen(pen);
+        painter.drawLine(rect().bottomRight(),rect().bottomLeft());
+        painter.restore();
+
     } else {
         painter.save();
         painter.setPen(QColor(m_color));
@@ -82,6 +90,16 @@ void DateWidget::paintEvent(QPaintEvent *e)
         }
 
         painter.drawText(m_rect_info,m_courseInfo);
+        painter.restore();
+
+
+        painter.save();
+        QPen pen;
+        pen.setColor(QColor("#F5F5F5"));
+        pen.setWidth(2);
+        painter.setPen(pen);
+        painter.drawLine(rect().topLeft(),rect().bottomLeft());
+        painter.drawLine(rect().bottomRight(),rect().bottomLeft());
         painter.restore();
     }
 }
