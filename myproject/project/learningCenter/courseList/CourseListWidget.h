@@ -34,6 +34,8 @@ private:
     void initArea();
     void initNoCourseUi();
 
+    void initConnections();
+
     void updateScrollArea(const QSize &size);
     void updateUiByColumn();
 private:

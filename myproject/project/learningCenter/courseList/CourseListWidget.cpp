@@ -6,6 +6,7 @@
 #include <QEvent>
 #include <QResizeEvent>
 #include <QScrollBar>
+#include <QDebug>
 #include "CourseCardWidget.h"
 
 CourseListWidget::CourseListWidget(QWidget *parent) : QWidget(parent)
@@ -13,6 +14,8 @@ CourseListWidget::CourseListWidget(QWidget *parent) : QWidget(parent)
     m_columnCount = 3;
     this->setAttribute(Qt::WA_StyledBackground);
     initUi();
+
+    initConnections();
 }
 
 void CourseListWidget::initUi()
@@ -68,6 +71,17 @@ void CourseListWidget::initUi()
     initNoCourseUi();
 
 //    changeToNoCourseMode();
+}
+
+void CourseListWidget::initConnections()
+{
+//    QScrollBar * vscrollBar = m_area->verticalScrollBar();
+//    connect(vscrollBar, &QScrollBar::valueChanged,[=](int value) {
+//        if(vscrollBar->maximum() == value)
+//        {
+//            qDebug()<<"============need loading========";
+//        }
+//    });
 }
 
 void CourseListWidget::initNoCourseUi()
@@ -256,6 +270,10 @@ bool CourseListWidget::eventFilter(QObject *obj, QEvent *event)
         if (event->type() == QEvent::Resize) {
             QResizeEvent *reEvt = static_cast<QResizeEvent*>(event);
             updateScrollArea(reEvt->size());
+        }
+        if(event->type() == QEvent::Wheel) {
+            if(m_area->verticalScrollBar()->value() == m_area->verticalScrollBar()->maximum())
+                qDebug()<<"1111111=NEED LOADING======";
         }
     }
     return QWidget::eventFilter(obj, event);
