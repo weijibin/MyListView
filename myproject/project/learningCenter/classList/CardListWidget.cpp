@@ -11,6 +11,7 @@
 #include <QDebug>
 
 #include <QTimer>
+#include "common/common.h"
 
 #include "CardWidget.h"
 
@@ -44,7 +45,7 @@ void CardListWidget::initUi()
 
     m_area = new QScrollArea(this);
     m_area->setMouseTracking(true);
-    m_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+//    m_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     m_area->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     m_area->setContentsMargins(0,0,0,0);
@@ -68,10 +69,9 @@ void CardListWidget::initUi()
 
     for(int i =0; i<m_cardTotalCount; i++)
     {
-        CardWidget * w = new CardWidget(1,m_scrolWidget);
+        CardWidget * w = new CardWidget(m_scrolWidget);
 
         w->getClassCard()->installEventFilter(this);
-        w->getClassCard()->setClassInfo(getCardInfo(i)); //test
 
         m_cardList.append(w);
         m_scrolLayout->addWidget(w);
@@ -112,6 +112,18 @@ void CardListWidget::updateLeftAndRightBtn()
     m_rightBtn->move(posR);
 }
 
+void CardListWidget::updateLeftAndRightVisible()
+{
+    if(m_cardList.at(3)->getType() == 2)
+    {
+        m_rightBtn->setVisible(false);
+    }
+    if(m_cardList.at(1)->getType() == 2)
+    {
+        m_leftBtn->setVisible(false);
+    }
+}
+
 void CardListWidget::initConnections()
 {
     connect(m_leftBtn,&QPushButton::clicked,this,&CardListWidget::onLeftClick);
@@ -125,6 +137,7 @@ ClassCardInfo CardListWidget::getCardInfo(int type)
     time.startTime = "8:30";
     time.endTime = "18:30";
     time.index = 2;
+    time.date = QDate::currentDate();
 
     ClassCardInfo info;
     info.time = time;
@@ -208,9 +221,15 @@ bool CardListWidget::eventFilter(QObject *obj, QEvent *event)
     if(event->type() == QEvent::Enter){
 
         if(m_cardList.at(m_cardTotalCount/2-1)->getClassCard() == obj){
-            m_leftBtn->setVisible(true);
+            if(m_cardList.at(m_cardTotalCount/2-1)->getType() == 2)
+                m_leftBtn->setVisible(false);
+            else
+                m_leftBtn->setVisible(true);
         } else if((m_cardList.at(m_cardTotalCount/2+1)->getClassCard()) == obj){
-            m_rightBtn->setVisible(true);
+            if(m_cardList.at(m_cardTotalCount/2+1)->getType() == 2)
+                m_rightBtn->setVisible(false);
+            else
+                m_rightBtn->setVisible(true);
         } else {
             m_leftBtn->setVisible(false);
             m_rightBtn->setVisible(false);
@@ -269,6 +288,25 @@ void CardListWidget::onRightClick()
 
 void CardListWidget::updateWidget_pre()
 {
+
+    qDebug()<<"CardListWidget::updateWidget_pre";
+    //=========================================
+    int nextCenterIndex = m_cardCurIndex-1;
+    int num = 0;
+    if((nextCenterIndex-2) < 0)
+    {
+        qDebug()<<"CardListWidget::updateWidget_pre  new Data";
+        //request data
+        num = 8;
+        for(int i = 0 ; i< num; i++)
+        {
+            ClassCardInfo info = getCardInfo(i+1);
+            info.type = 2;
+            m_cardInfos.insert(0,info);
+        }
+    }
+    //========================================
+
     for(int i=0; i<m_cardVisibleNum; i++)
     {
         int count = m_scrolLayout->layout()->count();
@@ -280,45 +318,118 @@ void CardListWidget::updateWidget_pre()
 
         delete child;
 
+        //=================================================================
 
-        CardWidget * w = new CardWidget(1,m_scrolWidget);
+        CardWidget * w = new CardWidget(m_scrolWidget);
+
         w->getClassCard()->installEventFilter(this);
+        w->getClassCard()->setClassInfo(m_cardInfos.at(nextCenterIndex-2 + num)); //test
 
-        w->getClassCard()->setClassInfo(getCardInfo(count%3)); //test
+        m_cardCurIndex = nextCenterIndex-2 + num;
+
+        //==================================================================
 
         w->setFixedHeight(m_cardHeight);
         w->setFixedWidth(m_cardWidth);
 
         m_scrolLayout->insertWidget(0,w);
         m_cardList.insert(0,w);
+
+
+        updateLeftAndRightVisible();
     }
 
     updateScrollArea();
+    emit sigCurCardDate(m_cardList.at(2)->getClassCard()->getClassInfo().time.date);
 }
 
 void CardListWidget::updateWidget_back()
 {
-    for(int i=0; i<m_cardVisibleNum; i++)
+    qDebug()<<"CardListWidget::updateWidget_back";
+    //=========================================
+    int nextCenterIndex = m_cardCurIndex+1;
+    if((nextCenterIndex+2)>(m_cardInfos.count()-1))
     {
-        QLayoutItem *child = m_scrolLayout->takeAt(0);
-
-        CardWidget *tt1 = qobject_cast<CardWidget *>(child->widget());
-        m_cardList.removeOne(tt1);
-        tt1->deleteLater();
-
-        delete child;
-
-        CardWidget * w = new CardWidget(0,m_scrolWidget);
-        w->getClassCard()->installEventFilter(this);
-
-        w->getClassCard()->setClassInfo(getCardInfo(i)); //test
-
-        w->setFixedHeight(m_cardHeight);
-        w->setFixedWidth(m_cardWidth);
-
-
-        m_scrolLayout->addWidget(w);
-        m_cardList.append(w);
+        qDebug()<<"CardListWidget::updateWidget_back  new Data";
+        //request data
+        for(int i = 0 ; i< 8; i++)
+        {
+            ClassCardInfo info = getCardInfo(i+1);
+            info.type = 2;
+            m_cardInfos.append(info);
+        }
     }
-    updateScrollArea();
+    //========================================
+
+
+//    else
+    {
+        for(int i=0; i<m_cardVisibleNum; i++)
+        {
+            QLayoutItem *child = m_scrolLayout->takeAt(0);
+
+            CardWidget *tt1 = qobject_cast<CardWidget *>(child->widget());
+            m_cardList.removeOne(tt1);
+            tt1->deleteLater();
+
+            delete child;
+
+
+            //=================================================================
+            CardWidget * w = new CardWidget(m_scrolWidget);
+            w->getClassCard()->installEventFilter(this);
+            w->getClassCard()->setClassInfo(m_cardInfos.at(nextCenterIndex+2)); //test
+            m_cardCurIndex = nextCenterIndex;
+            //==================================================================
+
+
+            w->setFixedHeight(m_cardHeight);
+            w->setFixedWidth(m_cardWidth);
+
+
+            m_scrolLayout->addWidget(w);
+            m_cardList.append(w);
+
+            //================
+            updateLeftAndRightVisible();
+        }
+        updateScrollArea();
+
+        emit sigCurCardDate(m_cardList.at(2)->getClassCard()->getClassInfo().time.date);
+    }
+}
+
+void CardListWidget::updateUiByDate(const QDate &date)
+{
+    qDebug()<<"======CardListWidget::updateUiByDate=====start==="<<date;
+
+    //=================================================
+    //request data
+    //request cards data by date
+
+    if(m_cardCurIndex != -1){
+        qDebug()<<m_cardCurIndex;
+        ClassCardInfo info = getCardInfo(1);
+        info.type = 0;
+        m_cardInfos.insert(m_cardCurIndex,info);
+
+    } else {
+        m_cardInfos.clear();
+        for(int i = 0 ; i< 8; i++)
+        {
+            ClassCardInfo info = getCardInfo(i+1);
+            info.type = 1;
+            m_cardInfos.append(info);
+        }
+        m_cardCurIndex = 3;
+    }
+    //==================================================
+
+    for(int i =0; i<m_cardTotalCount; i++)
+    {
+        m_cardList.at(i)->getClassCard()->setClassInfo(m_cardInfos.at(m_cardCurIndex-2 + i ));
+    }
+    //=============================================================
+
+    qDebug()<<"======CardListWidget::updateUiByDate========end";
 }

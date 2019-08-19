@@ -180,6 +180,13 @@ void MainWidget::initState()
     //=========================================
     m_stackedLayout->setCurrentIndex(Class);
     m_title->initState();
+    QDate date = QDate::currentDate();
+    m_classList->refresh(date);
+}
+
+void MainWidget::initData()
+{
+    m_classList->refresh(QDate::currentDate());
 }
 
 void MainWidget::changeToClassMode()

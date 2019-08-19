@@ -12,6 +12,8 @@ class ClassListWidget : public QWidget
 public:
     explicit ClassListWidget(QWidget *parent = 0);
 
+    void refresh(const QDate& date);
+
 signals:
 
 public slots:
@@ -19,7 +21,7 @@ protected:
     virtual void resizeEvent(QResizeEvent *event) override;
 private:
     void initUi();
-
+    void initConnections();
     QSize getCardListSize(const QSize &size);
 private:
     DateListWidget * m_dateListWidget = nullptr;

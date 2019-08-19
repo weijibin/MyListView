@@ -17,6 +17,7 @@ public:
     enum Index{ Class, Course, TakeClass,NoClass, Retry };
 
     void initState();
+    void initData();
 
     void changeToClassMode();
     void changeToCourseMode();

@@ -2,6 +2,7 @@
 #define DATALISTWIDGET_H
 
 #include <QWidget>
+#include "common/common.h"
 
 class QPushButton;
 class QScrollArea;
@@ -24,6 +25,8 @@ public:
 
     void updateScrollArea();
 
+    void refreshByDate(const QDate& date);
+
 signals:
     void sigSelectedDate(const QDate& date);
 
@@ -31,6 +34,8 @@ public slots:
 protected:
     void setCalendarDate(const QDate& date);
     void updateWeekListByDate(const QDate& date);
+
+    void updateWeekSelected(const QDate& date);
 
     virtual void paintEvent(QPaintEvent *event) override;
 
@@ -61,6 +66,9 @@ private:
     QHBoxLayout * m_scrolLayout;
 
     QList<DateWidget*> m_dateWidgets;
+
+    QList<DateInfo> m_curDateInfos;
+
     QButtonGroup * m_btnGroup;
 
     int m_dateCount;   // total DateWidget count

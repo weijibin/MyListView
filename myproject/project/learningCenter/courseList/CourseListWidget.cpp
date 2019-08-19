@@ -73,6 +73,11 @@ void CourseListWidget::initUi()
 //    changeToNoCourseMode();
 }
 
+void CourseListWidget::refresh()
+{
+
+}
+
 void CourseListWidget::initConnections()
 {
 //    QScrollBar * vscrollBar = m_area->verticalScrollBar();

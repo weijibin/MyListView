@@ -29,6 +29,10 @@ CalendarWidget::CalendarWidget(QWidget *parent) : QWidget(parent)
 //    effect->setBlurRadius(10);
 //    this->setGraphicsEffect(effect);
 
+
+    //init data
+//    this->setCalendarDate(QDate::currentDate());
+
 }
 
 void CalendarWidget::initOutLineWithShadow()
@@ -112,8 +116,6 @@ void CalendarWidget::initUI()
 
     m_calendar = new CCalendarWidget(this);
 
-    m_calendar->setSelectedDate(QDate::currentDate());
-
     layout->addWidget(m_calendar);
 
     this->setLayout(layout);
@@ -164,7 +166,27 @@ void CalendarWidget::paintEvent(QPaintEvent*event)
 
 void CalendarWidget::setCalendarDate(const QDate &date)
 {
+    qDebug()<<"CalendarWidget::setCalendarDate"<<date;
+
+    if(m_calendar->getSelectedDate().month() != date.month())
+    {
+        //request data
+        qDebug()<<"need update courseInfo";
+        //========================================
+        //setNew Couse Date
+        QList<QDate> lst;
+        lst.append(QDate::currentDate());
+        lst.append(QDate::currentDate().addDays(2));
+        lst.append(QDate::currentDate().addDays(5));
+        setCourseDate(lst);
+        //======================================
+    }
     m_calendar->setSelectedDate(date);
+}
+
+const QDate& CalendarWidget::getCalendarDate()
+{
+    return m_calendar->getSelectedDate();
 }
 
 void CalendarWidget::setCourseDate(const QList<QDate> &coursesInfo)

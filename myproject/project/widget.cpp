@@ -35,21 +35,6 @@ Widget::~Widget()
 
 void Widget::on_dateBtn_clicked()
 {
-//    DateListWidget *w = new DateListWidget();
-
-//    QFile f(":/qss/style.qss");
-//    if (f.open(QFile::ReadOnly)) {
-//        QByteArray a_qss(std::move(f.readAll()));
-//        f.close();
-//        w->setStyleSheet(a_qss);
-//    }
-
-//    connect(w,&DateListWidget::sigSelectedDate,[=](const QDate&date){
-//        qDebug()<<"selected Date==========="<<date.toString();
-//    });
-
-//    w->show();
-//    w->updateScrollArea();
 
     CCalendarWidget * w = new CCalendarWidget;
 

@@ -11,6 +11,7 @@ ClassListWidget::ClassListWidget(QWidget *parent) : QWidget(parent)
 {
     this->setAttribute(Qt::WA_StyledBackground);
     initUi();
+    initConnections();
 }
 
 void ClassListWidget::initUi()
@@ -66,6 +67,19 @@ void ClassListWidget::initUi()
     });
 }
 
+void ClassListWidget::initConnections()
+{
+    //根据dateList 变换 更新 cardList
+    connect(m_dateListWidget,&DateListWidget::sigSelectedDate,[=](const QDate&date){
+        m_cardList->updateUiByDate(date);
+    });
+
+    // 根据cardList的切换更新 dateList
+    connect(m_cardList, &CardListWidget::sigCurCardDate,[=](const QDate&date){
+        m_dateListWidget->refreshByDate(date);
+    });
+}
+
 void ClassListWidget::resizeEvent(QResizeEvent *event)
 {
     QWidget::resizeEvent(event);
@@ -104,4 +118,13 @@ QSize ClassListWidget::getCardListSize(const QSize &size)
         sizet = m_cardListMaxSize;
     }
     return sizet;
+}
+
+void ClassListWidget::refresh(const QDate & date)
+{
+    m_dateListWidget->refreshByDate(date);
+
+    // classlist刷新
+    m_cardList->updateUiByDate(date);
+
 }

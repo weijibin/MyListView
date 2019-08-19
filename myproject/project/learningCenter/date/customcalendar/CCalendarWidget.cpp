@@ -49,6 +49,7 @@ QDate CCalendarWidget::getSelectedDate() const
 
 void CCalendarWidget::setSelectedDate(const QDate &date)
 {
+    qDebug()<<"CCalendarWidget::setSelectedDate=="<< date;
     int day = date.day();
     setDate(date.addDays(-1*day+1));
 
@@ -223,6 +224,16 @@ void CCalendarWidget::updateUiByCourseInfo()
 
 void CCalendarWidget::sltShowPrevMonth()
 {
+    //===============================
+    //request data
+    qDebug()<<"need update sltShowPrevMonth";
+    QList<QDate> lst;
+    lst.append(QDate::currentDate());
+    lst.append(QDate::currentDate().addDays(2));
+    lst.append(QDate::currentDate().addDays(5));
+    this->setCourseDate(lst);
+    //===============================
+
     setDate(m_date.addMonths(-1));
     updateUiBySelectedDate();
     updateUiByCourseInfo();
@@ -230,6 +241,16 @@ void CCalendarWidget::sltShowPrevMonth()
 
 void CCalendarWidget::sltShowNextMonth()
 {
+    //===============================
+    //request data
+    qDebug()<<"need update sltShowNextMonth";
+    QList<QDate> lst;
+    lst.append(QDate::currentDate());
+    lst.append(QDate::currentDate().addDays(2));
+    lst.append(QDate::currentDate().addDays(5));
+    this->setCourseDate(lst);
+    //===============================
+
     setDate(m_date.addMonths(1));
     updateUiBySelectedDate();
     updateUiByCourseInfo();

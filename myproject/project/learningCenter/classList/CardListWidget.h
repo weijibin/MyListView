@@ -22,8 +22,11 @@ public:
 
     void updateScrollArea();
 
-signals:
+    // interact
+    void updateUiByDate(const QDate& date);
 
+signals:
+    void sigCurCardDate(const QDate& date);
 public slots:
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
@@ -47,12 +50,15 @@ private:
 
     ClassCardInfo getCardInfo(int type);
 
+    void updateLeftAndRightVisible();
+
 private:
     QScrollArea * m_area;
     QWidget * m_scrolWidget;
     QHBoxLayout * m_scrolLayout;
 
     QList<CardWidget*> m_cardList;
+    QList<ClassCardInfo> m_cardInfos;
 
 
     QPushButton * m_leftBtn = nullptr;
@@ -60,6 +66,9 @@ private:
 
     int m_cardTotalCount;
     int m_cardVisibleNum;
+
+    int m_cardCurIndex = -1;
+
     int m_cardWidth;
     int m_cardHeight;
     int m_aniDuration;

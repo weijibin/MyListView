@@ -6,20 +6,27 @@
 #include "common/TeacherHeadWidget.h"
 
 #include <QGraphicsDropShadowEffect>
+#include <QDebug>
 
-ClassCardWidget::ClassCardWidget(int type,QWidget *parent) : QWidget(parent)
+ClassCardWidget::ClassCardWidget(QWidget *parent) : QWidget(parent)
 {
-    m_type = type;
-
     setWindowFlags(Qt::FramelessWindowHint);
 //    setAttribute(Qt::WA_TranslucentBackground);
 
 //    this->setFixedSize(772,512);
 
-    if(m_type == 1)
-        initUi();
-    else
-        initNoClassUi();
+    setContentsMargins(0,0,0,0);
+    m_stacked = new QStackedLayout;
+    m_stacked->setContentsMargins(0,0,0,0);
+
+    initNoClassUi();
+    initUi();
+    initBlankUi();
+
+    this->setLayout(m_stacked);
+
+
+    m_stacked->setCurrentIndex(1);
 
     setMouseTracking(true);
 
@@ -33,55 +40,69 @@ ClassCardWidget::ClassCardWidget(int type,QWidget *parent) : QWidget(parent)
 
 void ClassCardWidget::initNoClassUi()
 {
-    setContentsMargins(0,0,0,0);
-    m_layout = new QVBoxLayout;
-    m_layout->setContentsMargins(0,0,0,0);
-    m_layout->setSpacing(0);
+    m_noClassWidget = new QWidget(this);
+    QVBoxLayout * layout = new QVBoxLayout;
+    layout->setContentsMargins(0,0,0,0);
+    layout->setSpacing(0);
 
-    m_noClassImg = new QLabel(this);
+    m_noClassImg = new QLabel(m_noClassWidget);
     m_noClassImg->setFixedSize(250,186);
     m_noClassImg->setObjectName("c_noClassImg");
-    m_noClassTip = new QLabel(this);
+    m_noClassTip = new QLabel(m_noClassWidget);
     m_noClassTip->setObjectName("c_noClassTip");
     m_noClassTip->setFixedHeight(14);
     m_noClassTip->setText(QString::fromLocal8Bit("今天没有课程安排哦~"));
 
-    m_layout->addStretch();
-    m_layout->addWidget(m_noClassImg,0,Qt::AlignCenter);
-    m_layout->addWidget(m_noClassTip,0,Qt::AlignCenter);
-    m_layout->addStretch();
+    layout->addStretch();
+    layout->addWidget(m_noClassImg,0,Qt::AlignCenter);
+    layout->addWidget(m_noClassTip,0,Qt::AlignCenter);
+    layout->addStretch();
 
-    setLayout(m_layout);
+    m_noClassWidget->setLayout(layout);
 
-    this->setStyleSheet("QWidget{\
+    m_noClassWidget->setStyleSheet("QWidget{\
                         background:#FFFFFF;\
                         border-radius:8px;\
                     }");
+    m_stacked->addWidget(m_noClassWidget);
+}
+
+void ClassCardWidget::initBlankUi()
+{
+    m_blankWidget = new QWidget(this);
+    m_blankWidget->setStyleSheet("QWidget{\
+                        background:#FFFFFF;\
+                        border-radius:8px;\
+                    }");
+    m_stacked->addWidget(m_blankWidget);
 }
 
 void ClassCardWidget::initUi()
 {
-    setContentsMargins(0,0,0,0);
-    m_layout = new QVBoxLayout;
-    m_layout->setContentsMargins(0,0,0,0);
-    m_layout->setSpacing(0);
+    m_classWidget = new QWidget(this);
+
+    QVBoxLayout* layout = new QVBoxLayout;
+    layout->setContentsMargins(0,0,0,0);
+    layout->setSpacing(0);
 
 
-    m_widgetEntrance = new QFrame();
+    m_widgetEntrance = new QFrame(m_classWidget);
     m_widgetEntrance->setObjectName("class_entrance");
-    m_widgetCourseInfo = new QFrame();
+    m_widgetCourseInfo = new QFrame(m_classWidget);
     m_widgetCourseInfo->setObjectName("class_courseinfo");
 
-    m_layout->addWidget(m_widgetEntrance);
-    m_layout->addWidget(m_widgetCourseInfo);
+    layout->addWidget(m_widgetEntrance);
+    layout->addWidget(m_widgetCourseInfo);
 
     initEntrance();
     initCourseInfo();
 
-    setLayout(m_layout);
+    m_classWidget->setLayout(layout);
 
     m_widgetEntrance->setMouseTracking(true);
     m_widgetCourseInfo->setMouseTracking(true);
+
+    m_stacked->addWidget(m_classWidget);
 }
 
 void ClassCardWidget::initEntrance()
@@ -92,7 +113,7 @@ void ClassCardWidget::initEntrance()
 
     QHBoxLayout *layout_time = new QHBoxLayout;
     layout_time->setContentsMargins(0,0,0,0);
-    m_classTime = new QLabel(this);
+    m_classTime = new QLabel();
     m_classTime->setObjectName("c_classTime");
     m_classTime->setContentsMargins(16,6,16,6);
     m_classTime->setFixedHeight(32);
@@ -101,16 +122,16 @@ void ClassCardWidget::initEntrance()
     layout_time->addStretch();
     layout->addLayout(layout_time);
 
-    m_classDescribe = new QLabel(this);
+    m_classDescribe = new QLabel();
     m_classDescribe->setObjectName("c_classdes");
     m_classDescribe->setAlignment(Qt::AlignCenter);
     m_classDescribe->setFixedHeight(24);
-    m_classTip = new QLabel(this);
+    m_classTip = new QLabel();
     m_classTip->setObjectName("c_tip");
     m_classTip->setAlignment(Qt::AlignCenter);
     m_classTip->setFixedHeight(19);
 
-    m_enterClassBtn = new QPushButton(this);
+    m_enterClassBtn = new QPushButton();
     m_enterClassBtn->setObjectName("c_enterclass");
     m_enterClassBtn->setFixedHeight(44);
     m_enterClassBtn->setFixedWidth(160);
@@ -142,7 +163,7 @@ void ClassCardWidget::initCourseInfo()
     layout_info->setContentsMargins(0,0,0,0);
     layout_info->setSpacing(0);
 
-    m_chaperName = new QLabel(this);
+    m_chaperName = new QLabel();
     m_chaperName->setObjectName("c_chaptername");
     m_chaperName->setFixedHeight(18);
 
@@ -150,10 +171,10 @@ void ClassCardWidget::initCourseInfo()
     QHBoxLayout * layout_c = new QHBoxLayout;
     layout_c->setContentsMargins(0,0,0,0);
 
-    m_subjectName = new QLabel(this);
+    m_subjectName = new QLabel();
     m_subjectName->setContentsMargins(2,0,2,0);
     m_subjectName->setObjectName("c_subname");
-    m_courseName = new QLabel(this);
+    m_courseName = new QLabel();
     m_courseName->setObjectName("c_courname");
 
 
@@ -204,46 +225,50 @@ const ClassCardInfo& ClassCardWidget::getClassInfo()
 void ClassCardWidget::setClassInfo(const ClassCardInfo &info)
 {
     m_info = info;
-    if(m_type ==1)
-        updateUiByInfo();
+    updateUiByInfo();
 }
 
 void ClassCardWidget::updateUiByInfo()
 {
-    QString str = QString::fromLocal8Bit("%1第%2场 %3-%4").arg(m_info.time.day)
-            .arg(m_info.time.index).arg(m_info.time.startTime).arg(m_info.time.endTime);
-    m_classTime->setText(str);
-    m_classDescribe->setText(m_info.classStatus);
-    m_classTip->setText(m_info.classTip);
+    m_stacked->setCurrentIndex(m_info.type);
 
-    if(m_info.classStatusType == 0) {
-        m_enterClassBtn->setVisible(false);
-        m_classTip->setVisible(true);
-    } else if(m_info.classStatusType == 1) {
-        m_enterClassBtn->setVisible(true);
-        m_classTip->setVisible(false);
-        m_enterClassBtn->setText(m_info.btnText);
-        m_enterClassBtn->setProperty("liveType","live");
-    } else if(m_info.classStatusType == 2){
-        m_enterClassBtn->setVisible(true);
-        m_classTip->setVisible(false);
-        m_enterClassBtn->setText(m_info.btnText);
-        m_enterClassBtn->setProperty("liveType","playback");
-    } else {
-        m_enterClassBtn->setVisible(true);
-        m_classTip->setVisible(true);
-        m_enterClassBtn->setText(m_info.btnText);
-        m_enterClassBtn->setProperty("liveType","playback");
-    }
-
+    if(m_info.type == Class)
     {
-        m_enterClassBtn->style()->unpolish(m_enterClassBtn);
-        m_enterClassBtn->style()->polish(m_enterClassBtn);
+        QString str = QString::fromLocal8Bit("%1第%2场 %3-%4").arg(m_info.time.day)
+                .arg(m_info.time.index).arg(m_info.time.startTime).arg(m_info.time.endTime);
+        m_classTime->setText(str);
+        m_classDescribe->setText(m_info.classStatus);
+        m_classTip->setText(m_info.classTip);
+
+        if(m_info.classStatusType == 0) {
+            m_enterClassBtn->setVisible(false);
+            m_classTip->setVisible(true);
+        } else if(m_info.classStatusType == 1) {
+            m_enterClassBtn->setVisible(true);
+            m_classTip->setVisible(false);
+            m_enterClassBtn->setText(m_info.btnText);
+            m_enterClassBtn->setProperty("liveType","live");
+        } else if(m_info.classStatusType == 2){
+            m_enterClassBtn->setVisible(true);
+            m_classTip->setVisible(false);
+            m_enterClassBtn->setText(m_info.btnText);
+            m_enterClassBtn->setProperty("liveType","playback");
+        } else {
+            m_enterClassBtn->setVisible(true);
+            m_classTip->setVisible(true);
+            m_enterClassBtn->setText(m_info.btnText);
+            m_enterClassBtn->setProperty("liveType","playback");
+        }
+
+        {
+            m_enterClassBtn->style()->unpolish(m_enterClassBtn);
+            m_enterClassBtn->style()->polish(m_enterClassBtn);
+        }
+
+        m_chaperName->setText(m_info.chapterName);
+        m_subjectName->setText(m_info.subjectName);
+        m_courseName->setText(m_info.courseName);
+
+        m_teachersInfo->setTeacherHeadInfo(m_info.teachers);
     }
-
-    m_chaperName->setText(m_info.chapterName);
-    m_subjectName->setText(m_info.subjectName);
-    m_courseName->setText(m_info.courseName);
-
-    m_teachersInfo->setTeacherHeadInfo(m_info.teachers);
 }

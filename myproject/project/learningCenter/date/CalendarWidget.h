@@ -15,6 +15,7 @@ public:
     void initUI();
 
     void setCalendarDate(const QDate& date);
+    const QDate& getCalendarDate();
     void setCourseDate(const QList<QDate>& info);
 signals:
     void sigSelectedDate(const QDate& date);

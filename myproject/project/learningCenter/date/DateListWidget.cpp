@@ -128,8 +128,6 @@ void DateListWidget::initUi()
         m_btnGroup->addButton(w);
     }
 
-    updateWeekListByDate(QDate::currentDate());
-
     m_scrolLayout->setSizeConstraint(QLayout::SetFixedSize);
     m_area->setFixedWidth(m_dateVisibleNum*m_dateWidgetWidth);
     m_area->setFixedHeight(m_dateWidgetHeight);
@@ -138,14 +136,6 @@ void DateListWidget::initUi()
 
     m_popupWidget = new CalendarWidget(this);
     m_popupWidget->setObjectName("calendarWidget");
-
-    //========================================
-    QList<QDate> lst;
-    lst.append(QDate::currentDate());
-    lst.append(QDate::currentDate().addDays(2));
-    lst.append(QDate::currentDate().addDays(5));
-    m_popupWidget->setCourseDate(lst);
-    //======================================
 }
 
 void DateListWidget::initConnections()
@@ -183,10 +173,29 @@ void DateListWidget::initConnections()
 
         m_dateBtn->setDisplyText(QDate::currentDate().toString(m_dateFormat));
         emit sigSelectedDate(QDate::currentDate());
-
+        m_popupWidget->setCalendarDate(QDate::currentDate());
         updateWeekListByDate(QDate::currentDate());
     });
 
+}
+
+void DateListWidget::refreshByDate(const QDate &date)
+{
+    qDebug()<<"DateListWidget::refreshByDate== start";
+    m_dateBtn->setDisplyText(date.toString(m_dateFormat));
+
+    //=========================================
+    //update calendar widget
+
+    m_popupWidget->setCalendarDate(date);   // 负责请求数据 ，并初始化界面
+    //=========================================
+
+    // 刷新日期列表
+    updateWeekListByDate(date);
+
+    qDebug()<<"DateListWidget::refreshByDate== end";
+//    //通知外部选中哪一天
+//    emit sigSelectedDate(date);
 }
 
 void DateListWidget::paintEvent(QPaintEvent *)
@@ -220,6 +229,27 @@ void DateListWidget::updateScrollArea()
 
 void DateListWidget::onLeftClick()
 {
+    //====================================
+    //request data
+
+    QDate endDate = m_dateWidgets.at(7)->getDateInfo().date.addDays(-1);
+    QDate startDate = endDate.addDays(-6);
+    qDebug()<<"request pre "<<"from: "<<startDate<<" to: "<<endDate;
+
+    m_curDateInfos.clear();
+    for(int i =0; i<7; i++)
+    {
+        QDate date = startDate;
+        DateInfo Info;
+        Info.date = date.addDays(i);
+        Info.num = 30;
+
+        m_curDateInfos.append(Info);
+
+        m_dateWidgets.at(i)->setDateInfo(Info);
+    }
+    //====================================
+
     int startValue = m_area->horizontalScrollBar()->value();
     int endValue = startValue-m_dateVisibleNum*m_dateWidgetWidth;
 
@@ -235,6 +265,25 @@ void DateListWidget::onLeftClick()
 
 void DateListWidget::onRightClick()
 {
+    //====================================
+    //request data
+    QDate startDate = m_dateWidgets.at(13)->getDateInfo().date.addDays(1);
+    QDate endDate = startDate.addDays(6);
+    qDebug()<<"request week "<<"from: "<<startDate<<" to: "<<endDate;
+    m_curDateInfos.clear();
+    for(int i =0; i<7; i++)
+    {
+        QDate date = startDate;
+        DateInfo Info;
+        Info.date = date.addDays(i);
+        Info.num = 10;
+
+        m_curDateInfos.append(Info);
+
+        m_dateWidgets.at(14+i)->setDateInfo(Info);
+    }
+    //====================================
+
     int startValue = m_area->horizontalScrollBar()->value();
     int endValue = startValue+m_dateVisibleNum*m_dateWidgetWidth;
 
@@ -270,14 +319,6 @@ void DateListWidget::updateWidget_pre()
         w->setFixedHeight(m_dateWidgetHeight);
         w->setFixedWidth(m_dateWidgetWidth);
 
-        {
-            QDate date = m_dateWidgets.first()->getDateInfo().date;
-            DateInfo Info;
-            Info.date = date.addDays(-1);
-            Info.num = 2;
-            w->setDateInfo(Info);
-        }
-
         m_scrolLayout->insertWidget(0,w);
         m_dateWidgets.insert(0,w);
         m_btnGroup->addButton(w);
@@ -290,6 +331,8 @@ void DateListWidget::updateWidget_pre()
         m_animation = nullptr;
     }
 //    printLayoutWidgetsInfo();
+    QDate date = m_popupWidget->getCalendarDate();
+    updateWeekSelected(date);
 }
 
 void DateListWidget::updateWidget_back()
@@ -310,14 +353,6 @@ void DateListWidget::updateWidget_back()
         w->setFixedHeight(m_dateWidgetHeight);
         w->setFixedWidth(m_dateWidgetWidth);
 
-        {
-            QDate date = m_dateWidgets.last()->getDateInfo().date;
-            DateInfo info;
-            info.date = date.addDays(1);
-            info.num = 1;
-            w->setDateInfo(info);
-        }
-
         m_scrolLayout->addWidget(w);
         m_dateWidgets.append(w);
         m_btnGroup->addButton(w);
@@ -329,6 +364,8 @@ void DateListWidget::updateWidget_back()
         m_animation = nullptr;
     }
 //    printLayoutWidgetsInfo();
+    QDate date = m_popupWidget->getCalendarDate();
+    updateWeekSelected(date);
 }
 
 
@@ -339,22 +376,47 @@ void DateListWidget::setCalendarDate(const QDate &date)
 
 void DateListWidget::updateWeekListByDate(const QDate &date)
 {
+    qDebug()<<"====DateListWidget::updateWeek===date";
+    //====================================
+    //request data
     int index = date.dayOfWeek();
-    if(index > 0){
-        QDate firstDay = date.addDays(-1 * (index-1) - 7);
+    QDate startDate = date.addDays(-1*index + 1);
+    QDate endDate = startDate.addDays(6);
 
+    qDebug()<<"request weekData "<<"from: "<<startDate<<" to: "<<endDate;
+
+    m_curDateInfos.clear();
+    for(int i =0; i<7; i++)
+    {
+        QDate date = startDate;
+        DateInfo Info;
+        Info.date = date.addDays(i);
+        Info.num = 20;
+        m_curDateInfos.append(Info);
+    }
+    //====================================
+    //new data
+    for(int i = 0; i<7; i++)
+    {
+        m_dateWidgets.at(i+7)->setDateInfo(m_curDateInfos.at(i));
+    }
+
+    updateWeekSelected(date);
+}
+
+void DateListWidget::updateWeekSelected(const QDate &date)
+{
+    qDebug()<<"====DateListWidget::updateWeekSelected"<<date;
+    if(date.isValid()){
         for(int i = 0; i < m_dateWidgets.count(); i++)
         {
-            DateInfo info;
-            info.date = firstDay.addDays(i);
-            info.num = 3;
-            m_dateWidgets.at(i)->setDateInfo(info);
-
+            if(m_dateWidgets.at(i)->getDateInfo().date == date)
+            {
+                m_dateWidgets.at(i)->setChecked(true);
+            }
         }
-        m_dateWidgets.at(index+6)->setChecked(true);
-
     } else {
-        qDebug()<<"updateWeekListByDate error";
+        qDebug()<<"updateWeekSelected error";
     }
 }
 

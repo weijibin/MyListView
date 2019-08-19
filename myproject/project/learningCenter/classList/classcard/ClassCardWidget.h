@@ -7,6 +7,7 @@
 #include <QFrame>
 #include <QLabel>
 #include <QPushButton>
+#include <QStackedLayout>
 #include "common/common.h"
 
 class TeacherHeadWidget;
@@ -15,11 +16,12 @@ class ClassCardWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ClassCardWidget(int type = 1,QWidget *parent = 0);
+    explicit ClassCardWidget(QWidget *parent = 0);
 
     const ClassCardInfo& getClassInfo();
     void setClassInfo(const ClassCardInfo& info);
 
+    enum ClassType{NoClass, Class, Blank};
 signals:
 
 public slots:
@@ -28,12 +30,20 @@ protected:
 private:
 
     void initNoClassUi();
+    void initBlankUi();
 
     void initUi();
     void initEntrance();
     void initCourseInfo();
     void updateUiByInfo();
 private:
+
+    QStackedLayout * m_stacked;
+    QWidget* m_noClassWidget;
+    QWidget* m_classWidget;
+    QWidget* m_blankWidget;
+
+
     QVBoxLayout * m_layout;
     ClassCardInfo m_info;
 
@@ -51,8 +61,6 @@ private:
     QLabel * m_courseName = nullptr;
     QLabel * m_subjectName = nullptr;
     TeacherHeadWidget * m_teachersInfo = nullptr;
-
-    int m_type = 1; //0 无课卡片, 1 有课的卡片
 
     //no class
     QLabel * m_noClassImg = nullptr;

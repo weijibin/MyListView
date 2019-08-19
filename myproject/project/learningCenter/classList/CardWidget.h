@@ -8,12 +8,10 @@ class CardWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit CardWidget(int type=1 ,QWidget *parent = 0);
+    explicit CardWidget(QWidget *parent = 0);
 
     ClassCardWidget * getClassCard(){return m_card;}
-
-    int getType() {return m_type;}
-
+    int getType();
 signals:
 
 public slots:
@@ -23,7 +21,6 @@ private:
     void initUi();
 private:
     ClassCardWidget *m_card = nullptr;
-    int m_type;  //1 课程卡片 , 0 无课的卡片
 };
 
 #endif // CARDWIDGET_H

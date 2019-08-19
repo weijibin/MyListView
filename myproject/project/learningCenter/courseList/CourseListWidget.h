@@ -18,6 +18,8 @@ public:
 
     enum Index{ Course, NoCourse};
 
+    void refresh();
+
     void changeToNoCourseMode();
     void changeToCourseListMode();
 

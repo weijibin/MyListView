@@ -24,6 +24,7 @@ typedef struct {
 
 // 上课时间
 typedef struct{
+    QDate date;
     QString day;
     QString startTime;
     QString endTime;
@@ -128,7 +129,10 @@ typedef struct CourseCardInfo{
 //=====================================================
 //直播卡片的数据结构
 
-typedef struct{
+typedef struct ClassCardInfo{
+
+    int type;  //0,无课卡片 1,上课卡片  2,空白页面
+
     ClassTime time;
     int classStatusType;  // 0 直播待开始  1 直播进行中 2 直播未完成 3 直播已完成
     QString classStatus;  //直播待开始,直播进行中,直播未完成,直播已完成
@@ -139,6 +143,10 @@ typedef struct{
     QString subjectName;
     QString courseName;
     QList<TeacherInfo> teachers;
+
+    ClassCardInfo(){
+        type = 1;
+    }
 
 }ClassCardInfo;
 
