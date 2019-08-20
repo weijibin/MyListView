@@ -48,9 +48,11 @@ private:
     void initUi();
     void initConnections();
 
-    ClassCardInfo getCardInfo(int type);
-
     void updateLeftAndRightVisible();
+
+    void removeNoClassCard();
+
+    void updateUiByCardInfos(int curIndex);
 
 private:
     QScrollArea * m_area;
@@ -72,6 +74,10 @@ private:
     int m_cardWidth;
     int m_cardHeight;
     int m_aniDuration;
+
+    int m_noClassIndex = -1;
+
+    int m_requestLeftDataNum = 0;
 };
 
 #endif // CARDLISTWIDGET_H

@@ -1,11 +1,11 @@
 #ifndef CHAPTERTITLE_H
 #define CHAPTERTITLE_H
-#include "TitleWidget.h"
+#include "TitleBaseWidget.h"
 #include <QPushButton>
 #include <QLabel>
 
 #include "ToolButton.h"
-class ChapterTitle : public TitleWidget
+class ChapterTitle : public TitleBaseWidget
 {
     Q_OBJECT
 public:

@@ -13,6 +13,8 @@
 #include <QDebug>
 #include <QFont>
 #include <QButtonGroup>
+#include "dataCenter/DataProvider.h"
+#include "../CalendarWidget.h"
 
 static const QString s_strWeek[] = {
     QString::fromLocal8Bit("一"), QString::fromLocal8Bit("二"),
@@ -224,34 +226,54 @@ void CCalendarWidget::updateUiByCourseInfo()
 
 void CCalendarWidget::sltShowPrevMonth()
 {
+    m_isRequestData = true;
     //===============================
     //request data
     qDebug()<<"need update sltShowPrevMonth";
     QList<QDate> lst;
-    lst.append(QDate::currentDate());
-    lst.append(QDate::currentDate().addDays(2));
-    lst.append(QDate::currentDate().addDays(5));
+    QDate date = m_date.addMonths(-1);
+    DataProvider::GetInstance().requestCourseDateForMonth(date,lst);
     this->setCourseDate(lst);
     //===============================
 
     setDate(m_date.addMonths(-1));
     updateUiBySelectedDate();
     updateUiByCourseInfo();
+
+    m_isRequestData = false;
+    m_parentDlg->activateWindow();
 }
 
 void CCalendarWidget::sltShowNextMonth()
 {
+    m_isRequestData = true;
     //===============================
     //request data
     qDebug()<<"need update sltShowNextMonth";
     QList<QDate> lst;
-    lst.append(QDate::currentDate());
-    lst.append(QDate::currentDate().addDays(2));
-    lst.append(QDate::currentDate().addDays(5));
+
+    QDate date = m_date.addMonths(1);
+    DataProvider::GetInstance().requestCourseDateForMonth(date,lst);
+
     this->setCourseDate(lst);
     //===============================
 
     setDate(m_date.addMonths(1));
     updateUiBySelectedDate();
     updateUiByCourseInfo();
+
+
+    m_isRequestData = false;
+    m_parentDlg->activateWindow();
+}
+
+
+bool CCalendarWidget::eventFilter(QObject *watched, QEvent *event)
+{
+    if(QEvent::WindowDeactivate == event->type())
+    {
+        if(!m_isRequestData)
+            m_parentDlg->hide();
+    }
+    return QWidget::eventFilter(watched,event);
 }

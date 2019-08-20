@@ -21,7 +21,6 @@ SOURCES += main.cpp\
     learningCenter/date/CalendarWidget.cpp \
     learningCenter/date/DateListWidget.cpp \
     learningCenter/classList/ClassListWidget.cpp \
-    learningCenter/title/TitleWidget.cpp \
     learningCenter/title/MainTitle.cpp \
     learningCenter/MainWidget.cpp \
     learningCenter/ChapterWidget.cpp \
@@ -46,7 +45,8 @@ SOURCES += main.cpp\
     learningCenter/chapterList/ChapterItem.cpp \
     learningCenter/courseList/CourseCardWidget.cpp \
     learningCenter/date/customcalendar/CCalendarWidget.cpp \
-    learningCenter/date/customcalendar/DayLabel.cpp
+    learningCenter/date/customcalendar/DayLabel.cpp \
+    learningCenter/title/TitleBaseWidget.cpp
 
 HEADERS  += widget.h \
     learningCenter/chapterList/ChapterListWidget.h \
@@ -55,7 +55,6 @@ HEADERS  += widget.h \
     learningCenter/date/DateListWidget.h \
     learningCenter/date/DateWidget.h \
     learningCenter/classList/ClassListWidget.h \
-    learningCenter/title/TitleWidget.h \
     learningCenter/title/MainTitle.h \
     learningCenter/MainWidget.h \
     learningCenter/ChapterWidget.h \
@@ -80,7 +79,8 @@ HEADERS  += widget.h \
     learningCenter/chapterList/ChapterItem.h \
     learningCenter/courseList/CourseCardWidget.h \
     learningCenter/date/customcalendar/CCalendarWidget.h \
-    learningCenter/date/customcalendar/DayLabel.h
+    learningCenter/date/customcalendar/DayLabel.h \
+    learningCenter/title/TitleBaseWidget.h
 
 FORMS    += widget.ui
 

@@ -8,6 +8,7 @@
 #include <QScrollBar>
 #include <QDebug>
 #include "CourseCardWidget.h"
+#include "dataCenter/DataProvider.h"
 
 CourseListWidget::CourseListWidget(QWidget *parent) : QWidget(parent)
 {
@@ -20,20 +21,6 @@ CourseListWidget::CourseListWidget(QWidget *parent) : QWidget(parent)
 
 void CourseListWidget::initUi()
 {
-//    QPushButton * btn = new QPushButton(this);
-//    btn->move(100,100);
-
-//    btn->setText("ChapterListWidget");
-
-//    connect(btn,&QPushButton::clicked,[=](){
-
-//        CourseToChapterPar par;
-//        par.courseName = QStringLiteral("【2019-暑】六年级初一数学直播菁英班（北京人教）");
-//        par.courseType = 1;
-//        par.stuCouID = 12212121;
-//        InterMediaCtrl::GetInstance().changeToChapterMode(par);
-//    });
-
     setContentsMargins(0,0,0,0);
     QVBoxLayout * layout = new QVBoxLayout;
     layout->setContentsMargins(0,0,4,0);
@@ -73,9 +60,218 @@ void CourseListWidget::initUi()
 //    changeToNoCourseMode();
 }
 
+void CourseListWidget::clearTitle()
+{
+    clearTitle1();
+    clearTitle2();
+}
+void CourseListWidget::clearTitle1()
+{
+    QLayoutItem *child;
+    while ((child = m_statusTitle->layout()->takeAt(0)) != 0)
+    {
+        if(child->widget())
+        {
+            child->widget()->setParent(NULL);
+        }
+        delete child;
+    }
+}
+void CourseListWidget::clearTitle2()
+{
+    QLayoutItem *child;
+    while ((child = m_subTitle->layout()->takeAt(0)) != 0)
+    {
+        if(child->widget())
+        {
+            child->widget()->setParent(NULL);
+        }
+        delete child;
+    }
+}
+
+void CourseListWidget::clearArea()
+{
+    QLayoutItem *child;
+    while ((child = m_scrolLayout->takeAt(0)) != 0)
+    {
+        if(child->widget())
+        {
+            child->widget()->setParent(NULL);
+        }
+        delete child;
+    }
+
+    m_scrolWidget->setFixedHeight(m_area->height()); // hide scrollbar
+
+    if(m_tip!=nullptr)
+        m_tip->setVisible(false);
+}
+
+
 void CourseListWidget::refresh()
 {
+    //clear
+    clearTitle();
+    clearArea();
 
+    //==============================
+    //request data
+
+    //course info
+    QList<CourseCardInfo> lst;
+
+    FilterType filter;
+    filter.status = 0;
+    filter.subjectType = 0;
+    filter.nextZone = m_nextZone;
+    int ret = DataProvider::GetInstance().requestCourseCard(filter,lst,m_nextZone);
+
+    //title info
+    CourseConfigInfo info1;
+    ret = DataProvider::GetInstance().requestCourseConfig(info1);
+
+    updateTitle1ByInfo(info1.courseStatus);
+    updateTitle2ByInfo(info1.subjects);
+
+    updateAreaByInfo(lst);
+
+    //==============================
+
+}
+
+void CourseListWidget::requestMoreCourseInfo()
+{
+    qDebug()<<"CourseListWidget::requestMoreCourseInfo()";
+
+    //===========================================
+    //request data
+
+    int id1 = m_groupTitle1->checkedId();
+    int id2 = m_groupTitle2->checkedId();
+
+    //course info
+    QList<CourseCardInfo> lst;
+
+    FilterType filter;
+    filter.status = id1;
+    filter.subjectType = id2;
+    filter.nextZone = m_nextZone;
+    int ret = DataProvider::GetInstance().requestCourseCard(filter,lst,m_nextZone);
+
+
+    //update by data
+    int count = m_cardList.count();
+
+    int start = count;
+    int end = count+lst.count();
+
+    for(int i = start; i < end; i++)
+    {
+        CourseCardWidget *w = new CourseCardWidget(this);
+        w->setCourseInfo(lst.at(i-start));
+
+        m_cardList.append(w);
+        m_scrolLayout->addWidget(w,i/m_columnCount,i%m_columnCount);
+    }
+
+    updateScrollArea(m_area->size());
+    //===========================================
+}
+
+void CourseListWidget::updateTitle1ByInfo(const QMap<int, QString> &info)
+{
+    qDebug()<<m_statusTitle->layout()->count();
+    clearTitle1();
+    qDebug()<<m_statusTitle->layout()->count();
+
+
+    QHBoxLayout * h_layout = qobject_cast<QHBoxLayout*>(m_statusTitle->layout());
+    h_layout->setSpacing(46);
+    h_layout->addSpacing(30);
+
+    QMap<int, QString>::const_iterator i = info.constBegin();
+    while (i != info.constEnd()) {
+
+        QPushButton * btn = new QPushButton(m_statusTitle);
+//        btn->setFixedSize(64,24);
+
+        btn->setCheckable(true);
+        btn->setText(i.value());
+
+        m_groupTitle1->addButton(btn,i.key());
+        h_layout->addWidget(btn);
+
+        if(i.key() == 0)
+        {
+            btn->setChecked(true);
+        }
+
+        ++i;
+    }
+    h_layout->addStretch();
+    m_statusTitle->setLayout(h_layout);
+}
+
+void CourseListWidget::updateTitle2ByInfo(const QMap<int, QString> &info)
+{
+    qDebug()<<m_subTitle->layout()->count();
+    clearTitle2();
+    qDebug()<<m_subTitle->layout()->count();
+
+
+    QHBoxLayout * h_layout = qobject_cast<QHBoxLayout*>(m_subTitle->layout());
+    h_layout->setSpacing(24);
+    h_layout->addSpacing(30);
+
+    QMap<int, QString>::const_iterator i = info.constBegin();
+    while (i != info.constEnd()) {
+
+        QPushButton * btn = new QPushButton(m_subTitle);
+        btn->setFixedSize(64,24);
+
+        btn->setCheckable(true);
+        btn->setText(i.value());
+
+        m_groupTitle2->addButton(btn,i.key());
+        h_layout->addWidget(btn);
+
+        if(i.key() == 0)
+        {
+            btn->setChecked(true);
+        }
+
+        ++i;
+    }
+    h_layout->addStretch();
+    m_subTitle->setLayout(h_layout);
+}
+
+
+void CourseListWidget::updateAreaByInfo(const QList<CourseCardInfo> &info)
+{
+    if(info.count() == 0)
+    {
+        changeToNoCourseMode();
+    }
+    else
+    {
+        changeToCourseListMode();
+
+        clearArea();
+
+        m_cardList.clear();
+
+        for(int i  = 0; i<info.count(); i++)
+        {
+            CourseCardWidget *w = new CourseCardWidget(this);
+            w->setCourseInfo(info.at(i));
+
+            m_cardList.append(w);
+            m_scrolLayout->addWidget(w,i/m_columnCount,i%m_columnCount);
+        }
+        updateScrollArea(m_area->size());
+    }
 }
 
 void CourseListWidget::initConnections()
@@ -87,6 +283,47 @@ void CourseListWidget::initConnections()
 //            qDebug()<<"============need loading========";
 //        }
 //    });
+
+    connect(m_groupTitle1,static_cast<void(QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonClicked),
+            [=](QAbstractButton * btn){
+        //==========================================
+        //request data
+        int id1 = m_groupTitle1->checkedId();
+        int id2 = m_groupTitle2->checkedId();
+
+        //course info
+        QList<CourseCardInfo> lst;
+
+        FilterType filter;
+        filter.status = id1;
+        filter.subjectType = id2;
+        filter.nextZone = m_nextZone;
+        int ret = DataProvider::GetInstance().requestCourseCard(filter,lst,m_nextZone);
+
+        updateAreaByInfo(lst);
+        //===========================================
+
+           });
+    connect(m_groupTitle2,static_cast<void(QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonClicked),
+            [=](QAbstractButton * btn){
+        //==========================================
+        //request data
+        int id1 = m_groupTitle1->checkedId();
+        int id2 = m_groupTitle2->checkedId();
+
+        //course info
+        QList<CourseCardInfo> lst;
+
+        FilterType filter;
+        filter.status = id1;
+        filter.subjectType = id2;
+        filter.nextZone = m_nextZone;
+        int ret = DataProvider::GetInstance().requestCourseCard(filter,lst,m_nextZone);
+
+        updateAreaByInfo(lst);
+        //===========================================
+
+    });
 }
 
 void CourseListWidget::initNoCourseUi()
@@ -143,10 +380,10 @@ void CourseListWidget::initTitle1()
     btn3->setCheckable(true);
     btn4->setCheckable(true);
 
-    m_groupTitle1->addButton(btn1,1);
-    m_groupTitle1->addButton(btn2,2);
-    m_groupTitle1->addButton(btn3,3);
-    m_groupTitle1->addButton(btn4,4);
+    m_groupTitle1->addButton(btn1,0);
+    m_groupTitle1->addButton(btn2,1);
+    m_groupTitle1->addButton(btn3,2);
+    m_groupTitle1->addButton(btn4,3);
 
     btn1->setText(QString::fromLocal8Bit("全部"));
     btn2->setText(QString::fromLocal8Bit("未开始"));
@@ -278,7 +515,12 @@ bool CourseListWidget::eventFilter(QObject *obj, QEvent *event)
         }
         if(event->type() == QEvent::Wheel) {
             if(m_area->verticalScrollBar()->value() == m_area->verticalScrollBar()->maximum())
-                qDebug()<<"1111111=NEED LOADING======";
+            {
+                //=====================================================
+                qDebug()<<"=====NEED LOADING MoreData======";
+                requestMoreCourseInfo();
+                //=====================================================
+            }
         }
     }
     return QWidget::eventFilter(obj, event);

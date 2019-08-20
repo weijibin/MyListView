@@ -21,6 +21,7 @@
 #include "date/DateWidget.h"
 #include "date/CalendarWidget.h"
 #include "date/CalendarButton.h"
+#include "dataCenter/DataProvider.h"
 
 
 DateListWidget::DateListWidget(QWidget *parent) : QWidget(parent)
@@ -150,13 +151,18 @@ void DateListWidget::initConnections()
     });
 
     checked = connect(m_dateBtn,&QPushButton::clicked,[=](){
-        m_popupWidget->show();
-        QRect rect = m_dateBtn->rect();
-        int width = m_popupWidget->width();
-        QPoint pos1 = m_dateBtn->pos() + QPoint(rect.width()/2,rect.height());
-        QPoint offset = QPoint(-1*width/2+120, 0);
-        QPoint pos = this->mapToGlobal(pos1 + offset);
-        m_popupWidget->move(pos);
+
+        bool ret = m_popupWidget->requestDataBeforeShow();  //显示之前请求数据
+
+        if(ret) {
+            m_popupWidget->show();
+            QRect rect = m_dateBtn->rect();
+            int width = m_popupWidget->width();
+            QPoint pos1 = m_dateBtn->pos() + QPoint(rect.width()/2,rect.height());
+            QPoint offset = QPoint(-1*width/2+120, 0);
+            QPoint pos = this->mapToGlobal(pos1 + offset);
+            m_popupWidget->move(pos);
+        }
     });
 
     connect(m_btnGroup,static_cast<void(QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonClicked),
@@ -187,7 +193,7 @@ void DateListWidget::refreshByDate(const QDate &date)
     //=========================================
     //update calendar widget
 
-    m_popupWidget->setCalendarDate(date);   // 负责请求数据 ，并初始化界面
+    m_popupWidget->setCalendarDate(date);
     //=========================================
 
     // 刷新日期列表
@@ -236,17 +242,11 @@ void DateListWidget::onLeftClick()
     QDate startDate = endDate.addDays(-6);
     qDebug()<<"request pre "<<"from: "<<startDate<<" to: "<<endDate;
 
-    m_curDateInfos.clear();
+    DataProvider::GetInstance().requestClassNumInPeriod(startDate,endDate,m_curDateInfos);
+
     for(int i =0; i<7; i++)
     {
-        QDate date = startDate;
-        DateInfo Info;
-        Info.date = date.addDays(i);
-        Info.num = 30;
-
-        m_curDateInfos.append(Info);
-
-        m_dateWidgets.at(i)->setDateInfo(Info);
+        m_dateWidgets.at(i)->setDateInfo(m_curDateInfos.at(i));
     }
     //====================================
 
@@ -270,17 +270,10 @@ void DateListWidget::onRightClick()
     QDate startDate = m_dateWidgets.at(13)->getDateInfo().date.addDays(1);
     QDate endDate = startDate.addDays(6);
     qDebug()<<"request week "<<"from: "<<startDate<<" to: "<<endDate;
-    m_curDateInfos.clear();
+    DataProvider::GetInstance().requestClassNumInPeriod(startDate,endDate,m_curDateInfos);
     for(int i =0; i<7; i++)
     {
-        QDate date = startDate;
-        DateInfo Info;
-        Info.date = date.addDays(i);
-        Info.num = 10;
-
-        m_curDateInfos.append(Info);
-
-        m_dateWidgets.at(14+i)->setDateInfo(Info);
+        m_dateWidgets.at(14+i)->setDateInfo(m_curDateInfos.at(i));
     }
     //====================================
 
@@ -377,24 +370,20 @@ void DateListWidget::setCalendarDate(const QDate &date)
 void DateListWidget::updateWeekListByDate(const QDate &date)
 {
     qDebug()<<"====DateListWidget::updateWeek===date";
-    //====================================
-    //request data
-    int index = date.dayOfWeek();
-    QDate startDate = date.addDays(-1*index + 1);
-    QDate endDate = startDate.addDays(6);
 
-    qDebug()<<"request weekData "<<"from: "<<startDate<<" to: "<<endDate;
-
-    m_curDateInfos.clear();
-    for(int i =0; i<7; i++)
+    if((m_curDateInfos.count()<1)||
+            (date > m_curDateInfos.last().date)|| (date < m_curDateInfos.first().date) )
     {
-        QDate date = startDate;
-        DateInfo Info;
-        Info.date = date.addDays(i);
-        Info.num = 20;
-        m_curDateInfos.append(Info);
+        //====================================
+        //request data
+        int index = date.dayOfWeek();
+        QDate startDate = date.addDays(-1*index + 1);
+        QDate endDate = startDate.addDays(6);
+        qDebug()<<"request weekData "<<"from: "<<startDate<<" to: "<<endDate;
+        DataProvider::GetInstance().requestClassNumInPeriod(startDate,endDate,m_curDateInfos);
+
+        //====================================
     }
-    //====================================
     //new data
     for(int i = 0; i<7; i++)
     {

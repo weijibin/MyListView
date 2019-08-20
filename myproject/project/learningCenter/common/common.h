@@ -3,6 +3,7 @@
 #include <QString>
 #include <QPixmap>
 #include <QDate>
+#include <QMap>
 
 #define SCROLLBAR_CSS             (\
 "QScrollArea{ border:0px solid; border-radius: 3px;}" \
@@ -111,7 +112,9 @@ typedef struct MaterialUnit{
 //课程卡片的数据结构
 typedef struct{
  int status; // 0 全部, 1 未开始, 2正在学, 3已结束
- int subjectType; // 语文 英语  数学 ...
+ int subjectType; //0 全部  语文 英语  数学 ...
+
+ int nextZone;  // 请求下一页参数
 }FilterType;
 
 typedef struct CourseCardInfo{
@@ -123,6 +126,13 @@ typedef struct CourseCardInfo{
         isRefund = false;
     }
 }CourseCardInfo;
+
+typedef struct CourseConfigInfo{
+    bool isHaveCoures;
+    bool isHaveExcellentCourses;
+    QMap<int,QString> subjects;
+    QMap<int,QString> courseStatus;
+} CourseConfigInfo;
 
 //=====================================================
 
@@ -149,6 +159,13 @@ typedef struct ClassCardInfo{
     }
 
 }ClassCardInfo;
+
+//下一次请求的参数，往未来方向请求使用nextPreDate，过去使用nextBackDate
+typedef struct ClassCardsPar{
+    QString nextPreDate;
+    QString nextBackDate;
+    int curIndex;  //定位下标
+}ClassCardsPar;
 
 typedef struct DateInfo{
     QDate date;

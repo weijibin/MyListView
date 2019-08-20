@@ -8,7 +8,7 @@
 #include "HeadImg.h"
 #include "InterMediaCtrl.h"
 
-MainTitle::MainTitle(QWidget *parent) : TitleWidget(parent)
+MainTitle::MainTitle(QWidget *parent) : TitleBaseWidget(parent)
 {
     initOtherUi();
     initOtherConnections();

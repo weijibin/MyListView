@@ -12,6 +12,7 @@
 
 #include <QTimer>
 #include "common/common.h"
+#include "dataCenter/DataProvider.h"
 
 #include "CardWidget.h"
 
@@ -130,50 +131,6 @@ void CardListWidget::initConnections()
     connect(m_rightBtn,&QPushButton::clicked,this,&CardListWidget::onRightClick);
 }
 
-ClassCardInfo CardListWidget::getCardInfo(int type)
-{
-    ClassTime time;
-    time.day = QString::fromLocal8Bit("今日");
-    time.startTime = "8:30";
-    time.endTime = "18:30";
-    time.index = 2;
-    time.date = QDate::currentDate();
-
-    ClassCardInfo info;
-    info.time = time;
-
-    info.classStatusType = type%3;
-
-    info.classStatus = QString::fromLocal8Bit("直播进行中...");
-    info.classTip = QString::fromLocal8Bit("记得去APP完成课清哦~");
-    if(info.classStatusType == 1)
-        info.btnText = QString::fromLocal8Bit("去上课");
-    else
-        info.btnText = QString::fromLocal8Bit("看回放");
-
-    info.chapterName = QString::fromLocal8Bit("第一讲 函数奇偶性与对称性");
-    info.subjectName = QString::fromLocal8Bit("数学");
-    info.courseName = QString::fromLocal8Bit("【2019-暑】六年级初一数学直播菁英班（北京人教）");
-
-    TeacherInfo info_t1;
-    info_t1.name = QString::fromLocal8Bit("郭德纲");
-    info_t1.type = 1;
-    info_t1.imgUrl = ":/res/default_boy_img.png";
-
-    TeacherInfo info_t2;
-    info_t2.name = QString::fromLocal8Bit("于谦");
-    info_t2.type = 4;
-    info_t2.imgUrl = ":/res/default_boy_img.png";
-
-    info.teachers.clear();
-    info.teachers.append(info_t1);
-    info.teachers.append(info_t2);
-
-
-    return info;
-
-}
-
 void CardListWidget::updateCardBySize(int w, int h)
 {
 //    m_cardWidth = w/2;
@@ -262,6 +219,28 @@ void CardListWidget::updateScrollArea()
 
 void CardListWidget::onLeftClick()
 {
+    //=========================================
+    int nextCenterIndex = m_cardCurIndex-1;
+    m_requestLeftDataNum = 0;
+    if((nextCenterIndex-2) < 0)
+    {
+        qDebug()<<"CardListWidget::onLeftClick  new Data";
+        //request data
+        QList<ClassCardInfo> cards;
+        ClassCardsPar par;
+        int ret = DataProvider::GetInstance().requestClassCard(m_cardInfos.first().time.date.addDays(-1),
+                                                               2,cards,par);
+//        m_cardCurIndex = par.curIndex;
+
+        m_requestLeftDataNum = cards.count();
+
+        for(int i = 0 ; i< cards.count(); i++)
+        {
+            m_cardInfos.insert(0,cards.at(i));
+        }
+    }
+    //========================================
+
     int startValue = m_area->horizontalScrollBar()->value();
     int endValue = startValue-m_cardVisibleNum*m_cardWidth;
     QPropertyAnimation *  animation = new QPropertyAnimation(m_area->horizontalScrollBar(),"value");
@@ -274,6 +253,29 @@ void CardListWidget::onLeftClick()
 
 void CardListWidget::onRightClick()
 {
+
+    //=========================================
+    int nextCenterIndex = m_cardCurIndex+1;
+    if((nextCenterIndex+2)>(m_cardInfos.count()-1))
+    {
+        qDebug()<<"CardListWidget::updateWidget_back  new Data";
+
+        //request data
+        //request cards data by date
+        QList<ClassCardInfo> cards;
+        ClassCardsPar par;
+        int ret = DataProvider::GetInstance().requestClassCard(m_cardInfos.last().time.date.addDays(1),
+                                                               1,cards,par);
+//        m_cardCurIndex = par.curIndex;
+
+        for(int i = 0 ; i< cards.count(); i++)
+        {
+            m_cardInfos.append(cards.at(i));
+        }
+    }
+    //========================================
+
+
     int startValue = m_area->horizontalScrollBar()->value();
     int endValue = startValue+m_cardVisibleNum*m_cardWidth;
 
@@ -290,22 +292,6 @@ void CardListWidget::updateWidget_pre()
 {
 
     qDebug()<<"CardListWidget::updateWidget_pre";
-    //=========================================
-    int nextCenterIndex = m_cardCurIndex-1;
-    int num = 0;
-    if((nextCenterIndex-2) < 0)
-    {
-        qDebug()<<"CardListWidget::updateWidget_pre  new Data";
-        //request data
-        num = 8;
-        for(int i = 0 ; i< num; i++)
-        {
-            ClassCardInfo info = getCardInfo(i+1);
-            info.type = 2;
-            m_cardInfos.insert(0,info);
-        }
-    }
-    //========================================
 
     for(int i=0; i<m_cardVisibleNum; i++)
     {
@@ -321,11 +307,13 @@ void CardListWidget::updateWidget_pre()
         //=================================================================
 
         CardWidget * w = new CardWidget(m_scrolWidget);
-
+        int nextCenterIndex = m_cardCurIndex-1;
         w->getClassCard()->installEventFilter(this);
-        w->getClassCard()->setClassInfo(m_cardInfos.at(nextCenterIndex-2 + num)); //test
+        w->getClassCard()->setClassInfo(m_cardInfos.at(nextCenterIndex-2 + m_requestLeftDataNum)); //test
 
-        m_cardCurIndex = nextCenterIndex-2 + num;
+        m_cardCurIndex = nextCenterIndex + m_requestLeftDataNum;
+
+        m_requestLeftDataNum = 0;
 
         //==================================================================
 
@@ -341,28 +329,36 @@ void CardListWidget::updateWidget_pre()
 
     updateScrollArea();
     emit sigCurCardDate(m_cardList.at(2)->getClassCard()->getClassInfo().time.date);
+
+    //remove no class card
+    removeNoClassCard();
+
+}
+
+void CardListWidget::removeNoClassCard()
+{
+    if(m_noClassIndex != -1)
+    {
+        m_cardInfos.removeAt(m_noClassIndex);
+
+        updateUiByCardInfos(m_noClassIndex);
+
+        m_noClassIndex = -1;
+    }
+}
+
+void CardListWidget::updateUiByCardInfos(int curIndex)
+{
+    for(int i =0; i<m_cardTotalCount; i++)
+    {
+        m_cardList.at(i)->getClassCard()->setClassInfo(m_cardInfos.at(curIndex-2 + i ));
+    }
+    m_cardCurIndex = curIndex;
 }
 
 void CardListWidget::updateWidget_back()
 {
     qDebug()<<"CardListWidget::updateWidget_back";
-    //=========================================
-    int nextCenterIndex = m_cardCurIndex+1;
-    if((nextCenterIndex+2)>(m_cardInfos.count()-1))
-    {
-        qDebug()<<"CardListWidget::updateWidget_back  new Data";
-        //request data
-        for(int i = 0 ; i< 8; i++)
-        {
-            ClassCardInfo info = getCardInfo(i+1);
-            info.type = 2;
-            m_cardInfos.append(info);
-        }
-    }
-    //========================================
-
-
-//    else
     {
         for(int i=0; i<m_cardVisibleNum; i++)
         {
@@ -376,6 +372,9 @@ void CardListWidget::updateWidget_back()
 
 
             //=================================================================
+
+            int nextCenterIndex = m_cardCurIndex+1;
+
             CardWidget * w = new CardWidget(m_scrolWidget);
             w->getClassCard()->installEventFilter(this);
             w->getClassCard()->setClassInfo(m_cardInfos.at(nextCenterIndex+2)); //test
@@ -396,6 +395,9 @@ void CardListWidget::updateWidget_back()
         updateScrollArea();
 
         emit sigCurCardDate(m_cardList.at(2)->getClassCard()->getClassInfo().time.date);
+
+        //remove no class card
+        removeNoClassCard();
     }
 }
 
@@ -406,29 +408,15 @@ void CardListWidget::updateUiByDate(const QDate &date)
     //=================================================
     //request data
     //request cards data by date
-
-    if(m_cardCurIndex != -1){
-        qDebug()<<m_cardCurIndex;
-        ClassCardInfo info = getCardInfo(1);
-        info.type = 0;
-        m_cardInfos.insert(m_cardCurIndex,info);
-
-    } else {
-        m_cardInfos.clear();
-        for(int i = 0 ; i< 8; i++)
-        {
-            ClassCardInfo info = getCardInfo(i+1);
-            info.type = 1;
-            m_cardInfos.append(info);
-        }
-        m_cardCurIndex = 3;
-    }
+    ClassCardsPar par;
+    int ret = DataProvider::GetInstance().requestClassCard(date,0,m_cardInfos,par);
+    m_cardCurIndex = par.curIndex;
+    qDebug()<<m_cardInfos.count();
+    qDebug()<<par.curIndex;
     //==================================================
 
-    for(int i =0; i<m_cardTotalCount; i++)
-    {
-        m_cardList.at(i)->getClassCard()->setClassInfo(m_cardInfos.at(m_cardCurIndex-2 + i ));
-    }
+    updateUiByCardInfos(m_cardCurIndex);
+
     //=============================================================
 
     qDebug()<<"======CardListWidget::updateUiByDate========end";

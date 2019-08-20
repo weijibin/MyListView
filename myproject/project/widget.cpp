@@ -6,7 +6,7 @@
 #include "date/DateListWidget.h"
 #include "courselist/CourseListWidget.h"
 
-#include "title/TitleWidget.h"
+#include "title/TitleBaseWidget.h"
 
 #include "LearningCenterWidget.h"
 #include "InterMediaCtrl.h"
@@ -56,13 +56,6 @@ void Widget::on_dateBtn_clicked()
 
 void Widget::on_classBtn_clicked()
 {
-//    DataProvider::GetInstance().setParentWidget(this);
-//    QDate dataStart;
-//    QDate dataend;
-//    QList<ClassCardInfo> cards;
-//    int ret = DataProvider::GetInstance().requestClassCard(dataStart,dataend,cards);
-
-//    qDebug()<<"Widget::on_classBtn_clicked()"<<ret;
 
     ClassCardWidget *w = new ClassCardWidget(0);
     w->setFixedSize(772,512);
@@ -96,15 +89,6 @@ void Widget::on_classBtn_clicked()
 
 void Widget::on_courseBtn_clicked()
 {
-//    for(int i = 0 ; i<2; i++)
-//    {
-//        DataProvider::GetInstance().setParentWidget(this);
-//        FilterType filter;
-//        QList<CourseCardInfo> cards;
-//        int ret = DataProvider::GetInstance().requestCourseCard(filter,cards);
-
-//        qDebug()<<"Widget::on_courseBtn_clicked()"<<ret;
-//    }
 
     CourseCardWidget *w = new CourseCardWidget(this);
 
@@ -166,7 +150,6 @@ void Widget::on_pushButton_clicked()
         m_center = new LearningCenterWidget;
         m_center->resize(900,600);
         InterMediaCtrl::GetInstance().setCenterWidget(m_center);
-        InterMediaCtrl::GetInstance().initState();
 
         QFile f(":/qss/style.qss");
         if (f.open(QFile::ReadOnly)) {
@@ -176,5 +159,6 @@ void Widget::on_pushButton_clicked()
         }
     }
     m_center->showNormal();
+    InterMediaCtrl::GetInstance().initState();
 
 }

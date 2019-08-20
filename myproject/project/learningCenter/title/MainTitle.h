@@ -1,13 +1,13 @@
 #ifndef MAINTITLE_H
 #define MAINTITLE_H
-#include "TitleWidget.h"
+#include "TitleBaseWidget.h"
 
 class HeadImg;
 class QLabel;
 class QPushButton;
 class QButtonGroup;
 
-class MainTitle : public TitleWidget
+class MainTitle : public TitleBaseWidget
 {
     Q_OBJECT
 public:

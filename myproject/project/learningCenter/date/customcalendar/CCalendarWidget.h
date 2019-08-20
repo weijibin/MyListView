@@ -19,6 +19,8 @@ class QButtonGroup;
 
 QT_END_NAMESPACE
 
+class CalendarWidget;
+
 typedef enum {
     Sunday,
     Monday,
@@ -37,6 +39,9 @@ public:
     explicit CCalendarWidget(QWidget *parent = 0);
     ~CCalendarWidget();
 
+
+    void setParentDlg(CalendarWidget *w ){m_parentDlg = w;}
+
     QDate getDate() const;
     void setDate(const QDate&date);
 
@@ -45,11 +50,15 @@ public:
 
     void setCourseDate(const QList<QDate>& m_coursesInfo);
 
+    const QList<QDate>& getCourseDate() {return m_haveCoursDates;}
+
 signals:
     void sigDayClicked(const QDate& date);
 public slots:
     void sltShowPrevMonth();
     void sltShowNextMonth();
+protected:
+    virtual bool eventFilter(QObject *watched, QEvent *event) override;
 
 private:
     void initWidget();
@@ -84,6 +93,9 @@ private:
     QString m_dateFormat;
 
     QList<QDate> m_haveCoursDates;
+
+    CalendarWidget* m_parentDlg = nullptr;
+    bool m_isRequestData = false;
 };
 
 #endif // CCALENDARWIDGET_H

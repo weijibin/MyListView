@@ -197,6 +197,7 @@ void MainWidget::changeToClassMode()
 void MainWidget::changeToCourseMode()
 {
     m_stackedLayout->setCurrentIndex(Course);
+    m_courseList->refresh();
 }
 
 void MainWidget::changeToNoClassMode()

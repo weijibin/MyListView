@@ -22,25 +22,9 @@ void CardWidget::initUi()
 
     m_card = new ClassCardWidget;
 
-    {
-        ClassTime time;
-        time.day = QString::fromLocal8Bit("今日");
-        time.startTime = "8:30";
-        time.endTime = "18:30";
-        time.index = 2;
-
-        ClassCardInfo info;
-        info.time = time;
-        info.classStatusType = 1;
-        info.classStatus = QString::fromLocal8Bit("直播进行中...");
-        info.classTip = QString::fromLocal8Bit("记得去APP完成课清哦~");
-        info.btnText = QString::fromLocal8Bit("去上课");
-        info.chapterName = QString::fromLocal8Bit("第一讲 函数奇偶性与对称性");
-        info.subjectName = QString::fromLocal8Bit("数学");
-        info.courseName = QStringLiteral("【2019-暑】六年级初一数学直播菁英班（北京人教）");
-
-        m_card->setClassInfo(info);
-    }
+    ClassCardInfo info;
+    info.type = 2;
+    m_card->setClassInfo(info);
 
     layout->addWidget(m_card);
     this->setLayout(layout);

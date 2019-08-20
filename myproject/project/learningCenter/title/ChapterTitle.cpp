@@ -2,7 +2,7 @@
 #include "InterMediaCtrl.h"
 #include <QHBoxLayout>
 
-ChapterTitle::ChapterTitle(QWidget *parent) : TitleWidget(parent)
+ChapterTitle::ChapterTitle(QWidget *parent) : TitleBaseWidget(parent)
 {
     initOtherUi();
     initOtherConnections();

@@ -5,12 +5,16 @@
 #include <QTextCharFormat>
 #include <QDebug>
 #include <QGraphicsDropShadowEffect>
+#include <QEvent>
 
 #include "customcalendar/CCalendarWidget.h"
 
+#include "dataCenter/DataProvider.h"
+
 CalendarWidget::CalendarWidget(QWidget *parent) : QWidget(parent)
 {
-    setWindowFlags(Qt::NoDropShadowWindowHint | Qt::FramelessWindowHint | Qt::Popup);
+//    setWindowFlags(Qt::NoDropShadowWindowHint | Qt::FramelessWindowHint | Qt::Popup);
+    setWindowFlags(Qt::NoDropShadowWindowHint | Qt::FramelessWindowHint | Qt::Window);
     setAttribute(Qt::WA_TranslucentBackground, true);
 
     initUI();
@@ -22,6 +26,7 @@ CalendarWidget::CalendarWidget(QWidget *parent) : QWidget(parent)
 
 
     initOutLineWithShadow();
+
 
 //    QGraphicsDropShadowEffect * effect = new QGraphicsDropShadowEffect(this);
 //    effect->setOffset(QPointF(0,0));
@@ -116,6 +121,10 @@ void CalendarWidget::initUI()
 
     m_calendar = new CCalendarWidget(this);
 
+    // active
+    m_calendar->setParentDlg(this);
+    installEventFilter(m_calendar);
+
     layout->addWidget(m_calendar);
 
     this->setLayout(layout);
@@ -163,25 +172,35 @@ void CalendarWidget::paintEvent(QPaintEvent*event)
     p.restore();
 }
 
-
 void CalendarWidget::setCalendarDate(const QDate &date)
 {
     qDebug()<<"CalendarWidget::setCalendarDate"<<date;
-
-    if(m_calendar->getSelectedDate().month() != date.month())
-    {
-        //request data
-        qDebug()<<"need update courseInfo";
-        //========================================
-        //setNew Couse Date
-        QList<QDate> lst;
-        lst.append(QDate::currentDate());
-        lst.append(QDate::currentDate().addDays(2));
-        lst.append(QDate::currentDate().addDays(5));
-        setCourseDate(lst);
-        //======================================
-    }
     m_calendar->setSelectedDate(date);
+}
+
+bool CalendarWidget::requestDataBeforeShow()
+{
+    bool ret = true;
+
+    bool isNeedUpdate = true;
+    if(m_calendar->getCourseDate().count() > 0)
+    {
+        isNeedUpdate = (m_calendar->getCourseDate().first().month() != m_calendar->getDate().month());
+    }
+
+    if(isNeedUpdate)
+    {
+        //===============================
+        //request data
+        //setNew Couse Date Before Show;
+        qDebug()<<"need update courseInfo";
+        QList<QDate> lst;
+        DataProvider::GetInstance().requestCourseDateForMonth(m_calendar->getDate(),lst);
+        this->setCourseDate(lst);
+        //===============================
+    }
+
+    return ret;
 }
 
 const QDate& CalendarWidget::getCalendarDate()

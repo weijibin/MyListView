@@ -5,7 +5,7 @@
 
 #include <QStackedLayout>
 #include <QVBoxLayout>
-
+#include "dataCenter/DataProvider.h"
 
 
 LearningCenterWidget::LearningCenterWidget(QWidget *parent) : QWidget(parent)
@@ -20,6 +20,8 @@ LearningCenterWidget::LearningCenterWidget(QWidget *parent) : QWidget(parent)
     initUI();
 //    this->setFixedSize(1280,720);   //固定大小
     this->setMinimumSize(1280,720);
+
+    DataProvider::GetInstance().setParentWidget(this);
 }
 
 void LearningCenterWidget::initUI()

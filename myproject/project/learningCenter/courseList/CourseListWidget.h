@@ -8,6 +8,7 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QStackedLayout>
+#include "common/common.h"
 
 class CourseCardWidget;
 class CourseListWidget : public QWidget
@@ -32,6 +33,20 @@ private:
     void initUi();
     void initTitle1();
     void initTitle2();
+
+    //
+    void updateTitle1ByInfo(const QMap<int,QString> & info);
+    void updateTitle2ByInfo(const QMap<int,QString> & info);
+    void updateAreaByInfo(const QList<CourseCardInfo>& info);
+
+    void clearTitle();
+    void clearTitle1();
+    void clearTitle2();
+
+    void clearArea();
+
+    //
+    void requestMoreCourseInfo();
 
     void initArea();
     void initNoCourseUi();
@@ -59,6 +74,8 @@ private:
     QList<CourseCardWidget*> m_cardList;
 
     int m_columnCount;
+
+    int m_nextZone = 1;
 };
 
 #endif // COURSELISTWIDGET_H
