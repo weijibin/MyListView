@@ -9,6 +9,7 @@
 #include <QGraphicsBlurEffect>
 #include <QLibrary>
 #include <QPalette>
+#include "InterMediaCtrl.h"
 
 TitleBaseWidget::TitleBaseWidget(QWidget *parent) : QWidget(parent)
 {
@@ -82,6 +83,10 @@ void TitleBaseWidget::initConnections()
         {
             m_outerWidget->close();
         }
+    });
+
+    connect(m_updateBtn,&QPushButton::clicked,[=](){
+        InterMediaCtrl::GetInstance().refresh();
     });
 }
 

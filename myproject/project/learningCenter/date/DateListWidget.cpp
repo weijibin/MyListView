@@ -367,6 +367,11 @@ void DateListWidget::setCalendarDate(const QDate &date)
     m_popupWidget->setCalendarDate(date);
 }
 
+QDate DateListWidget::getCalendarDate()
+{
+    return m_popupWidget->getCalendarDate();
+}
+
 void DateListWidget::updateWeekListByDate(const QDate &date)
 {
     qDebug()<<"====DateListWidget::updateWeek===date";

@@ -12,7 +12,11 @@ class ClassListWidget : public QWidget
 public:
     explicit ClassListWidget(QWidget *parent = 0);
 
-    void refresh(const QDate& date);
+    void refresh();
+
+    void setChildVisible(bool visible);
+
+    void updateUiByDate(const QDate& date);
 
 signals:
 

@@ -61,6 +61,9 @@ void MainTitle::initOtherUi()
     tab->setLayout(tabLayout);
 
     m_img = new HeadImg(QPixmap(":/res/default_boy_img.png"),this);
+
+    m_img->setImgUrl("https://hwt.xesimg.com/user/h/3701256.jpg");
+
     m_name = new QLabel(this);
     m_name->setObjectName("stuName");
     m_name->setFixedWidth(50);

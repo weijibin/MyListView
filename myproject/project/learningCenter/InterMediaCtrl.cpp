@@ -9,6 +9,14 @@ InterMediaCtrl::InterMediaCtrl()
 
 }
 
+void InterMediaCtrl::refresh()
+{
+    if(m_centerWidget != nullptr)
+    {
+        m_centerWidget->refresh();
+    }
+}
+
 void InterMediaCtrl::initState()
 {
     if(m_centerWidget != nullptr)

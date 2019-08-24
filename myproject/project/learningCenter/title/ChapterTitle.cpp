@@ -1,4 +1,4 @@
-#include "ChapterTitle.h"
+﻿#include "ChapterTitle.h"
 #include "InterMediaCtrl.h"
 #include <QHBoxLayout>
 
@@ -14,7 +14,7 @@ void ChapterTitle::initOtherUi()
     m_backHome = new ToolButton(this);
     m_backHome->setObjectName("l_back");
     m_backHome->setFixedSize(60,30);
-    m_backHome->setDisplyText("返回");
+    m_backHome->setDisplyText(QString::fromLocal8Bit("返回"));
 //    m_backHome->setIconSize(QSize(20,20));
 //    m_backHome->setIcon(QIcon(":/res/icon_fanhui_hover.png"));
 
@@ -26,7 +26,7 @@ void ChapterTitle::initOtherUi()
     m_material = new QPushButton(this);
     m_material->setFixedSize(80,32);
     m_material->setObjectName("l_material");
-    m_material->setText("学习资料");
+    m_material->setText(QString::fromLocal8Bit("学习资料"));
 
 #if defined(Q_OS_WIN)
     m_layout->insertSpacing(0,20);
@@ -53,6 +53,7 @@ void ChapterTitle::initOtherConnections()
     });
     connect(m_material,&QPushButton::clicked,[=](){
 //        setMaterialVisible(!(m_material->isVisible()));
+        emit StudyFileClicked();
     });
 }
 

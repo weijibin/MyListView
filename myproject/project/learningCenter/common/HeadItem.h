@@ -2,11 +2,12 @@
 #define HEADITEM_H
 
 #include <QWidget>
-
+#include <QNetworkAccessManager>
 class QLabel;
 class QVBoxLayout;
 class QHBoxLayout;
 class RoundMovieWidget;
+
 class HeadItem : public QWidget
 {
     Q_OBJECT
@@ -22,6 +23,11 @@ public:
     void setHeadPixmap(const QString &pixPath, int radius = 32);
     void setHeadText(const QString &type, const QString &teacherName);
 
+private:
+    void downloadImg(const QString &url);
+
+private slots:
+    void onHeadImg();
 
 private:
    QLabel              *m_typeLabel;
@@ -29,7 +35,7 @@ private:
    QHBoxLayout         *m_hLayout;
    QVBoxLayout         *m_vLayout;
    RoundMovieWidget    *m_roundWidget;
-
+   QNetworkAccessManager m_networkAccess;
 };
 
 #endif // HEADITEM_H

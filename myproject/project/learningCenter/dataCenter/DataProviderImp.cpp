@@ -238,7 +238,7 @@ void DataProviderImp::sltRequestChapterList(const CourseToChapterPar & par)
         TeacherInfo tInfo;
         tInfo.name =QString::fromLocal8Bit("武亚敏");
         tInfo.type = 0;
-        tInfo.imgUrl = ":/res/default_boy_img.png";
+        tInfo.imgUrl = "https://xesfile.xesimg.com/teacher/2018/07/12/15313833792288.png";
         info.teachers.append(tInfo);
         TeacherInfo tInfo2;
         tInfo2.name =QString::fromLocal8Bit("武亚敏");

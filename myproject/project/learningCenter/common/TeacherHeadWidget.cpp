@@ -16,8 +16,20 @@ TeacherHeadWidget::~TeacherHeadWidget()
 
 }
 
+void TeacherHeadWidget::clearContens()
+{
+    while (m_teacherHeadList.size() >0) {
+        m_layout->removeWidget(m_teacherHeadList.first());
+        m_teacherHeadList.removeFirst();
+    }
+
+    m_teacherHeadList.clear();
+}
+
 void TeacherHeadWidget::setTeacherHeadInfo(const QList<TeacherInfo> &info)
 {
+    clearContens();
+
     for(int i = 0;  i < info.size(); i++) {
         HeadItem * item = new HeadItem(this);
         qDebug() << "---->" << info.at(i).imgUrl << info.at(i).type << info.at(i).name;

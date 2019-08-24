@@ -46,7 +46,7 @@ void CardListWidget::initUi()
 
     m_area = new QScrollArea(this);
     m_area->setMouseTracking(true);
-//    m_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     m_area->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     m_area->setContentsMargins(0,0,0,0);

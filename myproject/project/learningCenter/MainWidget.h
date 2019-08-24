@@ -17,7 +17,6 @@ public:
     enum Index{ Class, Course, TakeClass,NoClass, Retry };
 
     void initState();
-    void initData();
 
     void changeToClassMode();
     void changeToCourseMode();
@@ -27,6 +26,8 @@ public:
     void changeToRetryMode();
 
     void setOuterWidget(QWidget*w);
+
+    void refresh();
 
 signals:
 

@@ -120,11 +120,23 @@ QSize ClassListWidget::getCardListSize(const QSize &size)
     return sizet;
 }
 
-void ClassListWidget::refresh(const QDate & date)
+void ClassListWidget::updateUiByDate(const QDate & date)
 {
     m_dateListWidget->refreshByDate(date);
 
     // classlist刷新
     m_cardList->updateUiByDate(date);
 
+}
+
+void ClassListWidget::setChildVisible(bool visible)
+{
+    m_dateListWidget->setVisible(visible);
+    m_cardList->setVisible(visible);
+}
+
+void ClassListWidget::refresh()
+{
+    QDate date = m_dateListWidget->getCalendarDate();
+    updateUiByDate(date);
 }

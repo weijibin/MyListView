@@ -16,6 +16,7 @@ RoundMovieWidget::RoundMovieWidget(QWidget *parent)
     connect(&m_timeLine, SIGNAL(frameChanged(int)), this, SLOT(onFrameChanged(int)));
 }
 
+
 void RoundMovieWidget::setPixmap(const QPixmap &pix)
 {
     m_pix = pix;

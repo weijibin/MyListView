@@ -20,6 +20,7 @@ public:
 
     ~TeacherHeadWidget();
 
+    void clearContens();
     void  setTeacherHeadInfo(const QList<TeacherInfo> &info);
 
 signals:

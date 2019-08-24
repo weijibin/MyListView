@@ -22,7 +22,9 @@ public:
     void changeToChapterMode(const CourseToChapterPar & par);
     void changeToHomeMode();
 
-    void  enterRoom(const QString& url);
+    void enterRoom(const QString& url);
+
+    void refresh();
 signals:
 
     void sigEnterRoom(const QString& url);  // 进入直播间信号

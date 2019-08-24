@@ -33,5 +33,13 @@
         <file>res/default_wuke.png</file>
         <file>res/icon_month_left.png</file>
         <file>res/icon_month_right.png</file>
+        <file>res/icon_arrow_download.png</file>
+        <file>res/icon_arrow_download_hover.png</file>
+        <file>res/icon_arrow_down.png</file>
+        <file>res/icon_arrow_down_hover.png</file>
+        <file>res/icon_arrow_up.png</file>
+        <file>res/icon_arrow_up_hover.png</file>
+        <file>res/icon_wenjianjia.png</file>
+        <file>res/icon_xuexiziliao_hover.png</file>
     </qresource>
 </RCC>

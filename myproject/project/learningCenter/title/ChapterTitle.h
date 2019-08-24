@@ -1,4 +1,4 @@
-#ifndef CHAPTERTITLE_H
+﻿#ifndef CHAPTERTITLE_H
 #define CHAPTERTITLE_H
 #include "TitleBaseWidget.h"
 #include <QPushButton>
@@ -13,6 +13,9 @@ public:
 
     void setMaterialVisible(bool visible);
     void setCourseName(const QString& name);
+signals:
+    void StudyFileClicked();
+
 protected:
     void initOtherUi();
     void initOtherConnections();

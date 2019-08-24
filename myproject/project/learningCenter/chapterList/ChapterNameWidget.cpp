@@ -80,7 +80,7 @@ void ChapterNameWidget::setChapterNameLabel(const QString &name)
     }
 
     m_nameLabel->setText(name);
-    m_nameLabel->setStyleSheet("font-size:16px;color:#212831;");
+    m_nameLabel->setStyleSheet("font-size:16px; font-family:Microsoft YaHei;color:#212831;");
 }
 
 void ChapterNameWidget::setChapterTimeLabel(const QString &time)
@@ -90,7 +90,7 @@ void ChapterNameWidget::setChapterTimeLabel(const QString &time)
         m_timeLabel = new QLabel(this);
     }
     m_timeLabel->setText(time);
-    m_timeLabel->setStyleSheet("font-size:12px; color:#858C96");
+    m_timeLabel->setStyleSheet("font-size:12px; font-family:Microsoft YaHei; color:#858C96");
 }
 
 void ChapterNameWidget::setAdjustChapterLabel()
@@ -104,7 +104,8 @@ void ChapterNameWidget::setAdjustChapterLabel()
                                         border:1px solid; \
                                         font-size:12px; \
                                         color:#60637E;\
-                                        border-color:#60637E;");
+                                        border-color:#60637E; \
+                                        font-family: Microsoft YaHei;");
 
    m_changeChapterLabel->setFixedSize(41, 16);
 }
@@ -119,7 +120,7 @@ void ChapterNameWidget::setEnglishTitle(const QString &name)
 
     setMinimumSize(480, 64);
     m_nameLabel->setText(name);
-    m_nameLabel->setStyleSheet("font-size:16px; font-weight:bold; color:#858C96;");
+    m_nameLabel->setStyleSheet("font-size:16px; font-family:Microsoft YaHei; font-weight:bold; color:#858C96;");
     m_vbLayout->setContentsMargins(0,22,0,22);
     m_vbLayout->setSpacing(0);
     m_vbLayout->addWidget(m_nameLabel);

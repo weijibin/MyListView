@@ -98,10 +98,12 @@ typedef struct MaterialInfo{
 typedef struct MaterialUnit{
     QString title;
     QString uploadTime;
+    bool isDir;        // 是否是文件夹
     bool isFolded;     // true 折叠, false 展开
     QList<MaterialInfo> lst;
     MaterialUnit(){
         title ="";
+        isDir = false;
         isFolded = false;
     }
 } MaterialUnit;

@@ -57,7 +57,7 @@ void ChapterListWidget::setChapterListContents(const QList<ChapterInfo> &list, c
     vTime.append(validTime);
     m_endLabel->setText(vTime);
     m_endLabel->setAlignment(Qt::AlignCenter);
-    m_endLabel->setStyleSheet("font-size:12px;color:#858C96;");
+    m_endLabel->setStyleSheet("font-size:12px; font-family:Microsoft YaHei; color:#858C96;");
     m_endLabel->setFixedHeight(64);
     m_scrollLayout->addWidget(m_endLabel);
     adjustSize();
@@ -106,7 +106,7 @@ void ChapterListWidget::initUi()
     setMinimumSize(1280, 664);
 
     m_scrollWidget = new QWidget(this);
-    m_scrollWidget->setMinimumWidth(1280);
+    m_scrollWidget->setMinimumWidth(1270);
 
     m_scrollLayout = new QVBoxLayout(m_scrollWidget);
     m_scrollLayout->setContentsMargins(0,0,0,0);
@@ -116,7 +116,7 @@ void ChapterListWidget::initUi()
     m_chapterScroll->setWidget(m_scrollWidget);
 
     m_vbLayout = new QVBoxLayout(this);
-    m_vbLayout->setContentsMargins(0,0,0,0);
+    m_vbLayout->setContentsMargins(0,0,4,0);
     m_vbLayout->setSpacing(0);
     m_vbLayout->addWidget(m_chapterScroll);
     setLayout(m_vbLayout);

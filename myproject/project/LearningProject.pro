@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -12,6 +12,7 @@ TARGET = MyListView
 TEMPLATE = app
 
 INCLUDEPATH += $$PWD/learningCenter
+INCLUDEPATH += $$PWD/learningCenter/chapterList/StudyFileDownload
 
 SOURCES += main.cpp\
         widget.cpp \
@@ -46,7 +47,14 @@ SOURCES += main.cpp\
     learningCenter/courseList/CourseCardWidget.cpp \
     learningCenter/date/customcalendar/CCalendarWidget.cpp \
     learningCenter/date/customcalendar/DayLabel.cpp \
-    learningCenter/title/TitleBaseWidget.cpp
+    learningCenter/title/TitleBaseWidget.cpp \
+    learningCenter/chapterList/StudyFileDownload/RoundProgressBar.cpp \
+    learningCenter/chapterList/StudyFileDownload/StudyFileItem.cpp \
+    learningCenter/chapterList/StudyFileDownload/StackDownload.cpp \
+    learningCenter/chapterList/StudyFileDownload/StudyDirWidget.cpp \
+    learningCenter/chapterList/StudyFileDownload/StudyFilesListWidget.cpp \
+    learningCenter/chapterList/StudyFileDownload/StudyFileManager.cpp \
+    learningCenter/chapterList/StudyFileDownload/StudyFilesDataProvider.cpp
 
 HEADERS  += widget.h \
     learningCenter/chapterList/ChapterListWidget.h \
@@ -80,9 +88,17 @@ HEADERS  += widget.h \
     learningCenter/courseList/CourseCardWidget.h \
     learningCenter/date/customcalendar/CCalendarWidget.h \
     learningCenter/date/customcalendar/DayLabel.h \
-    learningCenter/title/TitleBaseWidget.h
+    learningCenter/title/TitleBaseWidget.h \
+    learningCenter/chapterList/StudyFileDownload/RoundProgressBar.h \
+    learningCenter/chapterList/StudyFileDownload/StudyFileItem.h \
+    learningCenter/chapterList/StudyFileDownload/StackDownload.h \
+    learningCenter/chapterList/StudyFileDownload/StudyDirWidget.h \
+    learningCenter/chapterList/StudyFileDownload/StudyFilesListWidget.h \
+    learningCenter/chapterList/StudyFileDownload/StudyFileManager.h \
+    learningCenter/chapterList/StudyFileDownload/StudyFilesDataProvider.h
 
-FORMS    += widget.ui
+FORMS    += widget.ui \
+    learningCenter/chapterList/StudyFileDownload/StackDownload.ui
 
 RESOURCES += \
     res.qrc

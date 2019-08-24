@@ -253,6 +253,7 @@ void CCalendarWidget::sltShowNextMonth()
     QList<QDate> lst;
 
     QDate date = m_date.addMonths(1);
+//    DataProvider::GetInstance().setParentWidget(this);
     DataProvider::GetInstance().requestCourseDateForMonth(date,lst);
 
     this->setCourseDate(lst);

@@ -8,6 +8,7 @@ class ChapterTitle;
 class ChapterListWidget;
 class QStackedLayout;
 class CefViewWidget;
+class StudyFilesListWidget;
 
 class ChapterWidget : public QWidget
 {
@@ -24,11 +25,16 @@ public:
 
     void setCourseInfo(const CourseToChapterPar & par);
 
+    void refresh();
+
 signals:
 
 public slots:
+    void onInitShowStudyFileWidget();
+    void onShowStudyFileWidget();
 private:
     void initUI();
+    void updateUi();
 
 private:
 
@@ -40,7 +46,8 @@ private:
 
     CourseToChapterPar m_courseInfo;
     QList<ChapterInfo> m_chapterInfoList;
-
+    StudyFilesListWidget     *m_studyFileWidget = nullptr;
+    bool                      m_studyWidgetOpen;
 
 };
 

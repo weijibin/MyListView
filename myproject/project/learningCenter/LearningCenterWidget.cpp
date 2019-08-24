@@ -69,3 +69,19 @@ void LearningCenterWidget::enterRoom(const QString &url)
 {
     emit sigEnterRoom(url);
 }
+
+void LearningCenterWidget::refresh()
+{
+    if(this->isVisible())
+    {
+        if(m_stackedLayout->currentIndex() == Main)
+        {
+            m_mainWidget->refresh();
+        }
+        else
+        {
+            m_chapterWidget->refresh();
+        }
+    }
+
+}

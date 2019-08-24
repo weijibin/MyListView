@@ -25,6 +25,8 @@ public:
 
     void updateScrollArea();
 
+    QDate getCalendarDate();
+
     void refreshByDate(const QDate& date);
 
 signals:

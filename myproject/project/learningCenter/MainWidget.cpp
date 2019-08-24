@@ -171,6 +171,28 @@ void MainWidget::setOuterWidget(QWidget *w)
     m_title->setOuterWidget(w);
 }
 
+void MainWidget::refresh()
+{
+    if(m_stackedLayout->currentIndex() == Class)
+    {
+        m_classList->setChildVisible(false);
+        m_classList->refresh();
+        m_classList->setChildVisible(true);
+    }
+    else if(m_stackedLayout->currentIndex() == Course)
+    {
+        m_courseList->refresh();
+    }
+    else
+    {
+        m_title->initState();
+        m_stackedLayout->setCurrentIndex(Class);
+        m_classList->setChildVisible(false);
+        m_classList->refresh();
+        m_classList->setChildVisible(true);
+    }
+}
+
 void MainWidget::initState()
 {
     //========================================
@@ -180,24 +202,22 @@ void MainWidget::initState()
     //=========================================
     m_stackedLayout->setCurrentIndex(Class);
     m_title->initState();
+    m_classList->setChildVisible(false);
     QDate date = QDate::currentDate();
-    m_classList->refresh(date);
-}
-
-void MainWidget::initData()
-{
-    m_classList->refresh(QDate::currentDate());
+    m_classList->updateUiByDate(date);
+    m_classList->setChildVisible(true);
 }
 
 void MainWidget::changeToClassMode()
 {
     m_stackedLayout->setCurrentIndex(Class);
+    this->refresh();
 }
 
 void MainWidget::changeToCourseMode()
 {
     m_stackedLayout->setCurrentIndex(Course);
-    m_courseList->refresh();
+    this->refresh();
 }
 
 void MainWidget::changeToNoClassMode()

@@ -25,6 +25,8 @@ public:
 
     void initState();
 
+    void refresh();
+
     void setCenterWidget(LearningCenterWidget*w){m_centerWidget=w;}
     void setMainWidget(MainWidget*w){m_mainWidget=w;}
     void setChapterWidget(ChapterWidget*w){m_chapterWidget=w;}

@@ -64,7 +64,6 @@ void ChapterItem::setChapterItemContents(const ChapterInfo &info)
     }
 
     adjustSize();
-    show();
 }
 
 void ChapterItem::setChapterEnglishTitle(const QString &title)
@@ -142,11 +141,11 @@ void ButtonWidget::setLiveStatusLabel(QString text)
     }
     m_liveStatusLabel->setText(text);
     if (text == QString::fromLocal8Bit("直播待开始")) {
-        m_liveStatusLabel->setStyleSheet("font-size:14px; color:#ADB4BE");
+        m_liveStatusLabel->setStyleSheet("font-size:14px; font-family:Microsoft YaHei; color:#ADB4BE");
     } else if (text == QString::fromLocal8Bit("直播进行中")) {
-        m_liveStatusLabel->setStyleSheet("font-size:14px; color:#FF5E50");
+        m_liveStatusLabel->setStyleSheet("font-size:14px; font-family:Microsoft YaHei; color:#FF5E50");
     } else if (text == QString::fromLocal8Bit("直播未完成")) {
-        m_liveStatusLabel->setStyleSheet("font-size:14px; color:#212831");
+        m_liveStatusLabel->setStyleSheet("font-size:14px; font-family:Microsoft YaHei; color:#212831");
     }
 }
 
